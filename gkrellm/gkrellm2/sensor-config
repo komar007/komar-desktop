@@ -1,0 +1,26 @@
+sensor sensor_config_version 1
+sensor sensor_sysdep_private 2
+sensor sensor_float_factor 10000
+sensor gkrellm_float_factor 1000
+sensor sysdep_option use_nvclock 0
+sensor "CPU" "it8712@290/temp1" 0 0 1 0
+sensor "M/B" "it8712@290/temp2" 0 0 1 0
+sensor "Temp3" "it8712@290/temp3" 0 0 0 0
+sensor "Core0" "k8temp@c3/temp1" 0 0 0 0
+sensor "Core0" "k8temp@c3/temp2" 0 0 0 0
+sensor "Core1" "k8temp@c3/temp3" 0 0 0 0
+sensor "Core1" "k8temp@c3/temp4" 0 0 0 0
+sensor "fan1" "it8712@290/fan1" 0 0 1 0
+sensor "fan2" "it8712@290/fan2" 0 0 0 0
+sensor "fan3" "it8712@290/fan3" 0 0 0 0
+sensor "VCore 1" "it8712@290/in0" 0 0 0 0
+sensor "VCore 2" "it8712@290/in1" 0 0 0 0
+sensor "+3.3V" "it8712@290/in2" 0 0 0 0
+sensor "+5V" "it8712@290/in3" 0 0 0 0
+sensor "+12V" "it8712@290/in4" 0 0 0 0
+sensor "-12V" "it8712@290/in5" 0 0 0 0
+sensor "-5V" "it8712@290/in6" 0 0 0 0
+sensor "Stdby" "it8712@290/in7" 0 0 0 0
+sensor "VBat" "it8712@290/in8" 0 0 0 0
+sensor units_fahrenheit 0
+sensor volt_display_mode 0
