@@ -1,0 +1,43 @@
+! background (not tango), foreground, tint color (for inheritPixmap)
+URxvt*urgentOnBell: true
+URxvt*depth: 32
+URxvt*background: #000000
+URxvt*foreground: #babdb6
+URxvt*scrollBar: false
+URxvt*font: xft:Monospace:pixelsize=11
+
+! Black (not tango) + DarkGrey
+URxvt*color0: #000000
+URxvt*color8: #555753
+
+! DarkRed + Red
+URxvt*color1: #a40000
+URxvt*color9: #cc0000
+
+! DarkGreen + Green
+URxvt*color2: #4e9a06
+URxvt*color10: #73d216
+
+! DarkYellow + Yellow
+URxvt*color3: #c4a000
+URxvt*color11: #edd400
+
+! DarkBlue + Blue
+URxvt*color4: #204a87
+URxvt*color12: #3465a4
+
+! DarkMangenta + Mangenta
+URxvt*color5: #ce5c00
+URxvt*color13: #f57900
+
+!DarkCyan + Cyan (both not tango)
+URxvt*color6: #038e82
+URxvt*color14: #05d2c1
+
+! LightGrey + White
+URxvt*color7: #babdb6
+URxvt*color15: #d3d7cf
+
+URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyOutput: false
+
