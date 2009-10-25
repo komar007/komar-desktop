@@ -1,0 +1,11 @@
+Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+       , bgColor = "black"
+       , fgColor = "#555753"
+       , position = Top
+			 ,lowerOnStart = True
+       , commands = [ Run Weather "EPKT" ["-t"," <tempC>°C","-L","10","-H","30","--normal","#73d216","--high","#a40000","--low","#3465a4" ] 18000
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% } %mpc% { %cpu% <fc=#cccccc>|</fc> %memory% * %swap% <fc=#cccccc>|</fc>%EPKT% <fc=#c4a000>%date%</fc>"
+       }
