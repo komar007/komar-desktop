@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Divinorum-Orange
+Type=X-GNOME-Metatheme
+Comment=Dark theme
+
+[X-GNOME-Metatheme]
+GtkTheme=Divinorum-Orange
+MetacityTheme=Divinorum
