@@ -1,0 +1,37 @@
+Config {
+	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+	bgColor = "black",
+	fgColor = "#555753",
+	position = Top,
+	lowerOnStart = False,
+	commands = [ Run Weather "EPKT" [
+			"-t", " <tempC>°C",
+			"-L","10","-H","30",
+			"--normal","#73d216", "--high","#a40000",	"--low","#3465a4"
+		] 18000,
+		Run Cpu [
+			"-L","3",
+			"-H","50",
+			"--normal","#4e9a06", "--high","#a40000"
+		] 10,
+		Run Memory [
+			"-t","Mem: <usedratio>%",
+			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#840000"
+		] 10,
+		Run Swap [
+			"-t", "Swap: <usedratio>",
+			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#840000"
+		] 10,
+		Run Date "%a %b %_d %k:%M:%S" "date" 10,
+		Run Com  "~/.xmonad/mpds.sh" [] "mpc" 10,
+		Run StdinReader
+	],
+	sepChar = "%",
+	alignSep = "}{",
+	template = "%StdinReader% } %mpc% { %cpu% <fc=#cccccc>|</fc> %memory% <fc=#282828>*</fc> %swap% <fc=#cccccc>|</fc>%EPKT% <fc=#c4a000>%date%</fc>"
+}
+
+-- vim:ft=haskell
+
+
+
