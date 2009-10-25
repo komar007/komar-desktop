@@ -4,7 +4,7 @@ URxvt*depth: 32
 URxvt*background: #000000
 URxvt*foreground: #babdb6
 URxvt*scrollBar: false
-URxvt*font: xft:Monospace:pixelsize=11
+URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=11
 
 ! Black (not tango) + DarkGrey
 URxvt*color0: #000000
