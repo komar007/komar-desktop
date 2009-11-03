@@ -18,9 +18,9 @@ Config {
 			"-t","Mem: <usedratio>%",
 			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#840000"
 		] 10,
-		Run Swap [
-			"-t", "Swap: <usedratio>",
-			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#840000"
+		Run Battery [
+			"-t","Bat: <left>",
+			"--low", "#840000", "--normal", "#aaaaaa", "--high", "#777777"
 		] 10,
 		Run Date "%a %b %_d %k:%M:%S" "date" 10,
 		Run Com  "~/.xmonad/mpds.sh" [] "mpc" 10,
@@ -28,7 +28,7 @@ Config {
 	],
 	sepChar = "%",
 	alignSep = "}{",
-	template = "%StdinReader% } %mpc% { %cpu% <fc=#cccccc>|</fc> %memory% <fc=#282828>*</fc> %swap% <fc=#cccccc>|</fc>%EPKT% <fc=#c4a000>%date%</fc>"
+	template = "%StdinReader% } %mpc% { %battery% <fc=#cccccc>|</fc> %cpu% <fc=#cccccc>|</fc> %memory% <fc=#cccccc>|</fc>%EPKT% <fc=#c4a000>%date%</fc>"
 }
 
 -- vim:ft=haskell
