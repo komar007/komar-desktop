@@ -110,3 +110,7 @@ command! -nargs=1 Find :py Finder("")
 map! <C-f> <Esc>:Find 
 map  <C-f> :Find  
 
+nmap <F7> :wall<cr>:make %< <cr>
+nmap <F5> :cprev <cr>
+nmap <F4> :cnext <cr>
+
