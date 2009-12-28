@@ -72,6 +72,7 @@ myConditions = composeAll [
 	resource  =? "gkrellm"    --> doF (W.shift "stats"),
 	resource  =? "gkrellm"    --> (ask >>= \w -> liftX (toggleBorder w) >> doF id),
 	resource  =? "stats"      --> doF (W.shift "stats"),  
+	resource  =? "irc"        --> doF (W.shift "irc"),
 	className =? "Gajim.py"   --> doF (W.shift "im")]
 
 xpconfig = defaultXPConfig {
@@ -95,7 +96,7 @@ myConf xmproc dynHooksRef = defaultConfig {
   normalBorderColor = "#000000",
   focusedBorderColor = "#3465a4",
   terminal = "urxvt",
-  workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "temp", "stats"]
+  workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "temp", "stats"]
 } `additionalKeysP` (myKeys dynHooksRef xmproc) `additionalKeys` myKeysMulti
 
 main = do
@@ -108,7 +109,7 @@ dmenu_opts = "dmenu -fn -misc-fixed-*-*-*-*-10-*-*-*-*-*-*-* -b -nb '#000000' -n
 dmenu_exe = "exe=`dmenu_path | " ++ dmenu_opts ++  "` && $exe"
 
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-	"M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-=", "M-\\"]
+	"M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-=", "M-\\"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys dhRef xmproc = [
