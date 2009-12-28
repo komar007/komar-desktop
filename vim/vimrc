@@ -113,6 +113,7 @@ map  <C-f> :Find
 autocmd FileType pascal compiler fpc
 
 nmap <F7> :wall<cr>:make %< <cr>
+nmap <F8> :wall<cr>:make <cr>
 nmap <F5> :cprev <cr>
 nmap <F4> :cnext <cr>
 
