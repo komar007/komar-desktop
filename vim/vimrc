@@ -111,6 +111,7 @@ map! <C-f> <Esc>:Find
 map  <C-f> :Find  
 
 autocmd FileType pascal compiler fpc
+autocmd FileType haskell set expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
