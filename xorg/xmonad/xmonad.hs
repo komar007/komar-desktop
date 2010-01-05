@@ -55,7 +55,6 @@ myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
     stats = reflectHoriz $ withIM 0.125 (Resource "gkrellm") defaultMSet
 --    stats = gaps [(R, 150)] defaultMSet
 
-
 myLogHook pipe = dynamicLogWithPP $ xmobarPP {
     ppOutput = System.IO.UTF8.hPutStrLn pipe,
     ppTitle = xmobarColor "#3465a4" "" . shorten 100,  -- previously: "#73d216"
