@@ -21,6 +21,7 @@ import XMonad.Layout.Gaps
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.Reflect
+import XMonad.Layout.Tabbed
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
@@ -41,7 +42,7 @@ ratio = toRational (((sqrt 5) - 1)/2)
 
 myTall = named "[|]" tall
 myWide = named "[-]" $ Mirror tall
-myFull = named "[F]" Full
+myFull = named "[F]" $ noBorders (tabbedBottom shrinkText tabTheme)
 
 defaultSet =
     myTall ||| myWide ||| myFull
@@ -75,6 +76,19 @@ myConditions = composeAll [
     resource  =? "irc"        --> doF (W.shift "irc"),
     isFullscreen              --> doFullFloat,
     className =? "Gajim.py"   --> doF (W.shift "im")]
+
+tabTheme = defaultTheme {
+    activeColor          = "#111111",
+    inactiveColor        = "#000000",
+    urgentColor          = "#222222",
+    activeBorderColor    = "#3465a4",
+    inactiveBorderColor  = "#3465a4",
+    urgentBorderColor    = "#dd0000",
+    activeTextColor      = "#c4a000", 
+    inactiveTextColor    = "#aaaaaa",
+    urgentTextColor      = "#dd0000",
+    decoHeight           = 12
+}
 
 xpconfig = defaultXPConfig {
     font        = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
