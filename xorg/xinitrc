@@ -2,7 +2,7 @@ xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 xmodmap ~/.Xmodmap
 xset r rate 250 20
-urxvt -name stats -e tail -n 1000 -f /var/log/messages &
+urxvt -name stats -e alsamixer &
 urxvt -name stats -e htop &
 urxvt -name stats -e ncmpcpp &
 urxvt -name irc -e irssi &

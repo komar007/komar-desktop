@@ -141,29 +141,17 @@ svn:wc:ra_dav:version-url
 V 56
 /svn/!svn/ver/111/trunk/after/ftplugin/objc_snippets.vim
 END
-ruby_snippets.vim
-K 25
-svn:wc:ra_dav:version-url
-V 56
-/svn/!svn/ver/145/trunk/after/ftplugin/ruby_snippets.vim
-END
 python_snippets.vim
 K 25
 svn:wc:ra_dav:version-url
 V 58
 /svn/!svn/ver/148/trunk/after/ftplugin/python_snippets.vim
 END
-markdown_snippets.vim
+ruby_snippets.vim
 K 25
 svn:wc:ra_dav:version-url
-V 59
-/svn/!svn/ver/96/trunk/after/ftplugin/markdown_snippets.vim
-END
-c_snippets.vim
-K 25
-svn:wc:ra_dav:version-url
-V 53
-/svn/!svn/ver/139/trunk/after/ftplugin/c_snippets.vim
+V 56
+/svn/!svn/ver/145/trunk/after/ftplugin/ruby_snippets.vim
 END
 tcl_snippets.vim
 K 25
@@ -171,17 +159,29 @@ svn:wc:ra_dav:version-url
 V 55
 /svn/!svn/ver/122/trunk/after/ftplugin/tcl_snippets.vim
 END
-f-script_snippets.vim
+c_snippets.vim
 K 25
 svn:wc:ra_dav:version-url
-V 60
-/svn/!svn/ver/122/trunk/after/ftplugin/f-script_snippets.vim
+V 53
+/svn/!svn/ver/139/trunk/after/ftplugin/c_snippets.vim
+END
+markdown_snippets.vim
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/96/trunk/after/ftplugin/markdown_snippets.vim
 END
 php_snippets.vim
 K 25
 svn:wc:ra_dav:version-url
 V 55
 /svn/!svn/ver/141/trunk/after/ftplugin/php_snippets.vim
+END
+f-script_snippets.vim
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/122/trunk/after/ftplugin/f-script_snippets.vim
 END
 css_snippets.vim
 K 25
