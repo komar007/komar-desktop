@@ -3,34 +3,10 @@ syntax on             " Enable syntax highlighting
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
+set autoindent smartindent
+set smarttab
 
 set grepprg=grep\ -nH\ $*
-
-function RubyEndToken ()
-    let current_line = getline( '.' )
-    let braces_at_end = '{\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
-    let stuff_without_do = '^\s*\(class\|if\|unless\|begin\|case\|for\|module\|while\|until\|def\)'
-    let with_do = 'do\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
-
-    if match(current_line, braces_at_end) >= 0
-        return "\<CR>}\<C-O>O" 
-    elseif match(current_line, stuff_without_do) >= 0
-        return "\<CR>end\<C-O>O" 
-    elseif match(current_line, with_do) >= 0
-        return "\<CR>end\<C-O>O" 
-    else
-        return "\<CR>" 
-    endif
-endfunction
-
-function UseRubyIndent ()
-	"setlocal tabstop=8
-"    setlocal softtabstop=2
-"    setlocal shiftwidth=2
-"  setlocal expandtab
-
-"    imap <buffer> <CR> <C-R>=RubyEndToken()<CR>
-endfunction
 
 function Html()
 	set tabstop=2
@@ -38,23 +14,18 @@ function Html()
 endfunction
 
 runtime! ftplugin/man.vim
-autocmd FileType ruby,eruby call UseRubyIndent()
 autocmd FileType html,xhtml,eruby call Html()
 colorscheme desert
 set nu
-set gfn=Monospace\ 8
 set is
 set wildmenu
 set mouse=a
-unmenu ToolBar
-unmenu! ToolBar
 
-"Temoporary
 set tabstop=4
 set shiftwidth=4
 setlocal spelllang=pl 
-" setlocal spell
-"
+autocmd FileType latex setlocal spell
+
 map <M-1> <Esc>1gt<CR>
 map <M-2> <Esc>2gt<CR>
 map <M-3> <Esc>3gt<CR>
@@ -65,36 +36,6 @@ map <M-7> <Esc>7gt<CR>
 map <M-8> <Esc>8gt<CR>
 map <M-9> <Esc>9gt<CR>
 
-" Find file in current directory and edit it.
-function! Find(name)
-  let l:list=system("find . -name '".a:name."' | perl -ne 'print \"$.\\t$_\"'")
-  let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
-  if l:num < 1
-    echo "'".a:name."' not found"
-    return
-  endif
-  if l:num != 1
-    echo l:list
-    let l:input=input("Which ? (CR=nothing)\n")
-    if strlen(l:input)==0
-      return
-    endif
-    if strlen(substitute(l:input, "[0-9]", "", "g"))>0
-      echo "Not a number"
-      return
-    endif
-    if l:input<1 || l:input>l:num
-      echo "Out of range"
-      return
-    endif
-    let l:line=matchstr("\n".l:list, "\n".l:input."\t[^\n]*")
-  else
-    let l:line=l:list
-  endif
-  let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
-  execute ":e ".l:line
-endfunction
-command! -nargs=1 Find :call Find("")
 
 python << EOL
 import vim
@@ -105,11 +46,12 @@ def Finder(*args):
     vim.command("cgete system('%s')" % find_cmd)
     vim.command('botright copen')
 EOL
-command! -nargs=1 Find :py Finder("")
+command! -nargs=1 Find :py Finder("<args>")
 
-map! <C-f> <Esc>:Find 
-map  <C-f> :Find  
+map  <C-f> :Find 
 
+autocmd FileType c,cpp compiler gcc
+autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
 
@@ -118,3 +60,4 @@ nmap <F8> :wall<cr>:make <cr>
 nmap <F5> :cprev <cr>
 nmap <F4> :cnext <cr>
 
+set cinoptions=:0,l1,t0,g0

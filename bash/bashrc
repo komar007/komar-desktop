@@ -32,3 +32,5 @@ alias e="e -F"
 if [ -f /usr/share/mc/mc.gentoo ]; then
 	. /usr/share/mc/mc.gentoo
 fi
+
+[[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
