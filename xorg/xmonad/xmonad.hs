@@ -36,7 +36,7 @@ import XMonad.Actions.SpawnOn
 
 browser = "firefox"
 
-tall = Tall 1 delta ratio 
+tall = Tall 1 delta ratio
 delta = (3/100)
 ratio = toRational (((sqrt 5) - 1)/2)
 
@@ -46,7 +46,7 @@ myFull = named "[F]" $ noBorders (tabbedBottom shrinkText tabTheme)
 
 defaultSet =
     myTall ||| myWide ||| myFull
-defaultMSet = 
+defaultMSet =
     myWide ||| myTall ||| myFull
 
 myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
@@ -66,13 +66,13 @@ myLogHook pipe = dynamicLogWithPP $ xmobarPP {
     ppVisible = wrap (xmobarColor "#c4a000" "" "[") (xmobarColor "#c4a000" "" "]")
 }
 
-myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33) 
+myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33)
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "gkrellm"    --> (ask >>= doF . W.sink),
     resource  =? "gkrellm"    --> doF (W.shift "stats"),
     resource  =? "gkrellm"    --> (ask >>= \w -> liftX (toggleBorder w) >> doF id),
-    resource  =? "stats"      --> doF (W.shift "stats"),  
+    resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "irc"        --> doF (W.shift "irc"),
     isFullscreen              --> doFullFloat,
     className =? "Gajim.py"   --> doF (W.shift "im")]
@@ -84,7 +84,7 @@ tabTheme = defaultTheme {
     activeBorderColor    = "#3465a4",
     inactiveBorderColor  = "#3465a4",
     urgentBorderColor    = "#dd0000",
-    activeTextColor      = "#c4a000", 
+    activeTextColor      = "#c4a000",
     inactiveTextColor    = "#aaaaaa",
     urgentTextColor      = "#dd0000",
     decoHeight           = 12
@@ -149,7 +149,7 @@ myKeys dhRef xmproc spawner = [
         (sc, dir) <- [("[", ToLeft), ("]", ToRight)],
         (mod, func) <- [("M-", planeMove), ("M-S-", planeShift)]]
 
-mySearchEngine = searchEngineF "multi" parseGoogle 
+mySearchEngine = searchEngineF "multi" parseGoogle
     where
     parseGoogle s | s == "gmail" = "http://gmail.com"
                   | otherwise    = (use mymulti) s
