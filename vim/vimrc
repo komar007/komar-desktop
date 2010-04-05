@@ -23,28 +23,28 @@ set mouse=a
 
 set tabstop=4
 set shiftwidth=4
-setlocal spelllang=pl 
+setlocal spelllang=pl
 autocmd FileType latex setlocal spell
 
-map <M-1> <Esc>1gt<CR>
-map <M-2> <Esc>2gt<CR>
-map <M-3> <Esc>3gt<CR>
-map <M-4> <Esc>4gt<CR>
-map <M-5> <Esc>5gt<CR>
-map <M-6> <Esc>6gt<CR>
-map <M-7> <Esc>7gt<CR>
-map <M-8> <Esc>8gt<CR>
-map <M-9> <Esc>9gt<CR>
+map <M-1> <Esc>1gt
+map <M-2> <Esc>2gt
+map <M-3> <Esc>3gt
+map <M-4> <Esc>4gt
+map <M-5> <Esc>5gt
+map <M-6> <Esc>6gt
+map <M-7> <Esc>7gt
+map <M-8> <Esc>8gt
+map <M-9> <Esc>9gt
 
 
 python << EOL
 import vim
 
 def Finder(*args):
-    start_dir = vim.eval('getcwd()')
-    find_cmd = (r'find %s -iname "*%s*" ! -name "*.svn*" -type f -printf %%p:1:-\\n' % (start_dir, args[0]))
-    vim.command("cgete system('%s')" % find_cmd)
-    vim.command('botright copen')
+	start_dir = vim.eval('getcwd()')
+	find_cmd = (r'find %s -iname "*%s*" ! -name "*.svn*" -type f -printf %%p:1:-\\n' % (start_dir, args[0]))
+	vim.command("cgete system('%s')" % find_cmd)
+	vim.command('botright copen')
 EOL
 command! -nargs=1 Find :py Finder("<args>")
 
@@ -52,12 +52,19 @@ map  <C-f> :Find
 
 autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
+autocmd Filetype c,cpp set tabstop=8 shiftwidth=8
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
-nmap <F5> :cprev <cr>
-nmap <F4> :cnext <cr>
+nmap <F4> :cprev <cr>
+nmap <F5> :cnext <cr>
+
+highlight ExtraWhitespace ctermbg=red guibg=#902020
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#902020
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|^\ [^*]?/
+match ExtraWhitespace /\s\+$\|^\ [^*]?/
 
 set cinoptions=:0,l1,t0,g0
+set wildmode=longest,list,list,full
