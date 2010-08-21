@@ -3,6 +3,7 @@ import qualified Data.Map as M
 import qualified System.IO.UTF8
 import Data.Ratio ((%))
 import XMonad
+import XMonad.ManageHook
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.DynamicHooks
 import XMonad.Hooks.ManageDocks
@@ -10,6 +11,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Scratchpad
 import XMonad.Util.XSelection
 import XMonad.StackSet as W hiding(layout, workspaces)
@@ -34,7 +36,7 @@ import XMonad.Actions.NoBorders
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 
-browser = "firefox"
+browser = "chromium"
 
 tall = Tall 1 delta ratio
 delta = (3/100)
@@ -51,27 +53,33 @@ defaultMSet =
 
 myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
     onWorkspace "stats" stats $
+    onWorkspace "web1" web $
     defaultSet
     where
     stats = reflectHoriz $ withIM 0.125 (Resource "gkrellm") defaultMSet
---    stats = gaps [(R, 150)] defaultMSet
+    web = myFull
 
 myLogHook pipe = dynamicLogWithPP $ xmobarPP {
+    ppSort = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort xmobarPP,
     ppOutput = System.IO.UTF8.hPutStrLn pipe,
     ppTitle = xmobarColor "#3465a4" "" . shorten 100,  -- previously: "#73d216"
     ppCurrent = xmobarColor "#c4a000" "" .  wrap "[" "]",
     ppUrgent = xmobarColor "#dd0000" "",
     ppSep = xmobarColor "#aaaaaa" "" " | ",
-    ppHidden = \s -> if s == "SP" then "" else s, -- FIXME: awful
     ppVisible = wrap (xmobarColor "#c4a000" "" "[") (xmobarColor "#c4a000" "" "]")
 }
 
-myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33)
+scratchpads = [
+    NS "urxvt"     "urxvt -name scratchpad"
+        (resource =? "scratchpad")   urxvtFloating,
+    NS "alsamixer" "urxvt -name scratchmixer -e alsamixer"
+        (resource =? "scratchmixer") urxvtFloating]
+    where urxvtFloating = customFloating $ W.RationalRect 0 0.7 1 0.301
+
+--myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33)
+myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
-    resource  =? "gkrellm"    --> (ask >>= doF . W.sink),
-    resource  =? "gkrellm"    --> doF (W.shift "stats"),
-    resource  =? "gkrellm"    --> (ask >>= \w -> liftX (toggleBorder w) >> doF id),
     resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "irc"        --> doF (W.shift "irc"),
     isFullscreen              --> doFullFloat,
@@ -100,7 +108,7 @@ xpconfig = defaultXPConfig {
     height = 10
 }
 
-floatSearchResult dhRef = oneShotHook dhRef (className =? "Firefox") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
+floatSearchResult dhRef = oneShotHook dhRef (className =? "Chrome") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
 myConf spawner xmproc dynHooksRef = defaultConfig {
     manageHook = manageSpawn spawner <+> myManageHook <+> dynamicMasterHook dynHooksRef,
@@ -132,7 +140,8 @@ myKeys dhRef xmproc spawner = [
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
     ("M-p",               shellPromptHere spawner xpconfig),
-    ("M-s",               scratchpadSpawnActionTerminal "urxvt"),
+    ("M-s",               namedScratchpadAction scratchpads "urxvt"),
+    ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
     ("M-d",               changeDir xpconfig),
     ("M-S-z",             floatSearchResult dhRef >> (selectSearchBrowser browser mySearchEngine)),
     ("M-z",               floatSearchResult dhRef >> (promptSearchBrowser xpconfig browser mySearchEngine)),
