@@ -1,43 +1,46 @@
-! background (not tango), foreground, tint color (for inheritPixmap)
+! ==== terminal =========================================== !
 URxvt*urgentOnBell: true
-URxvt*depth: 32
+URxvt*depth: 24
 URxvt*background: #000000
-URxvt*foreground: #babdb6
+URxvt*foreground: #9a9d96
 URxvt*scrollBar: false
-URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=11
-
-! Black (not tango) + DarkGrey
-URxvt*color0: #000000
-URxvt*color8: #555753
-
-! DarkRed + Red
-URxvt*color1: #a40000
-URxvt*color9: #cc0000
-
-! DarkGreen + Green
-URxvt*color2: #4e9a06
-URxvt*color10: #73d216
-
-! DarkYellow + Yellow
-URxvt*color3: #c4a000
-URxvt*color11: #edd400
-
-! DarkBlue + Blue
-URxvt*color4: #204a87
-URxvt*color12: #3465a4
-
-! DarkMangenta + Mangenta
-URxvt*color5: #ce5c00
-URxvt*color13: #f57900
-
-!DarkCyan + Cyan (both not tango)
-URxvt*color6: #038e82
-URxvt*color14: #05d2c1
-
-! LightGrey + White
-URxvt*color7: #babdb6
-URxvt*color15: #d3d7cf
-
+URxvt*font: -xos4-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
 URxvt*scrollTtyKeypress: true
 URxvt*scrollTtyOutput: false
 
+! Black + DarkGrey
+*color0:  #000000
+*color8:  #555753
+! DarkRed + Red
+*color1:  #a53333
+*color9:  #d23232
+! DarkGreen + Green
+*color2:  #5b8338
+*color10: #719e4b
+! DarkYellow + Yellow
+*color3:  #adb95e
+*color11: #ccd879
+! DarkBlue + Blue
+*color4:  #374357
+*color12: #5d728d
+! DarkMangenta + Mangenta
+*color5:  #c0712c
+*color13: #de8b39
+! DarkCyan + Cyan
+*color6:  #4c9c97
+*color14: #4cc3bb
+! LightGrey + White
+*color7:  #969795
+*color15: #d3d7cf
+! ==== /terminal ========================================== !
+
+! ==== Xmessage =========================================== !
+Xmessage*font:                  -xos4-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
+Xmessage*background:            #171717
+Xmessage*foreground:            #909090
+Xmessage*form.*.shapeStyle:     rectangle
+Xmessage*Scrollbar.width:       0
+Xmessage*Scrollbar.borderWidth: 0
+Xmessage*Buttons:               Quit
+Xmessage*defaultButton:         Quit
+! ==== /Xmessage ========================================== !
