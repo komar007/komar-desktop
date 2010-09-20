@@ -24,6 +24,7 @@ import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.Reflect
 import XMonad.Layout.Tabbed
+import XMonad.Layout.MagicFocus
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
@@ -36,28 +37,33 @@ import XMonad.Actions.NoBorders
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 
-browser = "chromium"
+browser = "uzbl-browser"
 
-tall = Tall 1 delta ratio
-delta = (3/100)
-ratio = toRational (((sqrt 5) - 1)/2)
+golden = toRational (((sqrt 5) - 1)/2)
 
-myTall = named "[|]" tall
-myWide = named "[-]" $ Mirror tall
-myFull = named "[F]" $ noBorders (tabbedBottom shrinkText tabTheme)
+tall ratio = Tall 1 delta ratio
+    where delta = (3/100)
 
-defaultSet =
-    myTall ||| myWide ||| myFull
-defaultMSet =
-    myWide ||| myTall ||| myFull
+myTall r = named "[|]" $ tall r
+myWide r = named "[-]" $ Mirror $ tall r
+myFull   = named "[F]" $ noBorders (tabbedBottom shrinkText tabTheme)
+
+defaultSet r =
+    myTall r ||| myWide r ||| myFull
+defaultMSet r =
+    myWide r ||| myTall r ||| myFull
+defaultWSet r =
+    myFull   ||| myTall r ||| myWide r
+
+webSpaces = map (("web"++) . show) [1..5]
 
 myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
     onWorkspace "stats" stats $
-    onWorkspace "web1" web $
-    defaultSet
+    onWorkspaces webSpaces web $
+    defaultSet golden
     where
-    stats = reflectHoriz $ withIM 0.125 (Resource "gkrellm") defaultMSet
-    web = myFull
+    stats = defaultMSet golden
+    web = defaultWSet 0.88
 
 myLogHook pipe = dynamicLogWithPP $ xmobarPP {
     ppSort = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort xmobarPP,
@@ -81,6 +87,7 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
+    resource  =? "mail"       --> doF (W.shift "mail"),
     resource  =? "irc"        --> doF (W.shift "irc"),
     isFullscreen              --> doFullFloat,
     className =? "Gajim.py"   --> doF (W.shift "im")]
@@ -108,7 +115,7 @@ xpconfig = defaultXPConfig {
     height = 10
 }
 
-floatSearchResult dhRef = oneShotHook dhRef (className =? "Chrome") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
+floatSearchResult dhRef = oneShotHook dhRef (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
 myConf spawner xmproc dynHooksRef = defaultConfig {
     manageHook = manageSpawn spawner <+> myManageHook <+> dynamicMasterHook dynHooksRef,
@@ -119,7 +126,7 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
-    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "temp", "stats"]
+    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats"]
 } `additionalKeysP` (myKeys dynHooksRef xmproc spawner) `additionalKeys` myKeysMulti
 
 main = do
@@ -129,11 +136,8 @@ main = do
     dynHooksRef <- initDynamicHooks
     xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef
 
--- dmenu_opts = "dmenu -fn -misc-fixed-*-*-*-*-10-*-*-*-*-*-*-* -b -nb '#000000' -nf '#aaaaaa' -sb '#204a87' -sf '#aaaaaa'"
--- dmenu_exe = "exe=`dmenu_path | " ++ dmenu_opts ++  "` && $exe"
-
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-=", "M-\\"]
+    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys dhRef xmproc spawner = [

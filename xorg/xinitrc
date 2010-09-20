@@ -6,6 +6,7 @@ urxvt -name stats -e alsamixer &
 urxvt -name stats -e htop &
 urxvt -name stats -e ncmpcpp &
 urxvt -name irc -e irssi &
+urxvt -name mail -e mutt &
 #gkrellm -g 150x1000+1129+14 &
 gajim &
 xset dpms 120 120 120
