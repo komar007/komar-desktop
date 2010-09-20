@@ -11,26 +11,30 @@ macro index gs "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to Sent Mail"
 macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
 
 set move = no  #Stop asking to "move read messages to mbox"!
-set imap_keepalive = 900
+set imap_keepalive = 120
 
 set query_command = "goobook query %s"
 bind editor <Tab> complete-query
 #bind editor ^T complete
+#
+set sort = threads
+set index_format = "%4C %Z %{%b %d} %-32.32L  %s"
 
 # =========================================================
 # Taken from http://pbrisbin.com/pages/dots.html?target=/srv/http/dotfiles/mutt_colors.muttrc
+# slightly modified
 
 ###
 # mutt colors file
 ###
 
 # set default
-color normal     white         default
+color normal     blue         default
 
 # main colors
-color status     green         default
-color indicator  brightwhite   default
-color tree       blue          default
+color status     brightgreen   default
+color indicator  brightblue    default
+color tree       red           default
 color error      brightred     default
 color message    brightyellow  default
 
