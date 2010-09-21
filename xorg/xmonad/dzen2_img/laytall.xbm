@@ -1,0 +1,4 @@
+#define laytall_width 7
+#define laytall_height 7
+static unsigned char laytall_bits[] = {
+   0x7f, 0x49, 0x49, 0x79, 0x49, 0x49, 0x7f };

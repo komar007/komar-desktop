@@ -1,0 +1,4 @@
+#define durg_width 4
+#define durg_height 7
+static unsigned char durg_bits[] = {
+   0x0f, 0x0b, 0x09, 0x0f, 0x00, 0x00, 0x00 };

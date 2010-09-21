@@ -14,6 +14,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Scratchpad
 import XMonad.Util.XSelection
+import XMonad.Util.Loggers
 import XMonad.StackSet as W hiding(layout, workspaces)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.WorkspaceDir
@@ -44,9 +45,9 @@ golden = toRational (((sqrt 5) - 1)/2)
 tall ratio = Tall 1 delta ratio
     where delta = (3/100)
 
-myTall r = named "[|]" $ tall r
-myWide r = named "[-]" $ Mirror $ tall r
-myFull   = named "[F]" $ noBorders (tabbedBottom shrinkText tabTheme)
+myTall r = named "tall" $ tall r
+myWide r = named "wide" $ Mirror $ tall r
+myFull   = named "full" $ noBorders (tabbedBottom shrinkText tabTheme)
 
 defaultSet r =
     myTall r ||| myWide r ||| myFull
@@ -65,15 +66,26 @@ myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
     stats = defaultMSet golden
     web = defaultWSet 0.88
 
-myLogHook pipe = dynamicLogWithPP $ xmobarPP {
-    ppSort = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort xmobarPP,
-    ppOutput = System.IO.UTF8.hPutStrLn pipe,
-    ppTitle = xmobarColor "#5d728d" "" . shorten 100,  -- previously: "#73d216"
-    ppCurrent = xmobarColor "#c4a000" "" .  wrap "[" "]",
-    ppUrgent = xmobarColor "#dd0000" "",
-    ppSep = xmobarColor "#aaaaaa" "" " | ",
-    ppVisible = wrap (xmobarColor "#c4a000" "" "[") (xmobarColor "#c4a000" "" "]")
-}
+iconDir = "/home/komar/.xmonad/dzen2_img/"
+wrapSpace = wrap "^p(8)" "^p(1)"
+preIcon i = wrap ("^p(2)^i(" ++ iconDir ++ i ++ ")^p(2)") "^p(1)"
+
+layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
+
+myLogHook pipe = dynamicLogWithPP $ dzenPP {
+    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort dzenPP,
+    ppOutput  = hPutStrLn pipe,
+    ppTitle   = dzenColor "#5d728d" "" . shorten 100,
+    ppCurrent = dzenColor "#719e4b" "#333333" . preIcon "dcur.xbm",
+    ppUrgent  = dzenColor "#a53333" "" . preIcon "durg.xbm" . dzenColor "#666666" "" . dzenStrip,
+    ppVisible = dzenColor "#719e4b" "#252525" . preIcon "dvis.xbm",
+    ppHidden  = dzenColor "#444444" "" . wrapSpace,
+    ppWsSep   = "^p(2)",
+    ppSep     = dzenColor "#aaaaaa" "" "^p(3)|^p(3)",
+    ppLayout  = dzenColor "#c0712c" "" . layoutNameToIcon,
+    ppExtras  = [dzenColorL "#c0712c" "" $ wrapL "^pa(1156)" "" lDate]
+} where
+    lDate = date "%a %b %_d %k:%M:%S"
 
 scratchpads = [
     NS "urxvt"     "urxvt -name scratchpad"
@@ -105,8 +117,10 @@ tabTheme = defaultTheme {
     decoHeight           = 12
 }
 
+defaultFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+
 xpconfig = defaultXPConfig {
-    font        = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+    font        = defaultFont,
     bgColor     = "#000000",
     fgColor     = "#aaaaaa",
     bgHLight    = "#cccccc",
@@ -131,7 +145,8 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
 
 main = do
     sp <- mkSpawner
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/komar/.xmonad/xmobar2"
+--    xmproc <- spawnPipe "/usr/bin/xmobar /home/komar/.xmonad/xmobar2"
+    xmproc <- spawnPipe $ "HOME=~/.xmonad /usr/bin/dzen2 -bg black -w 1280 -x 1280 -ta l -fn " ++ defaultFont
     xmproc2 <- spawnPipe "/usr/bin/xmobar /home/komar/.xmonad/xmobar1"
     dynHooksRef <- initDynamicHooks
     xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef

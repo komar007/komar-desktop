@@ -1,0 +1,4 @@
+#define dvis_width 4
+#define dvis_height 6
+static unsigned char dvis_bits[] = {
+   0x0f, 0x01, 0x08, 0x0f, 0x00, 0x00 };

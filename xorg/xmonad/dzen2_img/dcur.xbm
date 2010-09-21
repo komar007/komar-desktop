@@ -1,0 +1,4 @@
+#define dcur_width 4
+#define dcur_height 6
+static unsigned char dcur_bits[] = {
+   0x0f, 0x0f, 0x0f, 0x0f, 0x00, 0x00 };
