@@ -82,10 +82,8 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
     ppHidden  = dzenColor "#444444" "" . wrapSpace,
     ppWsSep   = "^p(2)",
     ppSep     = dzenColor "#aaaaaa" "" "^p(3)|^p(3)",
-    ppLayout  = dzenColor "#c0712c" "" . layoutNameToIcon,
-    ppExtras  = [dzenColorL "#c0712c" "" $ wrapL "^pa(1156)" "" lDate]
-} where
-    lDate = date "%a %b %_d %k:%M:%S"
+    ppLayout  = dzenColor "#c0712c" "" . layoutNameToIcon
+}
 
 scratchpads = [
     NS "urxvt"     "urxvt -name scratchpad"
@@ -145,9 +143,7 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
 
 main = do
     sp <- mkSpawner
---    xmproc <- spawnPipe "/usr/bin/xmobar /home/komar/.xmonad/xmobar2"
-    xmproc <- spawnPipe $ "HOME=~/.xmonad /usr/bin/dzen2 -bg black -w 1280 -x 1280 -ta l -fn " ++ defaultFont
-    xmproc2 <- spawnPipe "/usr/bin/xmobar /home/komar/.xmonad/xmobar1"
+    xmproc <- spawnPipe $ "/home/komar/.xmonad/panel_launch.sh"
     dynHooksRef <- initDynamicHooks
     xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef
 
