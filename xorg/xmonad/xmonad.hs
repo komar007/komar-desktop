@@ -143,7 +143,7 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
 
 main = do
     sp <- mkSpawner
-    xmproc <- spawnPipe $ "/home/komar/.xmonad/panel_launch.sh"
+    xmproc <- spawnPipe $ "./panel_launch.sh"
     dynHooksRef <- initDynamicHooks
     xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef
 
