@@ -2,14 +2,9 @@ Config {
 	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
 	bgColor = "black",
 	fgColor = "#555753",
-	position = Top,
+	position = Static {xpos = 600, ypos = -1, width = 424, height = 14},
 	lowerOnStart = False,
-	commands = [ Run Weather "EPKT" [
-			"-t", " <tempC>°C",
-			"-L","10","-H","30",
-			"--normal","#5b8338", "--high","#a53333",	"--low","#3465a4"
-		] 18000,
-		Run Date "%a %b %_d %k:%M:%S" "date" 10,
+	commands = [ Run Date "%a %b %_d %k:%M:%S" "date" 10,
 		Run Cpu [
 			"-L","3",
 			"-H","50",
@@ -22,14 +17,15 @@ Config {
 		Run Battery [
 			"-t","Bat: <left>",
 			"--low", "#a53333", "--normal", "#aaaaaa", "--high", "#777777"
-		] 10
+		] 10,
+        Run Wireless "wlan0" [
+            "-t", "<essid>(<quality>)",
+			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
+        ] 10
 	],
 	sepChar = "%",
 	alignSep = "}{",
-	template = "}{ %battery% <fc=#cccccc>|</fc> %cpu% <fc=#cccccc>|</fc> %memory% <fc=#cccccc>|</fc>%EPKT% <fc=#c0712c>%date%</fc>"
+	template = "}{ %wlan0wi% <fc=#cccccc>|</fc> %battery% <fc=#282828>*</fc> %cpu% <fc=#282828>*</fc> %memory% <fc=#cccccc>|</fc> <fc=#c0712c>%date%</fc>"
 }
 
 -- vim:ft=haskell
-
-
-
