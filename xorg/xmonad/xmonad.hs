@@ -4,6 +4,7 @@ import qualified System.IO.UTF8
 import Data.Ratio ((%))
 import XMonad
 import XMonad.ManageHook
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.DynamicHooks
 import XMonad.Hooks.ManageDocks
@@ -48,6 +49,7 @@ tall ratio = Tall 1 delta ratio
 myTall r = named "tall" $ tall r
 myWide r = named "wide" $ Mirror $ tall r
 myFull   = named "full" $ noBorders (tabbedBottom shrinkText tabTheme)
+mySimpleFull = named "full" $ noBorders Full
 
 defaultSet r =
     myTall r ||| myWide r ||| myFull
@@ -55,16 +57,21 @@ defaultMSet r =
     myWide r ||| myTall r ||| myFull
 defaultWSet r =
     myFull   ||| myTall r ||| myWide r
+defaultVSet r =
+    mySimpleFull ||| myTall r ||| myWide r
 
 webSpaces = map (("web"++) . show) [1..5]
+vncSpaces = map (("vnc"++) . show) [1..4]
 
-myLayoutHook = (workspaceDir "~") . smartBorders . avoidStruts $
-    onWorkspace "stats" stats $
-    onWorkspaces webSpaces web $
-    defaultSet golden
+myLayoutHook = (workspaceDir "~") . smartBorders $
+    (onWorkspace "stats"    $ avoidStruts stats) $
+    (onWorkspaces webSpaces $ avoidStruts web) $
+    (onWorkspaces vncSpaces $ vnc) $
+    (avoidStruts $ defaultSet golden)
     where
     stats = defaultMSet golden
-    web = defaultWSet 0.88
+    web   = defaultWSet golden
+    vnc   = defaultVSet golden
 
 iconDir = "/home/komar/.xmonad/dzen2_img/"
 wrapSpace = wrap "^p(8)" "^p(1)"
@@ -99,8 +106,8 @@ myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "mail"       --> doF (W.shift "mail"),
     resource  =? "irc"        --> doF (W.shift "irc"),
-    isFullscreen              --> doFullFloat,
-    className =? "Gajim.py"   --> doF (W.shift "im")]
+    className =? "Gajim.py"   --> doF (W.shift "im"),
+    isFullscreen              --> doFullFloat]
 
 tabTheme = defaultTheme {
     activeColor          = "#111111",
@@ -130,15 +137,16 @@ xpconfig = defaultXPConfig {
 floatSearchResult dhRef = oneShotHook dhRef (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
 myConf spawner xmproc dynHooksRef = defaultConfig {
+    startupHook = setWMName "LG3D",
     manageHook = manageSpawn spawner <+> myManageHook <+> dynamicMasterHook dynHooksRef,
     layoutHook = myLayoutHook,
     logHook = myLogHook xmproc,
     focusFollowsMouse = False,
-    modMask = mod4Mask,
+    modMask = mod1Mask,
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
-    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats"]
+    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4"]
 } `additionalKeysP` (myKeys dynHooksRef xmproc spawner) `additionalKeys` myKeysMulti
 
 main = do
@@ -148,7 +156,7 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef
 
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\"]
+    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys dhRef xmproc spawner = [
