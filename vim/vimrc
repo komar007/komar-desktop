@@ -21,8 +21,6 @@ set is
 set wildmenu
 set mouse=a
 
-set tabstop=4
-set shiftwidth=4
 setlocal spelllang=pl
 autocmd FileType latex setlocal spell
 
@@ -52,7 +50,6 @@ map  <C-f> :Find
 
 autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
-autocmd Filetype c,cpp set tabstop=8 shiftwidth=8
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
 
