@@ -34,20 +34,6 @@ map <M-7> <Esc>7gt
 map <M-8> <Esc>8gt
 map <M-9> <Esc>9gt
 
-
-python << EOL
-import vim
-
-def Finder(*args):
-	start_dir = vim.eval('getcwd()')
-	find_cmd = (r'find %s -iname "*%s*" ! -name "*.svn*" -type f -printf %%p:1:-\\n' % (start_dir, args[0]))
-	vim.command("cgete system('%s')" % find_cmd)
-	vim.command('botright copen')
-EOL
-command! -nargs=1 Find :py Finder("<args>")
-
-map  <C-f> :Find 
-
 autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
