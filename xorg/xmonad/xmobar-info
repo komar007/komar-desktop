@@ -22,14 +22,11 @@ Config {
 		Run Com  "~/.xmonad/sens.sh" ["fan1"]    "fan"  10,
 		Run Com  "~/.xmonad/sens.sh" ["CPU"]     "tcpu" 10,
 		Run Com  "~/.xmonad/sens.sh" ["M.B"] "tmb"  10,
-        Run MPD [
-            "-t","<fc=#c0712c><lapsed></fc>/<length> <fc=#282828>*</fc> <fc=#5d728d><artist> - <title></fc>"
-        ] 10,
 		Run StdinReader
 	],
 	sepChar = "%",
 	alignSep = "}{",
-	template = "%memory% <fc=#282828>*</fc> %swap% <fc=#cccccc>|</fc> Fan: <fc=#777777>%fan% rpm</fc> <fc=#282828>*</fc> Cpu: <fc=#777777>%tcpu%°C</fc> M/B: <fc=#777777>%tmb%°C</fc> <fc=#cccccc>|</fc> %cpu% }{ %mpd%"
+	template = "%memory% <fc=#282828>*</fc> %swap% <fc=#cccccc>|</fc> Fan: <fc=#777777>%fan% rpm</fc> <fc=#282828>*</fc> Cpu: <fc=#777777>%tcpu%°C</fc> M/B: <fc=#777777>%tmb%°C</fc> <fc=#cccccc>|</fc> %cpu% }{ %mpc%"
 }
 
 -- vim:ft=haskell

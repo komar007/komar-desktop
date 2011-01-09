@@ -1,0 +1,1 @@
+mpc | head -n 2 | awk '/\[.+\] +#/{print $2,$3,$4,"<fc=#cccccc>|</fc>"} /volume:/ {print "Stopped"} !/\[.+\] +#|volume:/ {sub(/[ \t]+$/,"",$0);sub(/^[ \t]+/,"",$0);print "<fc=#3465a4>"$0"</fc>" }' | tac| xargs -0 -d '\n' | sed -e 's/\([0-9]\+:[0-9]\+\)\//<fc=#ce5c00>\1<\/fc>\//'
