@@ -67,11 +67,13 @@ myLayoutHook = (workspaceDir "~") . smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
     (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
-    (avoidStruts $ defaultSet golden)
+    (onWorkspace "temp" $ workspaceDir "~/temp" $ norm) $
+    norm
     where
     stats = defaultMSet golden
     web   = defaultWSet golden
     vnc   = defaultVSet golden
+    norm  = avoidStruts $ defaultSet golden
 
 iconDir = "/home/komar/.xmonad/dzen2_img/"
 wrapSpace = wrap "^p(8)" "^p(1)"
