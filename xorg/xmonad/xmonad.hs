@@ -13,7 +13,6 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
-import XMonad.Util.Scratchpad
 import XMonad.Util.XSelection
 import XMonad.Util.Loggers
 import XMonad.StackSet as W hiding(layout, workspaces)
@@ -65,7 +64,7 @@ vncSpaces = map (("vnc"++) . show) [1..4]
 
 myLayoutHook = (workspaceDir "~") . smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
-    (onWorkspaces webSpaces $ avoidStruts web) $
+    (onWorkspaces webSpaces $ workspaceDir "~/Pobrania" $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
     (onWorkspace "temp" $ workspaceDir "~/temp" $ norm) $
     norm
