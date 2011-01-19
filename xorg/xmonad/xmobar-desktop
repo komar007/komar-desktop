@@ -7,7 +7,7 @@ Config {
 	commands = [ Run Weather "EPKT" [
 			"-t", " <tempC>°C",
 			"-L","10","-H","30",
-			"--normal","#5b8338", "--high","#a53333",	"--low","#3465a4"
+			"--normal","#5b8338", "--high","#a53333",	"--low","#5d728d"
 		] 18000,
 		Run Date "%a %b %_d %k:%M:%S" "date" 10
 	],
