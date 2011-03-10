@@ -143,7 +143,7 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
     layoutHook = myLayoutHook,
     logHook = myLogHook xmproc,
     focusFollowsMouse = False,
-    modMask = mod1Mask,
+    modMask = mod4Mask,
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
@@ -193,7 +193,7 @@ myKeysMulti = [
     ((0,                    xK_XF86AudioStop        ), spawn ("mpc stop")),
     ((0,                    xK_XF86AudioPrev        ), spawn ("mpc prev")),
     ((0,                    xK_XF86AudioNext        ), spawn ("mpc next")),
-    ((0,                    xK_XF86AudioMute        ), spawn ("amixer -q set Master toggle")),
+    ((0,                    xK_XF86AudioMute        ), spawn ("amixer -q set Master\\ Front toggle")),
     ((0,                    xK_XF86AudioLowerVolume ), spawn ("amixer set Master\\ Front 2dB-")),
     ((0,                    xK_XF86AudioRaiseVolume ), spawn ("amixer set Master\\ Front 2dB+"))]
 
