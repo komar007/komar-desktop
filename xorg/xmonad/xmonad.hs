@@ -95,10 +95,10 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
 
 scratchpads = [
     NS "urxvt"     "urxvt -name scratchpad"
-        (resource =? "scratchpad")   urxvtFloating,
+        (resource =? "scratchpad")   (urxvtFloating 0 0.7 1 0.301),
     NS "alsamixer" "urxvt -name scratchmixer -e alsamixer"
-        (resource =? "scratchmixer") urxvtFloating]
-    where urxvtFloating = customFloating $ W.RationalRect 0 0.7 1 0.301
+        (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3)]
+    where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
 
 --myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33)
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
