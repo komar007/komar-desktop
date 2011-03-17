@@ -161,6 +161,7 @@ workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys dhRef xmproc spawner = [
+    ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
     ("M-p",               shellPromptHere spawner xpconfig),
