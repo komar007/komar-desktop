@@ -26,6 +26,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Reflect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.MagicFocus
+import qualified XMonad.Layout.HintedTile as H
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
@@ -42,7 +43,7 @@ browser = "uzbl-browser"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
-tall ratio = Tall 1 delta ratio
+tall ratio = H.HintedTile 1 delta ratio H.TopLeft H.Tall
     where delta = (3/100)
 
 myTall r = named "tall" $ tall r

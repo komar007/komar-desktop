@@ -2,12 +2,14 @@
 include "/home/komar/.themes/Divinorum-Orange/gtk-2.0/gtkrc"
 
 style "user-font" {
-	font_name = "Bitstream Vera Sans 9"
+	font_name = "Sans 9"
 }
 
 widget_class "*" style "user-font"
 
 gtk-font-name="Sans 9"
+
+gtk-theme-name  = "Divinorum-Orange"
 
 include "/home/komar/.gtkrc.mine"
 
