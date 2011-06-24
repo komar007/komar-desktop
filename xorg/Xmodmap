@@ -5,6 +5,13 @@ keycode 64 = Meta_L
 add mod1 = Alt_L
 add mod4 = Meta_L
 
+remove Lock = Caps_Lock
+remove Control = Control_L
+keysym Control_L = Alt_L
+keysym Caps_Lock = Control_L
+add Lock = Caps_Lock
+add Control = Control_L
+
 keycode 164 = XF86AudioStop
 keycode 173 = XF86AudioPrev
 keycode 171 = XF86AudioNext
