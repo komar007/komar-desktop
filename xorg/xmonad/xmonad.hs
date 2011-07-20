@@ -38,6 +38,9 @@ import XMonad.Actions.Promote
 import XMonad.Actions.NoBorders
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
+-- for MyDzenUrgencyHook
+import XMonad.Util.NamedWindows (getName)
+import XMonad.Util.Dzen (dzenWithArgs, seconds)
 
 browser = "uzbl-browser"
 
@@ -151,11 +154,36 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
     workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4"]
 } `additionalKeysP` (myKeys dynHooksRef xmproc spawner) `additionalKeys` myKeysMulti
 
+data MyDzenUrgencyHook = MyDzenUrgencyHook {
+                             duration :: Int,
+                             args :: [String]
+                         }
+    deriving (Read, Show)
+
+instance UrgencyHook MyDzenUrgencyHook where
+    urgencyHook MyDzenUrgencyHook { Main.duration = d, Main.args = a } w = do
+        name <- getName w
+        ws <- gets windowset
+        whenJust (W.findTag w ws) (flash name)
+      where flash name index =
+                  dzenWithArgs (dzenColor "#a53333" "" index ++ dzenColor "#444444" "" ": " ++ dzenColor "#5d728d" "" (show name)) a d
+
+myDzenUrgencyHook :: MyDzenUrgencyHook
+myDzenUrgencyHook = MyDzenUrgencyHook {Main.duration = seconds 1, Main.args = []}
+
+myUrgencyHook = myDzenUrgencyHook {Main.args = [
+    "-bg", "black",
+    "-xs", "2",
+    "-ta", "r",
+    "-fn", "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+    "-x", "830"
+]}
+
 main = do
     sp <- mkSpawner
     xmproc <- spawnPipe $ "sh -c ~/.xmonad/panel_launch.sh"
     dynHooksRef <- initDynamicHooks
-    xmonad $ withUrgencyHook NoUrgencyHook $ myConf sp xmproc dynHooksRef
+    xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf sp xmproc dynHooksRef
 
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
     "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
