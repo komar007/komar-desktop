@@ -24,11 +24,17 @@ function editor()
 	$E $* > /dev/null 2>&1
 }
 
+function alert()
+{
+	[ -n "$*" ] && echo -ne "\033]0;$*\a"
+	echo -ne "$*...\a"
+	read
+}
+
 export EDITOR="vim"
 alias vi='editor'
 alias ls="ls --color=always"
 alias grep="grep --colour=always"
-alias alert="echo -ne '\a'"
 alias e="e -F"
 for prog in oowriter ooimpress oocalc oobase oodraw; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
