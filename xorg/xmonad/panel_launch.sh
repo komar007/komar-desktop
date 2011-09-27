@@ -4,6 +4,8 @@ else
 	CONFIG=desktop
 fi
 
+killall xmobar dzen2
+
 FIFO=/tmp/xmobar-panel-fifo
 mkfifo $FIFO
 /usr/bin/dzen2 -bg black -xs 2 -ta l -fn '-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*' < $FIFO &

@@ -69,6 +69,7 @@ vncSpaces = map (("vnc"++) . show) [1..4]
 myLayoutHook = (workspaceDir "~") . smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
     (onWorkspaces webSpaces $ workspaceDir "~/Pobrania" $ avoidStruts web) $
+    (onWorkspace "mail" $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
     (onWorkspace "temp" $ workspaceDir "~/temp" $ norm) $
     norm
@@ -104,12 +105,11 @@ scratchpads = [
         (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3)]
     where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
 
---myScratchpadManageHook = scratchpadManageHook(W.RationalRect 0.25 0.33 0.5 0.33)
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
-    resource  =? "mail"       --> doF (W.shift "mail"),
+    className =? "gmail.com"  --> doF (W.shift "mail"),
     resource  =? "irc"        --> doF (W.shift "irc"),
     className =? "Gajim.py"   --> doF (W.shift "im"),
     isFullscreen              --> doFullFloat]
