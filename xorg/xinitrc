@@ -2,13 +2,16 @@ xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 xmodmap ~/.Xmodmap
 xset r rate 250 20
-urxvt -name stats -e bash -c "tail -f /var/log/messages | ccze" &
-urxvt -name stats -e htop &
-urxvt -name stats -e ncmpcpp &
+# sleeps to make sure the order is correct
+(
+	urxvt -name stats -e bash -c "tail -f /var/log/messages | ccze" &
+	sleep 1
+	urxvt -name stats -e ncmpcpp &
+	sleep 1
+	urxvt -name stats -e htop &
+) &
 urxvt -name irc -e irssi &
 chromium-browser --app=http://gmail.com &
-#gkrellm -g 150x1000+1129+14 &
 gajim &
 xset dpms 120 120 120
 exec /usr/bin/xmonad
-
