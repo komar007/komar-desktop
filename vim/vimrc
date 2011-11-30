@@ -38,6 +38,7 @@ autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
+autocmd FileType java set tabstop=4 shiftwidth=4 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>

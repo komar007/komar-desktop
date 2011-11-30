@@ -36,7 +36,7 @@ alias vi='editor'
 alias ls="ls --color=always"
 alias grep="grep --colour=always"
 alias e="e -F"
-for prog in oowriter ooimpress oocalc oobase oodraw; do
+for prog in oowriter ooimpress oocalc oobase oodraw kicad; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
 
