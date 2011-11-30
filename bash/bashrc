@@ -31,6 +31,7 @@ function alert()
 	read
 }
 
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export EDITOR="vim"
 alias vi='editor'
 alias ls="ls --color=always"
