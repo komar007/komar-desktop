@@ -139,11 +139,11 @@ xpconfig = defaultXPConfig {
     height = 10
 }
 
-floatSearchResult dhRef = oneShotHook dhRef (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
+floatSearchResult = oneShotHook (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
-myConf spawner xmproc dynHooksRef = defaultConfig {
+myConf xmproc = defaultConfig {
     startupHook = setWMName "LG3D",
-    manageHook = manageSpawn spawner <+> myManageHook <+> dynamicMasterHook dynHooksRef,
+    manageHook = manageSpawn <+> myManageHook <+> dynamicMasterHook,
     layoutHook = myLayoutHook,
     logHook = myLogHook xmproc,
     focusFollowsMouse = False,
@@ -152,7 +152,7 @@ myConf spawner xmproc dynHooksRef = defaultConfig {
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
     workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4"]
-} `additionalKeysP` (myKeys dynHooksRef xmproc spawner) `additionalKeys` myKeysMulti
+} `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
 
 data MyDzenUrgencyHook = MyDzenUrgencyHook {
                              duration :: Int,
@@ -180,25 +180,23 @@ myUrgencyHook = myDzenUrgencyHook {Main.args = [
 ]}
 
 main = do
-    sp <- mkSpawner
     xmproc <- spawnPipe $ "sh -c ~/.xmonad/panel_launch.sh"
-    dynHooksRef <- initDynamicHooks
-    xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf sp xmproc dynHooksRef
+    xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf xmproc
 
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
     "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
-myKeys dhRef xmproc spawner = [
+myKeys xmproc = [
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
-    ("M-p",               shellPromptHere spawner xpconfig),
+    ("M-p",               shellPromptHere xpconfig),
     ("M-s",               namedScratchpadAction scratchpads "urxvt"),
     ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
     ("M-d",               changeDir xpconfig),
-    ("M-S-z",             floatSearchResult dhRef >> (selectSearchBrowser browser mySearchEngine)),
-    ("M-z",               floatSearchResult dhRef >> (promptSearchBrowser xpconfig browser mySearchEngine)),
+    ("M-S-z",             floatSearchResult >> (selectSearchBrowser browser mySearchEngine)),
+    ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
     ("M-S-<Backspace>",   focusUrgent),
