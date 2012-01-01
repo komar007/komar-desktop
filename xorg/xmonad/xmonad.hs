@@ -42,7 +42,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
 
-browser = "uzbl-browser"
+browser = "chromium-browser"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
@@ -151,7 +151,7 @@ myConf xmproc = defaultConfig {
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
-    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4"]
+    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4", "NSP"]
 } `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
 
 data MyDzenUrgencyHook = MyDzenUrgencyHook {
@@ -184,7 +184,7 @@ main = do
     xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf xmproc
 
 workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
+    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>", ""]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys xmproc = [
@@ -198,6 +198,7 @@ myKeys xmproc = [
     ("M-S-z",             floatSearchResult >> (selectSearchBrowser browser mySearchEngine)),
     ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
     ("M-<Esc>",           goToSelected defaultGSConfig),
+    ("M-x",               renameWorkspace xpconfig),
     ("M-<Return>",        promote),
     ("M-S-<Backspace>",   focusUrgent),
     ("M-<Backspace>",     toggleWS)]
