@@ -41,6 +41,7 @@ import XMonad.Actions.SpawnOn
 -- for MyDzenUrgencyHook
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
+import XMonad.Util.WorkspaceCompare
 
 browser = "firefox"
 
@@ -86,7 +87,7 @@ preIcon i = wrap ("^p(2)^i(" ++ iconDir ++ i ++ ")^p(2)") "^p(1)"
 layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
 
 myLogHook pipe = dynamicLogWithPP $ dzenPP {
-    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort dzenPP,
+    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ getSortByXineramaRule,
     ppOutput  = hPutStrLn pipe,
     ppTitle   = dzenColor "#5d728d" "" . shorten 100,
     ppCurrent = dzenColor "#719e4b" "#333333" . preIcon "dcur.xbm",
@@ -181,7 +182,7 @@ main = do
     xmproc <- spawnPipe $ "sh -c ~/.xmonad/panel_launch.sh"
     xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf xmproc
 
-workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
+workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
     "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
