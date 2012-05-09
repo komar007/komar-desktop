@@ -42,7 +42,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
 
-browser = "uzbl-browser"
+browser = "firefox"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
@@ -109,8 +109,6 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
-    className =? "gmail.com"  --> doF (W.shift "mail"),
-    resource  =? "irc"        --> doF (W.shift "irc"),
     className =? "Gajim.py"   --> doF (W.shift "im"),
     isFullscreen              --> doFullFloat]
 

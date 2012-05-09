@@ -10,8 +10,6 @@ xset r rate 250 20
 	sleep 1
 	urxvt -name stats -e htop &
 ) &
-urxvt -name irc -e irssi &
-chromium-browser --app=http://gmail.com &
 gajim &
 xset dpms 120 120 120
 exec /usr/bin/xmonad
