@@ -149,7 +149,8 @@ data TopicItem = TI { topicName :: Topic   -- (22b)
 
 myTopics :: [TopicItem]
 myTopics =
-    [ ti "c1"    ""
+    [ ti "NSP"   ""
+    , ti "c1"    ""
     , ti "d1"    ""
     , ti "c2"    ""
     , ti "d2"    ""
