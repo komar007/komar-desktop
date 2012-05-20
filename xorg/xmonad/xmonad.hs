@@ -38,11 +38,13 @@ import XMonad.Actions.Promote
 import XMonad.Actions.NoBorders
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.TopicSpace
 -- for MyDzenUrgencyHook
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
+import XMonad.Util.WorkspaceCompare
 
-browser = "chromium-browser"
+browser = "firefox"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
@@ -63,9 +65,10 @@ defaultWSet r =
 defaultVSet r =
     mySimpleFull ||| myTall r ||| myWide r
 
-webSpaces = map (("web"++) . show) [1..5]
+webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
 vncSpaces = map (("vnc"++) . show) [1..4]
 
+-- FIXME dynamically create workspacedirs from topics configuration
 myLayoutHook = (workspaceDir "~") . smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
     (onWorkspaces webSpaces $ workspaceDir "~/Pobrania" $ avoidStruts web) $
@@ -86,7 +89,7 @@ preIcon i = wrap ("^p(2)^i(" ++ iconDir ++ i ++ ")^p(2)") "^p(1)"
 layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
 
 myLogHook pipe = dynamicLogWithPP $ dzenPP {
-    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ ppSort dzenPP,
+    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ getSortByXineramaRule,
     ppOutput  = hPutStrLn pipe,
     ppTitle   = dzenColor "#5d728d" "" . shorten 100,
     ppCurrent = dzenColor "#719e4b" "#333333" . preIcon "dcur.xbm",
@@ -109,8 +112,6 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
-    className =? "gmail.com"  --> doF (W.shift "mail"),
-    resource  =? "irc"        --> doF (W.shift "irc"),
     className =? "Gajim.py"   --> doF (W.shift "im"),
     isFullscreen              --> doFullFloat]
 
@@ -141,6 +142,62 @@ xpconfig = defaultXPConfig {
 
 floatSearchResult = oneShotHook (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
+data TopicItem = TI { topicName :: Topic   -- (22b)
+                    , topicDir  :: Dir
+                    , topicAction :: X ()
+                    }
+
+myTopics :: [TopicItem]
+myTopics =
+    [ ti "NSP"   ""
+    , ti "c1"    ""
+    , ti "d1"    ""
+    , ti "c2"    ""
+    , ti "d2"    ""
+    , ti "c3"    ""
+    , ti "d3"    ""
+    , ti "sys1"  ""
+    , ti "ds1"   ""
+    , ti "sys2"  ""
+    , ti "ds2"   ""
+    , TI "web1"  "~/Pobrania"
+        (spawnHere browser)
+    , TI "web2"  "~/Pobrania"
+        (spawnHere browser)
+    , TI "pdf1"  "~/Pobrania"
+        (runLastPdf)
+    , TI "pdf2"  "~/Pobrania"
+        (runLastPdf)
+    , TI "pdf3"  "~/Pobrania"
+        (runLastPdf)
+    , ti "im"    ""
+    , TI "irc"   "" (shellStallman "screen -x irssi")
+    , ti "mail"  ""
+    , ti "temp"  "~/temp"
+    , ti "stats" ""
+    , ti "vnc1"  ""
+    , ti "vnc2"  ""
+    , ti "vnc3"  ""
+    , ti "vnc4"  ""
+    ]
+    where
+        ti t d = TI t d shell
+        shell = spawnHere "urxvt"
+        runLastPdf = spawnHere "xpdf `ls -tr ~/Pobrania/*.pdf | tail -n 1`"
+        shellStallman cmd = spawnHere $ "urxvt -e ssh stallman -t " ++ cmd
+
+myTopicNames :: [Topic]
+myTopicNames = map topicName myTopics
+
+myTopicConfig :: TopicConfig
+myTopicConfig= defaultTopicConfig
+    { topicDirs = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
+    , defaultTopicAction = const (return ())
+    , defaultTopic = "web1"
+    , maxTopicHistory = 10
+    , topicActions = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
+    }
+
 myConf xmproc = defaultConfig {
     startupHook = setWMName "LG3D",
     manageHook = manageSpawn <+> myManageHook <+> dynamicMasterHook,
@@ -151,7 +208,7 @@ myConf xmproc = defaultConfig {
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
-    workspaces = ["c1", "d1", "c2", "d2", "c3", "d3", "sys1", "ds1", "sys2", "ds2", "web1", "web2", "web3", "web4", "web5", "im", "irc", "mail", "temp", "stats", "vnc1", "vnc2", "vnc3", "vnc4", "NSP"]
+    workspaces = myTopicNames
 } `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
 
 data MyDzenUrgencyHook = MyDzenUrgencyHook {
@@ -180,11 +237,12 @@ myUrgencyHook = myDzenUrgencyHook {Main.args = [
 ]}
 
 main = do
+    checkTopicConfig myTopicNames myTopicConfig
     xmproc <- spawnPipe $ "sh -c ~/.xmonad/panel_launch.sh"
     xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf xmproc
 
-workspaceKeys = ["M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>", ""]
+workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
+    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 myKeys xmproc = [
@@ -198,9 +256,9 @@ myKeys xmproc = [
     ("M-S-z",             floatSearchResult >> (selectSearchBrowser browser mySearchEngine)),
     ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
     ("M-<Esc>",           goToSelected defaultGSConfig),
-    ("M-x",               renameWorkspace xpconfig),
     ("M-<Return>",        promote),
     ("M-S-<Backspace>",   focusUrgent),
+    ("M-S-<Return>",      currentTopicAction myTopicConfig),
     ("M-<Backspace>",     toggleWS)]
     ++
     [(sc, withNthWorkspace W.greedyView n) | (sc, n) <- zip workspaceKeys [0..]]
