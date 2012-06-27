@@ -66,7 +66,7 @@ defaultVSet r =
     mySimpleFull ||| myTall r ||| myWide r
 
 webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
-vncSpaces = map (("vnc"++) . show) [1..4]
+vncSpaces = map (("vnc"++) . show) [1..2]
 
 -- FIXME dynamically create workspacedirs from topics configuration
 myLayoutHook = (workspaceDir "~") . smartBorders $
@@ -112,7 +112,7 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
-    className =? "Gajim.py"   --> doF (W.shift "im"),
+    className =? "Gajim"      --> doF (W.shift "im"),
     isFullscreen              --> doFullFloat]
 
 tabTheme = defaultTheme {
@@ -175,10 +175,12 @@ myTopics =
     , ti "mail"  ""
     , ti "temp"  "~/temp"
     , ti "stats" ""
-    , ti "vnc1"  ""
-    , ti "vnc2"  ""
-    , ti "vnc3"  ""
-    , ti "vnc4"  ""
+    , ti "vm1"  "~/VMs"
+    , ti "vm2"  "~/VMs"
+    , TI "vnc1"  ""
+        (spawnHere "vncviewer")
+    , TI "vnc2"  ""
+        (spawnHere "vncviewer")
     ]
     where
         ti t d = TI t d shell
@@ -226,9 +228,7 @@ instance UrgencyHook MyDzenUrgencyHook where
                   dzenWithArgs (dzenColor "#a53333" "" index ++ dzenColor "#444444" "" ": " ++ dzenColor "#5d728d" "" (show name)) a d
 
 myDzenUrgencyHook :: MyDzenUrgencyHook
-myDzenUrgencyHook = MyDzenUrgencyHook {Main.duration = seconds 1, Main.args = []}
-
-myUrgencyHook = myDzenUrgencyHook {Main.args = [
+myDzenUrgencyHook = MyDzenUrgencyHook {Main.duration = seconds 1, Main.args = [
     "-bg", "black",
     "-xs", "2",
     "-ta", "r",
@@ -236,10 +236,16 @@ myUrgencyHook = myDzenUrgencyHook {Main.args = [
     "-x", "830"
 ]}
 
+myBlinkUrgencyHook :: SpawnUrgencyHook
+myBlinkUrgencyHook = SpawnUrgencyHook "~/.xmonad/blink.sh "
+
 main = do
     checkTopicConfig myTopicNames myTopicConfig
     xmproc <- spawnPipe $ "sh -c ~/.xmonad/panel_launch.sh"
-    xmonad $ withUrgencyHookC myUrgencyHook urgencyConfig {remindWhen = Every 2} $ myConf xmproc
+    xmonad
+        $ withUrgencyHookC myDzenUrgencyHook urgencyConfig {remindWhen = Every 2}
+        $ withUrgencyHook myBlinkUrgencyHook
+        $ myConf xmproc
 
 workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
     "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
@@ -257,7 +263,10 @@ myKeys xmproc = [
     ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
-    ("M-S-<Backspace>",   focusUrgent),
+    ("M-S-<Backspace>",   do
+                              focusUrgent
+                              spawnHere "~/.xmonad/noblink.sh"
+                              ),
     ("M-S-<Return>",      currentTopicAction myTopicConfig),
     ("M-<Backspace>",     toggleWS)]
     ++
