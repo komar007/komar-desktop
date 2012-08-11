@@ -9,7 +9,7 @@ URxvt*scrollTtyKeypress: true
 URxvt*scrollTtyOutput: false
 
 URxvt.perl-ext-common: default,matcher
-URxvt.urlLauncher: firefox
+URxvt.urlLauncher: chromium
 URxvt.matcher.button: 2
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt.searchable-scrollback: 1-s

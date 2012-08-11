@@ -44,7 +44,7 @@ import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
 import XMonad.Util.WorkspaceCompare
 
-browser = "firefox"
+browser = "chromium"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
