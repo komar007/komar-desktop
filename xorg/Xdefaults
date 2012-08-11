@@ -53,3 +53,12 @@ Xmessage*Scrollbar.borderWidth: 0
 Xmessage*Buttons:               Quit
 Xmessage*defaultButton:         Quit
 ! ==== /Xmessage ========================================== !
+!
+xman*font:                  -xos4-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
+xman*background:            #171717
+xman*foreground:            #909090
+xman*form.*.shapeStyle:     rectangle
+xman*Scrollbar.width:       0
+xman*Scrollbar.borderWidth: 0
+xman*Buttons:               Quit
+xman*defaultButton:         Quit
