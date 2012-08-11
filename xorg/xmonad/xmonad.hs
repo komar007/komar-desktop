@@ -105,7 +105,9 @@ scratchpads = [
     NS "urxvt"     "urxvt -name scratchpad"
         (resource =? "scratchpad")   (urxvtFloating 0 0.7 1 0.301),
     NS "alsamixer" "urxvt -name scratchmixer -e alsamixer"
-        (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3)]
+        (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3),
+    NS "bc"        "urxvt -name bc -e bc -l"
+        (resource =? "bc")           (urxvtFloating 0.7 0.2 0.3 0.6)]
     where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
 
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
@@ -258,6 +260,7 @@ myKeys xmproc = [
     ("M-p",               shellPromptHere xpconfig),
     ("M-s",               namedScratchpadAction scratchpads "urxvt"),
     ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
+    ("M-x",               namedScratchpadAction scratchpads "bc"),
     ("M-d",               changeDir xpconfig),
     ("M-S-z",             floatSearchResult >> (selectSearchBrowser browser mySearchEngine)),
     ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
