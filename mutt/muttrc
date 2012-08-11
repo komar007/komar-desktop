@@ -9,9 +9,13 @@ macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
 macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
 macro index gs "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to Sent Mail"
 macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+mailboxes "=INBOX"
 
 set move = no  #Stop asking to "move read messages to mbox"!
 set imap_keepalive = 120
+set imap_idle = yes
+set timeout = 5
+set beep_new = yes
 
 set query_command = "goobook query %s"
 bind editor <Tab> complete-query
