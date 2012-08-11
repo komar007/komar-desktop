@@ -52,3 +52,5 @@ match ExtraWhitespace /\s\+$\|^\ [^*]?/
 
 set cinoptions=:0,l1,t0,g0
 set wildmode=longest,list,list,full
+
+let g:Tex_DefaultTargetFormat = 'pdf'
