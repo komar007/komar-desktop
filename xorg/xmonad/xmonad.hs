@@ -253,6 +253,9 @@ workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "
     "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
+-- Workaround for toggle + scratchpad
+myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP" && x /= "SP") . W.tag) . W.hidden
+
 myKeys xmproc = [
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
@@ -271,7 +274,7 @@ myKeys xmproc = [
                               spawnHere "~/.xmonad/noblink.sh"
                               ),
     ("M-S-<Return>",      currentTopicAction myTopicConfig),
-    ("M-<Backspace>",     toggleWS)]
+    ("M-<Backspace>",     myToggle)]
     ++
     [(sc, withNthWorkspace W.greedyView n) | (sc, n) <- zip workspaceKeys [0..]]
     ++

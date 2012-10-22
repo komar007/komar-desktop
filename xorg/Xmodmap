@@ -11,6 +11,7 @@ keysym Control_L = Alt_L
 keysym Caps_Lock = Control_L
 add Lock = Caps_Lock
 add Control = Control_L
+keysym 0xffec = ISO_Level3_Shift
 
 keycode 164 = XF86AudioStop
 keycode 173 = XF86AudioPrev
