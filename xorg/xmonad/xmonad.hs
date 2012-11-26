@@ -167,11 +167,11 @@ myTopics =
     , TI "web2"  "~/Pobrania"
         (spawnHere browser)
     , TI "pdf1"  "~/Pobrania"
-        (runLastPdf)
+        (runLastPdf "pdf1")
     , TI "pdf2"  "~/Pobrania"
-        (runLastPdf)
+        (runLastPdf "pdf2")
     , TI "pdf3"  "~/Pobrania"
-        (runLastPdf)
+        (runLastPdf "pdf3")
     , ti "im"    ""
     , TI "irc"   "" (shellStallman "screen -x irssi")
     , ti "mail"  ""
@@ -187,7 +187,7 @@ myTopics =
     where
         ti t d = TI t d shell
         shell = spawnHere "urxvt"
-        runLastPdf = spawnHere "xpdf `ls -tr ~/Pobrania/*.pdf | tail -n 1`"
+        runLastPdf w = spawnHere $ "~/.xmonad/run_pdf.sh " ++ w
         shellStallman cmd = spawnHere $ "urxvt -e ssh stallman -t " ++ cmd
 
 myTopicNames :: [Topic]
