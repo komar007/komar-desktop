@@ -11,5 +11,7 @@ xset r rate 250 20
 	urxvt -name stats -e htop &
 ) &
 gajim &
+xinput --set-float-prop "Logitech USB Optical Mouse" "Device Accel Constant Deceleration" 1.4
 xset dpms 120 120 120
+xset m 7/4 7
 exec /usr/bin/xmonad
