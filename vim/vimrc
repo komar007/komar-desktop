@@ -4,7 +4,6 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 set autoindent smartindent
-set smarttab
 
 set grepprg=grep\ -nH\ $*
 
@@ -15,7 +14,7 @@ endfunction
 
 runtime! ftplugin/man.vim
 autocmd FileType html,xhtml,eruby call Html()
-colorscheme desert
+colorscheme jellybeans-m
 set nu
 set is
 set wildmenu
@@ -38,7 +37,7 @@ autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
-autocmd FileType java set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType java,cs set tabstop=4 shiftwidth=4
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
@@ -54,3 +53,16 @@ set cinoptions=:0,l1,t0,g0
 set wildmode=longest,list,list,full
 
 let g:Tex_DefaultTargetFormat = 'pdf'
+
+function! ReloadSnippets( snippets_dir, ft )
+    if strlen( a:ft ) == 0
+        let filetype = "_"
+    else
+        let filetype = a:ft
+    endif
+
+    call ResetSnippets()
+    call GetSnippets( a:snippets_dir, filetype )
+endfunction
+
+nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
