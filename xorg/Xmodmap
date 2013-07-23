@@ -16,6 +16,4 @@ keysym 0xffec = ISO_Level3_Shift
 keycode 164 = XF86AudioStop
 keycode 173 = XF86AudioPrev
 keycode 171 = XF86AudioNext
-keycode 174 = XF86AudioLowerVolume
-keycode 176 = XF86AudioRaiseVolume
 keycode 160 = XF86AudioMute

@@ -173,8 +173,8 @@ myTopics =
     , TI "pdf3"  "~/Pobrania"
         (runLastPdf "pdf3")
     , ti "im"    ""
-    , TI "irc"   "" (shellStallman "screen -x irssi")
-    , ti "mail"  ""
+    , TI "irc"   "" (shellRemote "kserver" "screen -x irssi")
+    , TI "kserver" "" (shellRemote "kserver" "bash")
     , ti "temp"  "~/temp"
     , ti "stats" ""
     , ti "vm1"  "~/VMs"
@@ -188,7 +188,7 @@ myTopics =
         ti t d = TI t d shell
         shell = spawnHere "urxvt"
         runLastPdf w = spawnHere $ "~/.xmonad/run_pdf.sh " ++ w
-        shellStallman cmd = spawnHere $ "urxvt -e ssh stallman -t " ++ cmd
+        shellRemote host cmd = spawnHere $ "urxvt -e ssh " ++ host ++ " -t " ++ cmd
 
 myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
