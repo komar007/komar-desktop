@@ -31,18 +31,26 @@ function alert()
 	read
 }
 
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export EDITOR="vim"
 alias vi='editor'
 alias ls="ls --color=always"
 alias grep="grep --colour=always"
 alias e="e -F"
-for prog in oowriter ooimpress oocalc oobase oodraw audacity kicad eclipse eclipse-3.5; do
+for prog in kicad oowriter ooimpress oocalc oobase oodraw; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
+
+alias pdf1="qpdfview --unique --instance pdf1"
+alias pdf2="qpdfview --unique --instance pdf2"
+alias pdf3="qpdfview --unique --instance pdf3"
 
 if [ -f /usr/share/mc/mc.gentoo ]; then
 	. /usr/share/mc/mc.gentoo
 fi
 
 [[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
+# suppress tilde-expansion
+_expand()
+{
+    return 0;
+}
