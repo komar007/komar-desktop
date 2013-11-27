@@ -31,6 +31,12 @@ function alert()
 	read
 }
 
+function share()
+{
+	scp $1 komar@komar.be:/var/www/space.komar.be/htdocs/
+	echo http://space.komar.be/`basename $1`
+}
+
 export EDITOR="vim"
 alias vi='editor'
 alias ls="ls --color=always"

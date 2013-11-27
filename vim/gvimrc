@@ -4,5 +4,5 @@ set gfn=Terminus\ 9
 set guioptions=gc
 set cursorline
 "colorscheme asmanian_blood-m
-colorscheme jellybeans-m
+colorscheme asmanian_blood-m
 

@@ -97,8 +97,9 @@ snippet cls|%
 	}
 # constructor
 snippet ctor
-	public ${1:`Filename()`}() {
-		${2}
+	public ${1:`Filename()`}(${2})
+	{
+		${3}
 	}
 # properties - auto properties by default.
 # default type is int with layout get / set.
