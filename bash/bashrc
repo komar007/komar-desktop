@@ -42,7 +42,8 @@ alias vi='editor'
 alias ls="ls --color=always"
 alias grep="grep --colour=always"
 alias e="e -F"
-for prog in kicad oowriter ooimpress oocalc oobase oodraw; do
+alias t="ps -p $$ -o start_time"
+for prog in kicad oowriter ooimpress oocalc oobase oodraw audacity; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
 

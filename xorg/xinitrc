@@ -1,3 +1,4 @@
+cpp ~/.Xdefaults.edit > ~/.Xdefaults
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 xmodmap ~/.Xmodmap

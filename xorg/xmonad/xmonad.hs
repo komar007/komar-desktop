@@ -151,17 +151,17 @@ data TopicItem = TI { topicName :: Topic   -- (22b)
 
 myTopics :: [TopicItem]
 myTopics =
-    [ ti "NSP"   ""
-    , ti "c1"    ""
-    , ti "d1"    ""
-    , ti "c2"    ""
-    , ti "d2"    ""
-    , ti "c3"    ""
-    , ti "d3"    ""
-    , ti "sys1"  ""
-    , ti "ds1"   ""
-    , ti "sys2"  ""
-    , ti "ds2"   ""
+    [ ti "NSP"   "~"
+    , ti "c1"    "/home/komar"
+    , ti "d1"    "/home/komar"
+    , ti "c2"    "~"
+    , ti "d2"    "~"
+    , ti "c3"    "~"
+    , ti "d3"    "~"
+    , ti "sys1"  "~"
+    , ti "ds1"   "~"
+    , ti "sys2"  "~"
+    , ti "ds2"   "~"
     , TI "web1"  "~/Pobrania"
         (spawnHere browser)
     , TI "web2"  "~/Pobrania"
@@ -172,16 +172,16 @@ myTopics =
         (runLastPdf "pdf2")
     , TI "pdf3"  "~/Pobrania"
         (runLastPdf "pdf3")
-    , ti "im"    ""
-    , TI "irc"   "" (shellRemote "kserver" "screen -x irssi")
-    , TI "kserver" "" (shellRemote "kserver" "bash")
+    , ti "im"    "~"
+    , TI "irc"   "~" (shellRemote "kserver" "screen -x irssi")
+    , TI "kserver" "~" (shellRemote "kserver" "bash")
     , ti "temp"  "~/temp"
-    , ti "stats" ""
+    , ti "stats" "~"
     , ti "vm1"  "~/VMs"
     , ti "vm2"  "~/VMs"
-    , TI "vnc1"  ""
+    , TI "vnc1"  "~"
         (spawnHere "vncviewer")
-    , TI "vnc2"  ""
+    , TI "vnc2"  "~"
         (spawnHere "vncviewer")
     ]
     where
@@ -212,8 +212,17 @@ myConf xmproc = defaultConfig {
     normalBorderColor = "#000000",
     focusedBorderColor = "#3465a4",
     terminal = "urxvt",
-    workspaces = myTopicNames
+    workspaces = myTopicNames,
+    clickJustFocuses = True
 } `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
+
+-- Better idea to run dzen with blinker
+--myDzenWithArgs :: String -> [String] -> Int -> X ()
+--myDzenWithArgs str args timeout = io $ runProcessWithInputAndWait "~/.xmonad/dzenblink.sh" args (unchomp str) timeout
+--  -- dzen seems to require the input to terminate with exactly one newline.
+--  where unchomp s@['\n'] = s
+--        unchomp []       = ['\n']
+--        unchomp (c:cs)   = c : unchomp cs
 
 data MyDzenUrgencyHook = MyDzenUrgencyHook {
                              duration :: Int,

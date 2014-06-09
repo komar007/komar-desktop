@@ -1,3 +1,3 @@
 setxkbmap pl
-xmodmap ~/.Xmodmap
+#xmodmap ~/.Xmodmap
 xset r rate 250 20
