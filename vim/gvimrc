@@ -1,8 +1,10 @@
-"set gfn=Bitstream\ Vera\ Sans\ Mono\ 8.5
-set gfn=Terminus\ 9
-"set gfn=monospace\ 9
 set guioptions=gc
 set cursorline
-"colorscheme asmanian_blood-m
-colorscheme asmanian_blood-m
+colorscheme gruvbox
 
+set gfn=Terminus\ 9
+" -- settings for Source Code Pro --
+"set gfn=Source\ Code\ Pro\ 9.5
+"set linespace=-2
+
+"colorscheme asmanian_blood-m

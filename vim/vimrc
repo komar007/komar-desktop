@@ -1,4 +1,14 @@
-set nocompatible      " We're running Vim, not Vi!
+set nocompatible
+
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'bling/vim-airline'
+Plugin 'oblitum/rainbow'
+call vundle#end()
+filetype plugin indent on
+
 syntax on             " Enable syntax highlighting
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
@@ -7,13 +17,8 @@ set autoindent smartindent
 
 set grepprg=grep\ -nH\ $*
 
-function Html()
-	set tabstop=2
-	set shiftwidth=2
-endfunction
-
 runtime! ftplugin/man.vim
-autocmd FileType html,xhtml,eruby call Html()
+" colorscheme for console vim
 colorscheme jellybeans-m
 set nu
 set is
@@ -38,6 +43,7 @@ autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
 autocmd FileType java,cs set tabstop=4 shiftwidth=4
+autocmd FileType html,xhtml,eruby set tabstop=2 shiftwidth=2
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
@@ -66,3 +72,11 @@ function! ReloadSnippets( snippets_dir, ft )
 endfunction
 
 nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
+
+:command FixStrays :%s/\(^\| \)\([auiwzoAUIWZO]\) /\1\2\~/g
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:rainbow_active = 1
+set laststatus=2
+
+let g:netrw_browsex_viewer = "chromium-browser"
