@@ -33,8 +33,8 @@ function alert()
 
 function share()
 {
-	scp $1 komar@komar.be:/var/www/space.komar.be/htdocs/
-	echo http://space.komar.be/`basename $1`
+	scp "$1" komar@komar.be:/var/www/space.komar.be/htdocs/
+	echo http://space.komar.be/`basename "$1"`
 }
 
 export EDITOR="vim"
