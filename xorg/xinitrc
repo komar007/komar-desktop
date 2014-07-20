@@ -15,4 +15,5 @@ gajim &
 xinput --set-float-prop "Logitech USB Optical Mouse" "Device Accel Constant Deceleration" 1.4
 xset dpms 120 120 120
 xset m 7/4 7
+~/.xmonad/panels_launch.sh &
 exec /usr/bin/xmonad

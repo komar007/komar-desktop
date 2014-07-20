@@ -11,10 +11,13 @@ fi
 killall xmobar dzen2
 
 FIFO="/tmp/xmobar-panel-fifo"
-mkfifo $FIFO
+
+until [ -p "$FIFO" ]; do
+	sleep 1
+done
+
 /usr/bin/dzen2 -bg black -xs 2 -ta l -fn '-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*' < $FIFO &
 /usr/bin/xmobar "/home/komar/.xmonad/xmobar-$CONFIG" &
 if [[ $CONFIG == desktop ]]; then
     /usr/bin/xmobar "/home/komar/.xmonad/xmobar-info"
 fi &
-cat > $FIFO
