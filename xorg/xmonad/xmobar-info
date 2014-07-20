@@ -18,10 +18,10 @@ Config {
 			"-t", "Swap: <usedratio>",
 			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
 		] 10,
-		Run Com  "~/.xmonad/mpds.sh" []          "mpc"  10,
-		Run Com  "~/.xmonad/sens.sh" ["fan1"]    "fan"  10,
-		Run Com  "~/.xmonad/sens.sh" ["temp1"]     "tcpu" 10,
-		Run Com  "~/.xmonad/sens.sh" ["temp2"] "tmb"  10,
+		Run Com  "/home/komar/.xmonad/mpds.sh" []          "mpc"  10,
+		Run Com  "/home/komar/.xmonad/sens.sh" ["fan1"]    "fan"  10,
+		Run Com  "/home/komar/.xmonad/sens.sh" ["temp1"]     "tcpu" 10,
+		Run Com  "/home/komar/.xmonad/sens.sh" ["temp2"] "tmb"  10,
 		Run StdinReader
 	],
 	sepChar = "%",

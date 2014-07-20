@@ -115,6 +115,7 @@ myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manag
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
     className =? "Gajim"      --> doF (W.shift "im"),
+    stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat,
     isFullscreen              --> doFullFloat]
 
 tabTheme = defaultTheme {
