@@ -84,7 +84,7 @@ myLayoutHook = (workspaceDir "~") . smartBorders $
 
 iconDir = "/home/komar/.xmonad/dzen2_img/"
 wrapSpace = wrap "^p(8)" "^p(1)"
-preIcon i = wrap ("^p(2)^i(" ++ iconDir ++ i ++ ")^p(2)") "^p(1)"
+preIcon i = wrap ("^i(" ++ iconDir ++ i ++ ")") "^p(1)"
 
 layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
 
