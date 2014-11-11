@@ -43,7 +43,7 @@ alias ls="ls --color=always"
 alias grep="grep --colour=always"
 alias e="e -F"
 alias t="ps -p $$ -o start_time"
-for prog in kicad oowriter ooimpress oocalc oobase oodraw audacity; do
+for prog in kicad pcbnew eeschema oowriter ooimpress oocalc oobase oodraw audacity libreoffice; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
 
