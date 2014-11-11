@@ -7,6 +7,8 @@ call vundle#begin()
 Plugin 'bling/vim-airline'
 Plugin 'oblitum/rainbow'
 Plugin 'komar007/gruvbox'
+Plugin 'elzr/vim-json'
+Plugin 'hynek/vim-python-pep8-indent'
 call vundle#end()
 filetype plugin indent on
 
@@ -43,8 +45,9 @@ autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
-autocmd FileType java,cs set tabstop=4 shiftwidth=4
+autocmd FileType java,cs,python set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType html,xhtml,eruby set tabstop=2 shiftwidth=2
+autocmd FileType json set shiftwidth=4 tabstop=4 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
