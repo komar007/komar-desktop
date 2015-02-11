@@ -253,7 +253,7 @@ myBlinkUrgencyHook = SpawnUrgencyHook "~/.xmonad/blink.sh "
 
 main = do
     checkTopicConfig myTopicNames myTopicConfig
-    xmproc <- spawnPipe $ "sh -c ~/.xmonad/xmonad_pipe.sh"
+    xmproc <- spawnPipe $ "bash ~/.xmonad/xmonad_pipe.sh"
     xmonad
         $ withUrgencyHookC myDzenUrgencyHook urgencyConfig {remindWhen = Every 2}
         $ withUrgencyHook myBlinkUrgencyHook
