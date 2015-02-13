@@ -1,6 +1,13 @@
 #!/bin/bash
 
 cpp ~/.Xdefaults.edit > ~/.Xdefaults
+if [[ -a ~/.desktop_type ]]; then
+	CONFIG=`cat ~/.desktop_type`
+elif [[ -a /proc/acpi/battery/BAT0/ ]]; then
+	CONFIG=laptop
+else
+	CONFIG=desktop
+fi
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 xmodmap ~/.Xmodmap
@@ -13,7 +20,11 @@ xset r rate 250 20
 	sleep 1
 	urxvt -name stats -e htop &
 ) &
-gajim &
+if [[ "$CONFIG" == work ]]; then
+	pidgin &
+else
+	gajim &
+fi
 xset dpms 120 120 120
 xset m 7/4 7
 

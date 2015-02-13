@@ -14,6 +14,11 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+# if we have an original file
+if [ -f ~/.bashrc_orig ]; then
+	source ~/.bashrc_orig
+fi
+unset command_not_found_handle
 
 # Put your fun stuff here.
 

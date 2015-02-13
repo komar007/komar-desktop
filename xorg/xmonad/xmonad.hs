@@ -181,6 +181,7 @@ myTopics =
     , TI "kserver" "~" (shellRemote "kserver" "bash")
     , ti "temp"  "~/temp"
     , ti "stats" "~"
+    , ti "mail"  "~"
     , ti "vm1"  "~/VMs"
     , ti "vm2"  "~/VMs"
     , TI "vnc1"  "~"
@@ -263,7 +264,7 @@ main = do
         $ myConf xmproc
 
 workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
+    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-u", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 -- Workaround for toggle + scratchpad
