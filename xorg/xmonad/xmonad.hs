@@ -27,6 +27,7 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.MagicFocus
 import qualified XMonad.Layout.HintedTile as H
+import qualified XMonad.Layout.ResizableTile as R
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
@@ -44,11 +45,13 @@ import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
 import XMonad.Util.WorkspaceCompare
 
+import XMonad.Prompt.Input
+
 browser = "chromium"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
-tall ratio = H.HintedTile 1 delta ratio H.TopLeft H.Tall
+tall ratio = R.ResizableTall 1 delta ratio []
     where delta = (3/100)
 
 myTall r = named "tall" $ tall r
@@ -114,9 +117,10 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
-    className =? "Gajim"      --> doF (W.shift "im"),
-    stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat,
+    isIM                      --> doF (W.shift "im"),
+    resource  =? "scratchcmd" --> (doRectFloat $ W.RationalRect 0.1 0.1 0.8 0.8),
     isFullscreen              --> doFullFloat]
+    where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
 
 tabTheme = defaultTheme {
     activeColor          = "#111111",
@@ -142,8 +146,6 @@ xpconfig = defaultXPConfig {
     promptBorderWidth = 0,
     height = 10
 }
-
-floatSearchResult = oneShotHook (className =? "Uzbl-core") (doRectFloat $ W.RationalRect 0.15 0.15 0.7 0.7)
 
 data TopicItem = TI { topicName :: Topic   -- (22b)
                     , topicDir  :: Dir
@@ -266,6 +268,11 @@ workspaceSKeys = map ("S-"++) workspaceKeys
 -- Workaround for toggle + scratchpad
 myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP" && x /= "SP") . W.tag) . W.hidden
 
+scratchCmd :: String -> X ()
+scratchCmd c = spawnHere $ "urxvt -name scratchcmd -e " ++ c
+
+scratchCmdPrompt = inputPrompt xpconfig "scratch" ?+ scratchCmd
+
 myKeys xmproc = [
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
@@ -275,8 +282,11 @@ myKeys xmproc = [
     ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
     ("M-x",               namedScratchpadAction scratchpads "bc"),
     ("M-d",               changeDir xpconfig),
-    ("M-S-z",             floatSearchResult >> (selectSearchBrowser browser mySearchEngine)),
-    ("M-z",               floatSearchResult >> (promptSearchBrowser xpconfig browser mySearchEngine)),
+    ("M-S-z",             selectSearchBrowser browser mySearchEngine),
+    ("M-z",               promptSearchBrowser xpconfig browser mySearchEngine),
+    ("M-;",               sendMessage R.MirrorShrink),
+    ("M-'",               sendMessage R.MirrorExpand),
+    ("M-n",               scratchCmdPrompt),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
     ("M-S-<Backspace>",   do
