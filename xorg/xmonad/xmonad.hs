@@ -69,12 +69,12 @@ webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
 vncSpaces = map (("vnc"++) . show) [1..2]
 
 -- FIXME dynamically create workspacedirs from topics configuration
-myLayoutHook = (workspaceDir "~") . smartBorders $
+myLayoutHook = smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
-    (onWorkspaces webSpaces $ workspaceDir "~/Pobrania" $ avoidStruts web) $
+    (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspace "mail" $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
-    (onWorkspace "temp" $ workspaceDir "~/temp" $ norm) $
+    (onWorkspace "temp" $ norm) $
     norm
     where
     stats = defaultMSet golden
@@ -195,7 +195,7 @@ myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
 
 myTopicConfig :: TopicConfig
-myTopicConfig= defaultTopicConfig
+myTopicConfig = defaultTopicConfig
     { topicDirs = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
     , defaultTopic = "web1"
