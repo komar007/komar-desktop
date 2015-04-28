@@ -40,6 +40,7 @@ import XMonad.Actions.NoBorders
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
+import XMonad.Actions.DynamicWorkspaceGroups
 -- for MyDzenUrgencyHook
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Dzen (dzenWithArgs, seconds)
@@ -289,6 +290,9 @@ myKeys xmproc = [
     ("M-n",               scratchCmdPrompt),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
+    ("M-g n",             promptWSGroupAdd xpconfig "name group: "),
+    ("M-g g",             promptWSGroupView xpconfig "go to group: "),
+    ("M-g d",             promptWSGroupForget xpconfig "drop group: "),
     ("M-S-<Backspace>",   do
                               focusUrgent
                               spawnHere "~/.xmonad/noblink.sh"
