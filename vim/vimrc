@@ -18,6 +18,8 @@ filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 set autoindent smartindent
 
+set hlsearch
+
 set grepprg=grep\ -nH\ $*
 
 runtime! ftplugin/man.vim
@@ -48,6 +50,8 @@ autocmd FileType haskell set expandtab
 autocmd FileType java,cs,python set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType html,xhtml,eruby set tabstop=2 shiftwidth=2
 autocmd FileType json set shiftwidth=4 tabstop=4 expandtab
+
+autocmd FileType c,cpp set tabstop=4 shiftwidth=4 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
@@ -84,3 +88,6 @@ let g:rainbow_active = 1
 set laststatus=2
 
 let g:netrw_browsex_viewer = "chromium-browser"
+
+autocmd BufNewFile,BufRead *.h,*.c set filetype=c
+set tags=./tags;/
