@@ -29,7 +29,7 @@ function editor()
 	$E $* > /dev/null 2>&1
 }
 
-function alert()
+function notify()
 {
 	[ -n "$*" ] && echo -ne "\033]0;$*\a"
 	echo -ne "$*...\a"

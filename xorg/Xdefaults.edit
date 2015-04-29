@@ -19,7 +19,7 @@ URxvt.fading: 50
 
 *foreground: #ebdbb2
 ! Black + DarkGrey
-*color0:  #282828
+*color0:  #484848
 *color8:  #7c6f64
 ! DarkRed + Red
 *color1:  #cc241d
