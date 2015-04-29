@@ -73,7 +73,7 @@ webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
 vncSpaces = map (("vnc"++) . show) [1..2]
 
 -- FIXME dynamically create workspacedirs from topics configuration
-myLayoutHook = smartBorders $
+myLayoutHook = workspaceDir "~" $ smartBorders $
     (onWorkspace "stats"    $ avoidStruts stats) $
     (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspace "mail" $ avoidStruts web) $
