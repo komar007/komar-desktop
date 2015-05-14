@@ -23,8 +23,11 @@ set hlsearch
 set grepprg=grep\ -nH\ $*
 
 runtime! ftplugin/man.vim
-" colorscheme for console vim
 colorscheme jellybeans-m
+let g:gruvbox_italicize_comments=0
+let g:gruvbox_underline=1
+colorscheme gruvbox
+set cursorline
 set nu
 set is
 set wildmenu
@@ -51,7 +54,7 @@ autocmd FileType java,cs,python set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType html,xhtml,eruby set tabstop=2 shiftwidth=2
 autocmd FileType json set shiftwidth=4 tabstop=4 expandtab
 
-autocmd FileType c,cpp set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType c,cpp set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
@@ -82,7 +85,7 @@ endfunction
 nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
 
 :command FixStrays :%s/\(^\| \)\([auiwzoAUIWZO]\) /\1\2\~/g
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:rainbow_active = 1
 set laststatus=2

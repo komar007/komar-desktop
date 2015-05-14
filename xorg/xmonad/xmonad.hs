@@ -119,9 +119,11 @@ myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manag
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
     isIM                      --> doF (W.shift "im"),
+    isMail                    --> doF (W.shift "mail"),
     resource  =? "scratchcmd" --> (doRectFloat $ W.RationalRect 0.1 0.1 0.8 0.8),
     isFullscreen              --> doFullFloat]
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
+          isMail = className =? "Thunderbird"
 
 tabTheme = defaultTheme {
     activeColor          = "#111111",

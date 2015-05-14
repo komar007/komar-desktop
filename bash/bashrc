@@ -66,3 +66,5 @@ _expand()
 {
     return 0;
 }
+
+~/.vim/bundle/gruvbox/gruvbox_256palette.sh
