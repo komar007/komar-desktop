@@ -9,6 +9,7 @@ Plugin 'oblitum/rainbow'
 Plugin 'komar007/gruvbox'
 Plugin 'elzr/vim-json'
 Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
 

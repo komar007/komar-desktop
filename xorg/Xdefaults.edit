@@ -7,6 +7,7 @@ URxvt*font: -xos4-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
 URxvt*scrollTtyKeypress: true
 URxvt*scrollTtyOutput: false
 
+URxvt.saveLines: 32768
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: chromium
 URxvt.matcher.button: 2
