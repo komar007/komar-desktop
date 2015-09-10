@@ -10,6 +10,7 @@ Plugin 'komar007/gruvbox'
 Plugin 'elzr/vim-json'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'rhysd/conflict-marker.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -49,13 +50,11 @@ map <M-9> <Esc>9gt
 
 autocmd FileType c,cpp compiler gcc
 autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
+autocmd FileType c,cpp set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 autocmd FileType pascal compiler fpc
 autocmd FileType haskell set expandtab
-autocmd FileType java,cs,python set tabstop=4 shiftwidth=4 expandtab
-autocmd FileType html,xhtml,eruby set tabstop=2 shiftwidth=2
-autocmd FileType json set shiftwidth=4 tabstop=4 expandtab
-
-autocmd FileType c,cpp set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType java,cs,python,json set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType html,xhtml,eruby,xml set tabstop=2 shiftwidth=2 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
