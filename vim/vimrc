@@ -12,6 +12,7 @@ Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
 call vundle#end()
+
 filetype plugin indent on
 
 syntax on             " Enable syntax highlighting
@@ -19,13 +20,11 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 set autoindent smartindent
-
 set hlsearch
-
 set grepprg=grep\ -nH\ $*
 
 runtime! ftplugin/man.vim
-colorscheme jellybeans-m
+colorscheme jellybeans-m " dirty hack
 let g:gruvbox_italicize_comments=0
 let g:gruvbox_underline=1
 colorscheme gruvbox
@@ -48,12 +47,13 @@ map <M-7> <Esc>7gt
 map <M-8> <Esc>8gt
 map <M-9> <Esc>9gt
 
-autocmd FileType c,cpp compiler gcc
-autocmd FileType c,cpp set formatoptions=tcqlron textwidth=78
-autocmd FileType c,cpp set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-autocmd FileType pascal compiler fpc
-autocmd FileType haskell set expandtab
-autocmd FileType java,cs,python,json set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType c,cpp                compiler gcc
+autocmd FileType c,cpp                set formatoptions=tcqlron textwidth=78
+autocmd FileType c,cpp                set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType pascal               compiler fpc
+autocmd FileType haskell              set expandtab
+autocmd FileType java,cs,python,json  set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType make                 set tabstop=4 shiftwidth=4 noexpandtab
 autocmd FileType html,xhtml,eruby,xml set tabstop=2 shiftwidth=2 expandtab
 
 nmap <F7> :wall<cr>:make %< <cr>
@@ -84,6 +84,7 @@ endfunction
 
 nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
 
+:command SanitizeXML :%s/>/>\r/g | :%s/</\r</g | :%g/^\s*$/d | :normal gg=G
 :command FixStrays :%s/\(^\| \)\([auiwzoAUIWZO]\) /\1\2\~/g
 let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
