@@ -69,6 +69,8 @@ autocmd FileType html,xhtml,eruby,xml set tabstop=2 shiftwidth=2 expandtab
 
 autocmd BufNewFile,BufRead *.h,*.c set filetype=c
 
+nnoremap <Leader>y mY"*yiw`Y
+
 nmap <F7> :wall<cr>:make %< <cr>
 nmap <F8> :wall<cr>:make <cr>
 nmap <F4> :cprev <cr>
