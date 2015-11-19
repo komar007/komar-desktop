@@ -31,7 +31,7 @@ function editor()
 
 function notify()
 {
-	[ -n "$*" ] && echo -ne "\033]0;$*\a"
+	[ -n "$*" ] && echo -ne "\e]0;$*\a"
 	echo -ne "$*...\a"
 	read
 }
@@ -68,3 +68,57 @@ _expand()
 }
 
 ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
+
+# predicates
+p_is_git='-n "$(git rev-parse --git-dir 2> /dev/null)"'
+p_is_ssh='-n "$(who -m)"'
+p_cmd_ok='$? -eq 0'
+# strings
+p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
+p_git_desc='$(git describe 2>/dev/null)'
+
+function p_if_else()
+{
+	cond=$1
+	yes=$2
+	no=$3
+	echo -n "\$(if [ $cond ]; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
+}
+function p_if()
+{
+	p_if_else "$1" "$2" ""
+}
+
+function p_token()
+{
+	prefix=$1
+	str=$2
+	suffix=$3
+	quoted='"'$str'"'
+	p_if "-n $quoted" "$prefix$str$suffix"
+}
+
+function get_ps1()
+{
+	GRAY='\[\e[00;30m\]'
+	LRED='\[\e[00;31m\]'
+	RED='\[\e[01;31m\]'
+	BLUE='\[\e[01;34m\]'
+	GREEN='\[\e[01;32m\]'
+	LGREEN='\[\e[00;32m\]'
+	CYAN='\[\e[01;36m\]'
+	YELLOW='\[\e[01;33m\]'
+	RESET='\[\e[00m\]'
+
+	prev_status="$(p_if_else "$p_cmd_ok" '✔' "$LRED\$?$RESET")"
+	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
+	branch_token="$(p_token "$GRAY─┤$RED" "$p_git_branch" "$GRAY├$RESET")"
+
+	twoline=''
+	twoline+="$GRAY┌──┤$prev_status$GRAY├$branch_token$GRAY─╴[$BLUE\w$GRAY]$RESET\n"
+	twoline+="$GRAY└╴$GREEN\u$GRAY@$ssh_tag$LGREEN\h"
+	twoline+=" $BLUE\\\$$RESET "
+
+	echo -e "$twoline"
+}
+PS1=$(get_ps1)
