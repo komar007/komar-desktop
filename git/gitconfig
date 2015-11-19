@@ -1,0 +1,11 @@
+[color]
+	ui = auto
+[alias]
+	uncommit = !git reset --soft HEAD^ && git reset
+	wip = commit -a -m "wip"
+[core]
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	autocrlf = false
+
+[include]
+	path = ~/.gitconfig.local
