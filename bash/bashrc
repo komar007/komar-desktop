@@ -71,7 +71,7 @@ _expand()
 
 # predicates
 p_is_git='-n "$(git rev-parse --git-dir 2> /dev/null)"'
-p_is_ssh='-n "$(who -m)"'
+p_is_ssh='"$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\)'
 p_cmd_ok='$? -eq 0'
 # strings
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
@@ -82,7 +82,7 @@ function p_if_else()
 	cond=$1
 	yes=$2
 	no=$3
-	echo -n "\$(if [ $cond ]; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
+	echo -n "\$(if [[ $cond ]]; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
 }
 function p_if()
 {
