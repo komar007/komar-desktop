@@ -113,3 +113,4 @@ set tags=./tags;/
 " -- CtrlP config
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_lazy_update = 1
+let g:ctrlp_by_filename = 1
