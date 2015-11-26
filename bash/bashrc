@@ -76,6 +76,7 @@ p_cmd_ok='$? -eq 0'
 # strings
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 p_git_desc='$(git describe 2>/dev/null)'
+p_time='$(date +%H:%M:%S)'
 
 function p_if_else()
 {
@@ -121,7 +122,7 @@ function get_ps1()
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
 	twoline="$(p_set_title $title)"
-	twoline+="$GRAY┌──┤$prev_status$GRAY├$branch_token$GRAY─╴[$BLUE\w$GRAY]$RESET\n"
+	twoline+="$GRAY┌──┤$prev_status$GRAY├$branch_token$GRAY─╴[$BLUE\w$GRAY] $p_time$RESET\n"
 	twoline+="$GRAY└╴$GREEN\u$GRAY@$ssh_tag$LGREEN\h"
 	twoline+=" $BLUE\W \\\$$RESET "
 
