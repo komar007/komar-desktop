@@ -56,6 +56,13 @@ alias pdf1="qpdfview --unique --instance pdf1"
 alias pdf2="qpdfview --unique --instance pdf2"
 alias pdf3="qpdfview --unique --instance pdf3"
 
+function less_set_title()
+{
+	echo -e "\e];less: $@\a"
+	less "$@"
+}
+alias less="less_set_title"
+
 if [ -f /usr/share/mc/mc.gentoo ]; then
 	. /usr/share/mc/mc.gentoo
 fi
