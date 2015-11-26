@@ -128,10 +128,10 @@ function get_ps1()
 	branch_token="$(p_token "$GRAY─┤$RED" "$p_git_branch" "$GRAY├$RESET")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
-	twoline="$(p_set_title $title)"
+	twoline=""
 	twoline+="$GRAY┌──┤$prev_status$GRAY├$branch_token$GRAY─╴[$BLUE\w$GRAY] $p_time$RESET\n"
 	twoline+="$GRAY└╴$GREEN\u$GRAY@$ssh_tag$LGREEN\h"
-	twoline+=" $BLUE\W \\\$$RESET "
+	twoline+=" $BLUE\W \\\$$RESET $(p_set_title $title)"
 
 	echo -e "$twoline"
 }
