@@ -97,6 +97,11 @@ function p_token()
 	quoted='"'$str'"'
 	p_if "-n $quoted" "$prefix$str$suffix"
 }
+function p_set_title()
+{
+	title="$*"
+	echo -n "\[\e]0;$title\a\]"
+}
 
 function get_ps1()
 {
@@ -113,8 +118,9 @@ function get_ps1()
 	prev_status="$(p_if_else "$p_cmd_ok" '✔' "$LRED\$?$RESET")"
 	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
 	branch_token="$(p_token "$GRAY─┤$RED" "$p_git_branch" "$GRAY├$RESET")"
+	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
-	twoline=''
+	twoline="$(p_set_title $title)"
 	twoline+="$GRAY┌──┤$prev_status$GRAY├$branch_token$GRAY─╴[$BLUE\w$GRAY]$RESET\n"
 	twoline+="$GRAY└╴$GREEN\u$GRAY@$ssh_tag$LGREEN\h"
 	twoline+=" $BLUE\W \\\$$RESET "
