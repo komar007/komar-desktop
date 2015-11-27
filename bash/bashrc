@@ -42,6 +42,9 @@ function share()
 	echo http://space.komar.be/`basename "$1"`
 }
 
+# avoid multiple aliasing
+unalias vi ls grep e t pdf1 pdf2 pdf3 less
+
 export EDITOR="vim"
 alias vi='editor'
 alias ls="ls --color=always"
