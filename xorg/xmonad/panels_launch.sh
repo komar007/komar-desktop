@@ -25,5 +25,7 @@ sleep 0.1
 /usr/bin/xmobar "/home/komar/.xmonad/xmobar-$CONFIG" &
 if [[ $CONFIG == desktop ]]; then
     /usr/bin/xmobar "/home/komar/.xmonad/xmobar-info"
+elif [[ $CONFIG == work ]]; then
+    /usr/bin/xmobar "/home/komar/.xmonad/xmobar-aux-work"
 fi &
 cat

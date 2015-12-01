@@ -1,0 +1,29 @@
+Config {
+	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+	bgColor = "black",
+	fgColor = "#555753",
+	position = Static { xpos = 0, ypos = -1, width = 1280, height = 13 },
+	lowerOnStart = False,
+	commands = [
+		Run Cpu [
+			"-L","3",
+			"-H","50",
+			"--normal","#719a4b", "--high","#a53333"
+		] 10,
+		Run Memory [
+			"-t","Mem: <usedratio>%",
+			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
+		] 10,
+		Run Swap [
+			"-t", "Swap: <usedratio>",
+			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
+		] 10,
+		Run Com  "/home/komar/scripts/stbstatus.sh" [] "stb" 20,
+		Run StdinReader
+	],
+	sepChar = "X",
+	alignSep = "}{",
+	template = "XmemoryX <fc=#282828>*</fc> XswapX% <fc=#cccccc>|</fc> XcpuX <fc=#cccccc>|</fc> stb: XstbX"
+}
+
+-- vim:ft=haskell
