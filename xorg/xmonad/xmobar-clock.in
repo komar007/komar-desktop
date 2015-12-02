@@ -2,7 +2,7 @@ Config {
 	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
 	bgColor = "black",
 	fgColor = "#555753",
-	position = Static { xpos = 2360, ypos = -1, width = 200, height = 13 },
+	position = Static { xpos = POS, ypos = -1, width = WIDTH, height = 13 },
 	lowerOnStart = False,
 	commands = [ Run Weather "EPKT" [
 			"-t", " <tempC>°C",

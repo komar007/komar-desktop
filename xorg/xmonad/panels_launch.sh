@@ -22,10 +22,17 @@ while true; do
 	cat "$FIFO"
 done | /usr/bin/dzen2 -bg black -xs 2 -ta l -fn '-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*' &
 sleep 0.1
-/usr/bin/xmobar "/home/komar/.xmonad/xmobar-$CONFIG" &
 if [[ $CONFIG == desktop ]]; then
-    /usr/bin/xmobar "/home/komar/.xmonad/xmobar-info"
+    /usr/bin/xmobar ~/.xmonad/xmobar-info-desktop &
+    cpp -DPOS=2360 -DWIDTH=200 ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock
+    /usr/bin/xmobar /tmp/xmobar-clock &
 elif [[ $CONFIG == work ]]; then
-    /usr/bin/xmobar "/home/komar/.xmonad/xmobar-aux-work"
-fi &
+    /usr/bin/xmobar ~/.xmonad/xmobar-info-work &
+    cpp -DPOS=1400 -DWIDTH=200 ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock1
+    cpp -DPOS=3080 -DWIDTH=200 ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock2
+    /usr/bin/xmobar /tmp/xmobar-clock1 &
+    /usr/bin/xmobar /tmp/xmobar-clock2 &
+elif [[ $CONFIG == laptop ]]; then
+    /usr/bin/xmobar ~/.xmonad/xmobar-laptop &
+fi
 cat
