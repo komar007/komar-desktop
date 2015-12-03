@@ -18,7 +18,7 @@ Config {
 			"-t", "Swap: <usedratio>",
 			"--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
 		] 10,
-		Run Com  "/home/komar/scripts/stbstatus.sh" [] "stb" 20,
+		Run Com  "/home/komar/scripts/stbstatus_show.sh" [] "stb" 20,
 		Run StdinReader
 	],
 	sepChar = "X",

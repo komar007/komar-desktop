@@ -23,6 +23,7 @@ xset r rate 250 20
 if [[ "$CONFIG" == work ]]; then
 	pidgin &
 	thunderbird &
+        ~/scripts/stbstatus_updater.sh &
 else
 	gajim &
 fi
