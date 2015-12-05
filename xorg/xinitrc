@@ -10,7 +10,9 @@ else
 fi
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
-xmodmap ~/.Xmodmap
+if [[ "$CONFIG" != desktop ]]; then
+	xmodmap ~/.Xmodmap
+fi
 xset r rate 250 20
 # sleeps to make sure the order is correct
 (
