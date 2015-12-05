@@ -29,6 +29,7 @@ import XMonad.Layout.MagicFocus
 import qualified XMonad.Layout.HintedTile as H
 import qualified XMonad.Layout.ResizableTile as R
 import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
 import XMonad.Actions.DynamicWorkspaces
@@ -272,10 +273,17 @@ workspaceSKeys = map ("S-"++) workspaceKeys
 -- Workaround for toggle + scratchpad
 myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP" && x /= "SP") . W.tag) . W.hidden
 
-scratchCmd :: String -> X ()
-scratchCmd c = spawnHere $ "urxvt -name scratchcmd -e " ++ c
+-- Runs command in scratchpad
+scratchPrompt :: String -> X ()
+scratchPrompt c = spawnHere $ "urxvt -name scratchcmd -e " ++ c
 
-scratchCmdPrompt = inputPrompt xpconfig "scratch" ?+ scratchCmd
+-- taken from XMonad.Acrions.SpawnOn, because it is not exported...
+mkPrompt :: (String -> X ()) -> XPConfig -> X ()
+mkPrompt cb c = do
+    cmds <- io $ getCommands
+    mkXPrompt Shell c (getShellCompl cmds) cb
+
+scratchCmdPrompt = mkPrompt scratchPrompt
 
 myKeys xmproc = [
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
@@ -290,7 +298,7 @@ myKeys xmproc = [
     ("M-z",               promptSearchBrowser xpconfig browser mySearchEngine),
     ("M-;",               sendMessage R.MirrorShrink),
     ("M-'",               sendMessage R.MirrorExpand),
-    ("M-n",               scratchCmdPrompt),
+    ("M-n",               scratchCmdPrompt xpconfig),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
     ("M-g n",             promptWSGroupAdd xpconfig "name group: "),
