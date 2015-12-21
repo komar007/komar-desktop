@@ -13,6 +13,7 @@ Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/cscope_macros.vim'
 call vundle#end()
 
 filetype plugin indent on
