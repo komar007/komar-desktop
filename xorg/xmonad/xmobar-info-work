@@ -2,7 +2,7 @@ Config {
 	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
 	bgColor = "black",
 	fgColor = "#555753",
-	position = Static { xpos = 0, ypos = -1, width = 1400, height = 13 },
+	position = Static { xpos = 0, ypos = -1, width = 1000, height = 13 },
 	lowerOnStart = False,
 	commands = [
 		Run Cpu [
