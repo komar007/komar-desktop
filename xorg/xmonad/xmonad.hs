@@ -275,7 +275,7 @@ myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP"
 
 -- Runs command in scratchpad
 scratchPrompt :: String -> X ()
-scratchPrompt c = spawnHere $ "urxvt -name scratchcmd -e " ++ c
+scratchPrompt c = spawnHere $ "urxvt -name scratchcmd -e bash -ic '" ++ c ++ "'"
 
 -- taken from XMonad.Acrions.SpawnOn, because it is not exported...
 mkPrompt :: (String -> X ()) -> XPConfig -> X ()
