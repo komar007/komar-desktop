@@ -1,7 +1,7 @@
 import gdb
 from gdb.prompt import substitute_prompt
 
-p_tmpl = r'\[\e[01;31m\]gdb\[\e[01;32m\][\[\e[0m\]{thread}\[\e[01;32m\]] \[\e[0m\]{frame}\[\e[01;34m\]$ \[\e[0m\]'
+p_tmpl = '\[\e]0;gdb: [{thread}] {frame}\x07\]\[\e[01;31m\]gdb\[\e[01;32m\][\[\e[0m\]{thread}\[\e[01;32m\]] \[\e[0m\]{frame}\[\e[01;34m\]$ \[\e[0m\]'
 
 def render_prompt(cur):
     try:
