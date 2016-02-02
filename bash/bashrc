@@ -43,7 +43,7 @@ function share()
 }
 
 # avoid multiple aliasing
-unalias vi ls grep e t pdf1 pdf2 pdf3 less 2>/dev/null
+unalias vi ls grep e t pdf1 pdf2 pdf3 less tig 2>/dev/null
 
 export EDITOR="vim"
 alias vi='editor'
@@ -61,10 +61,23 @@ alias pdf3="qpdfview --unique --instance pdf3"
 
 function less_set_title()
 {
-	echo -e "\e];less: $@\a"
+	dir="$(pwd)"
+	echo -e "\e];less $@ [$dir]\a"
 	less "$@"
 }
 alias less="less_set_title"
+
+function tig_set_title()
+{
+	dir="$(dirname "$(cd "$(git rev-parse --git-dir 2> /dev/null)"; pwd)")"
+	branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+	if [ -n "$branch" ]; then
+		dir+=" on $branch"
+	fi
+	echo -e "\e];tig $@ [$dir]\a"
+	tig "$@"
+}
+alias tig="tig_set_title"
 
 if [ -f /usr/share/mc/mc.gentoo ]; then
 	. /usr/share/mc/mc.gentoo
@@ -74,20 +87,20 @@ fi
 # suppress tilde-expansion
 _expand()
 {
-    return 0;
+	return 0;
 }
 
 ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 function man() {
-    env LESS_TERMCAP_mb=$'\E[1;31m'   `# blink `    \
-        LESS_TERMCAP_md=$'\E[1;32m'   `# bold `     \
-        LESS_TERMCAP_me=$'\E[0m'                    \
-        LESS_TERMCAP_se=$'\E[0m'                    \
-        LESS_TERMCAP_so=$'\E[7m'      `# standout ` \
-        LESS_TERMCAP_ue=$'\E[0m'                    \
-        LESS_TERMCAP_us=$'\E[1;4;34m' `# underline` \
-        /usr/bin/man "$@"
+	env LESS_TERMCAP_mb=$'\E[1;31m'   `# blink `	\
+	    LESS_TERMCAP_md=$'\E[1;32m'   `# bold `	 \
+	    LESS_TERMCAP_me=$'\E[0m'					\
+	    LESS_TERMCAP_se=$'\E[0m'					\
+	    LESS_TERMCAP_so=$'\E[7m'	  `# standout ` \
+	    LESS_TERMCAP_ue=$'\E[0m'					\
+	    LESS_TERMCAP_us=$'\E[1;4;34m' `# underline` \
+	    /usr/bin/man "$@"
 }
 
 # predicates
