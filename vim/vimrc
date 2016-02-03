@@ -14,6 +14,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/cscope_macros.vim'
+Plugin 'wting/gitsessions.vim'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 filetype plugin indent on
@@ -115,3 +117,5 @@ set tags=./tags;/
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_lazy_update = 1
 let g:ctrlp_by_filename = 1
+
+set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
