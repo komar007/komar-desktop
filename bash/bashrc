@@ -74,7 +74,12 @@ function tig_set_title()
 	if [ -n "$branch" ]; then
 		dir+=" on $branch"
 	fi
-	echo -e "\e];tig $@ [$dir]\a"
+	title="tig"
+	argline="$@"
+	if [ -n "$argline" ]; then
+		title+=" $argline"
+	fi
+	echo -e "\e];$title [$dir]\a"
 	tig "$@"
 }
 alias tig="tig_set_title"
