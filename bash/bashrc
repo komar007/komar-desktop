@@ -97,16 +97,13 @@ _expand()
 
 ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
-function man() {
-	env LESS_TERMCAP_mb=$'\E[1;31m'   `# blink `	\
-	    LESS_TERMCAP_md=$'\E[1;32m'   `# bold `	 \
-	    LESS_TERMCAP_me=$'\E[0m'					\
-	    LESS_TERMCAP_se=$'\E[0m'					\
-	    LESS_TERMCAP_so=$'\E[7m'	  `# standout ` \
-	    LESS_TERMCAP_ue=$'\E[0m'					\
-	    LESS_TERMCAP_us=$'\E[1;4;34m' `# underline` \
-	    /usr/bin/man "$@"
-}
+export LESS_TERMCAP_mb=$'\E[1;31m'   # blink
+export LESS_TERMCAP_md=$'\E[1;32m'   # bold
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[7m'      # standout
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
 
 # predicates
 p_is_git='-n "$(git rev-parse --git-dir 2> /dev/null)"'
