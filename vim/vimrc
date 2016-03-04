@@ -7,7 +7,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
-Plugin 'oblitum/rainbow'
+Plugin 'luochen1990/rainbow'
 Plugin 'komar007/gruvbox'
 Plugin 'elzr/vim-json'
 Plugin 'hynek/vim-python-pep8-indent'
@@ -107,7 +107,45 @@ nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
 
 let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
+
 let g:rainbow_active = 1
+let g:rainbow_conf = {
+\   'parentheses': [
+\       'start=/(/ end=/)/ fold',
+\       'start=/\[/ end=/\]/ fold',
+\       'start=/{/ end=/}/ fold'
+\   ],
+\   'ctermfgs': [
+\       'brown',
+\       'Darkblue',
+\       'darkgray',
+\       'darkgreen',
+\       'darkcyan',
+\       'darkred',
+\       'darkmagenta',
+\       'brown',
+\       'gray',
+\       'black',
+\       'darkmagenta',
+\       'Darkblue',
+\       'darkgreen',
+\       'darkcyan',
+\       'darkred',
+\       'red',
+\       'blue',
+\       'green',
+\       'yellow',
+\       'cyan',
+\       'magenta',
+\       'lightblue',
+\       'lightgreen',
+\       'lightyellow',
+\       'lightcyan',
+\       'lightmagenta'
+\    ],
+\   'operators': '_,\|;\|==\|!=\|::\|=\|*\|->\|\.\|<\|>_'
+\}
+
 set laststatus=2
 
 let g:netrw_browsex_viewer = "chromium-browser"
