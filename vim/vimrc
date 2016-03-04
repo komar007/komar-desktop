@@ -45,16 +45,7 @@ set mouse=a
 
 setlocal spelllang=pl
 
-" -- tab switching [DEPRECATED]
-map <M-1> <Esc>1gt
-map <M-2> <Esc>2gt
-map <M-3> <Esc>3gt
-map <M-4> <Esc>4gt
-map <M-5> <Esc>5gt
-map <M-6> <Esc>6gt
-map <M-7> <Esc>7gt
-map <M-8> <Esc>8gt
-map <M-9> <Esc>9gt
+map <F2> :set cursorcolumn!<CR>
 
 " -- filetype customs
 autocmd FileType latex                setlocal spell
