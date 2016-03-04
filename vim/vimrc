@@ -5,6 +5,7 @@ filetype off
 " -- plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'oblitum/rainbow'
 Plugin 'komar007/gruvbox'
