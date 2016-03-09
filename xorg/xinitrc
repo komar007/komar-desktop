@@ -26,9 +26,10 @@ xset r rate 250 20
 	urxvt -name stats -e htop &
 ) &
 if [[ "$CONFIG" == work ]]; then
-	pidgin &
+	gajim &
 	thunderbird &
         ~/scripts/stbstatus_updater.sh &
+	xautolock -corners '0+00' -locker pyxtrlock -cornerdelay 2 -cornerredelay 10 -time 3 &
 else
 	gajim &
 fi
