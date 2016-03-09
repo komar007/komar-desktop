@@ -134,7 +134,7 @@ let g:rainbow_conf = {
 \       'lightcyan',
 \       'lightmagenta'
 \    ],
-\   'operators': '_,\|;\|==\|!=\|::\|=\|*\|->\|\.\|<\|>_'
+\   'operators': '_,\|;\|==\|!=\|!\||\|&\|\^\|\~\|+\|-\|:\|?\|=\|*\|->\|\.\|<\|>_'
 \}
 
 set laststatus=2
