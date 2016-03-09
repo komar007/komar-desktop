@@ -1,0 +1,118 @@
+;; basic GUI config
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(set-default-font "Terminus-9")
+
+;; BEGIN packages
+
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(setq package-enable-at-startup nil)
+
+(package-initialize)
+
+(defun ensure-package-installed (&rest packages)
+(mapcar
+  (lambda (package)
+    ;; (package-installed-p 'evil)
+    (if (package-installed-p package)
+      nil
+	(package-install package)
+	package))
+  packages))
+
+;; make sure to have downloaded archive description.
+;; Or use package-archive-contents as suggested by Nicolas Dudebout
+(or (file-exists-p package-user-dir)
+    (package-refresh-contents))
+
+(ensure-package-installed
+ 'evil
+ 'evil-args
+ 'evil-leader
+ 'evil-numbers
+ 'hl-line
+ 'ample-theme
+ 'powerline
+ 'rainbow-delimiters
+ 'diff-hl
+ 'linum
+ 'git-gutter
+ 'xcscope
+ )
+;; ---
+
+(package-initialize)
+
+;; END packages
+
+(require 'evil)
+(global-evil-leader-mode)
+(evil-mode t)
+(setq evil-want-fine-undo 0)
+
+(require 'hl-line)
+(global-hl-line-mode)
+
+(require 'powerline)
+(powerline-default-theme)
+
+(require 'ample-theme)
+(load-theme 'ample t)
+;; initial window settings
+(setq initial-frame-alist
+      '((background-color . "black")))
+;; subsequent window settings
+(setq default-frame-alist
+      '((background-color . "black")))
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(setq show-paren-delay 0)
+(add-hook 'prog-mode-hook #'show-paren-mode)
+
+(require 'diff-hl)
+(diff-hl-flydiff-mode)
+(add-hook 'prog-mode-hook #'diff-hl-mode)
+(set-face-foreground 'diff-hl-change "#baba36")
+
+(require 'linum)
+(global-linum-mode 1)
+
+(require 'evil-numbers)
+(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
+
+(require 'evil-args)
+;; bind evil-args text objects
+(define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+(define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+
+;; git-gutter shows changes with respect to index
+(require 'git-gutter)
+(global-git-gutter-mode +1)
+(define-key evil-normal-state-map "]c" 'git-gutter:next-hunk)
+(define-key evil-normal-state-map "[c" 'git-gutter:previous-hunk)
+(custom-set-variables
+ '(git-gutter:update-interval 1))
+(set-face-foreground 'git-gutter:modified (face-foreground 'diff-hl-change))
+(set-face-foreground 'git-gutter:added    (face-foreground 'diff-hl-insert))
+(set-face-foreground 'git-gutter:deleted  (face-foreground 'diff-hl-delete))
+
+(require 'xcscope)
+(cscope-setup)
+(evil-leader/set-key
+  "g" 'cscope-find-global-definition
+  "s" 'cscope-find-this-symbol
+  "c" 'cscope-find-functions-calling-this-function
+  "f" 'cscope-find-this-file)
+
+(setq inhibit-startup-message t)
+
+(setq-default indent-tabs-mode nil)
+(setq c-default-style "linux"
+      c-basic-offset 4)
