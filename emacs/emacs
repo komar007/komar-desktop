@@ -37,12 +37,14 @@
  'evil-numbers
  'hl-line
  'ample-theme
+ 'gruvbox-theme
  'powerline
  'rainbow-delimiters
  'diff-hl
  'linum
  'git-gutter
  'xcscope
+ 'helm
  )
 ;; ---
 
@@ -54,6 +56,13 @@
 (global-evil-leader-mode)
 (evil-mode t)
 (setq evil-want-fine-undo 0)
+;; word_fix
+(defvar my-syntax-table
+  (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?_ "w" table)
+    table))
+(add-hook 'prog-mode-hook (lambda ()
+                            (set-syntax-table my-syntax-table)))
 
 (require 'hl-line)
 (global-hl-line-mode)
@@ -61,8 +70,8 @@
 (require 'powerline)
 (powerline-default-theme)
 
-(require 'ample-theme)
-(load-theme 'ample t)
+(require 'gruvbox-theme)
+(load-theme 'gruvbox t)
 ;; initial window settings
 (setq initial-frame-alist
       '((background-color . "black")))
@@ -76,7 +85,8 @@
 (add-hook 'prog-mode-hook #'show-paren-mode)
 
 (require 'diff-hl)
-(diff-hl-flydiff-mode)
+(unless (version< emacs-version "24.4")
+  (diff-hl-flydiff-mode))
 (add-hook 'prog-mode-hook #'diff-hl-mode)
 (set-face-foreground 'diff-hl-change "#baba36")
 
@@ -102,6 +112,10 @@
 (set-face-foreground 'git-gutter:modified (face-foreground 'diff-hl-change))
 (set-face-foreground 'git-gutter:added    (face-foreground 'diff-hl-insert))
 (set-face-foreground 'git-gutter:deleted  (face-foreground 'diff-hl-delete))
+(custom-set-variables
+ '(git-gutter:modified-sign "")
+ '(git-gutter:added-sign "")
+ '(git-gutter:deleted-sign ""))
 
 (require 'xcscope)
 (cscope-setup)
@@ -110,6 +124,9 @@
   "s" 'cscope-find-this-symbol
   "c" 'cscope-find-functions-calling-this-function
   "f" 'cscope-find-this-file)
+
+(require 'helm)
+(helm-mode)
 
 (setq inhibit-startup-message t)
 
