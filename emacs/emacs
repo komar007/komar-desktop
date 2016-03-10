@@ -44,7 +44,8 @@
  'linum
  'git-gutter
  'xcscope
- 'helm
+ 'fiplr
+ 'company
  )
 ;; ---
 
@@ -125,8 +126,13 @@
   "c" 'cscope-find-functions-calling-this-function
   "f" 'cscope-find-this-file)
 
-(require 'helm)
-(helm-mode)
+(require 'fiplr)
+(setq fiplr-ignored-globs '((directories (".*"))
+                            (files ("*.jpg" "*.png" "*.zip" "*~" "*.tar.*"))))
+(define-key evil-normal-state-map (kbd "C-p") 'fiplr-find-file)
+
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (setq inhibit-startup-message t)
 
