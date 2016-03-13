@@ -149,9 +149,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'dtrt-indent)
 (dtrt-indent-mode)
 
+;; style
+
 (setq c-default-style "linux"
       c-basic-offset 4)
-
 (setq comment-style 'extra-line)
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (setq inhibit-startup-message t)
