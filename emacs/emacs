@@ -46,6 +46,7 @@
  'git-gutter
  'xcscope
  'fiplr
+ 'dtrt-indent
  )
 ;; ---
 
@@ -58,12 +59,8 @@
 (evil-mode t)
 (setq evil-want-fine-undo 0)
 ;; word_fix
-(defvar my-syntax-table
-  (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?_ "w" table)
-    table))
-(add-hook 'prog-mode-hook (lambda ()
-                            (set-syntax-table my-syntax-table)))
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol))
 
 ;;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -149,8 +146,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                             (files ("*.jpg" "*.png" "*.zip" "*~" "*.tar.*"))))
 (define-key evil-normal-state-map (kbd "C-p") 'fiplr-find-file)
 
-(setq inhibit-startup-message t)
+(require 'dtrt-indent)
+(dtrt-indent-mode)
 
-(setq-default indent-tabs-mode nil)
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+(setq comment-style 'extra-line)
+
+(setq inhibit-startup-message t)
