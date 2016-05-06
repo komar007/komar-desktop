@@ -29,13 +29,6 @@ function editor()
 	$E $* > /dev/null 2>&1
 }
 
-function notify()
-{
-	[ -n "$*" ] && echo -ne "\e]0;$*\a"
-	echo -ne "$*...\a"
-	read
-}
-
 function share()
 {
 	scp "$1" komar@komar.be:/var/www/space.komar.be/htdocs/
@@ -51,6 +44,7 @@ alias ls="ls --color=always"
 alias grep="grep --colour=always"
 alias e="e -F"
 alias t="ps -p $$ -o start_time"
+alias notify="~/.desktop_config/bash/notify.sh"
 for prog in kicad pcbnew eeschema oowriter ooimpress oocalc oobase oodraw audacity libreoffice; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
