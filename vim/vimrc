@@ -15,8 +15,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/cscope_macros.vim'
-Plugin 'wting/gitsessions.vim'
+"Plugin 'wting/gitsessions.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'wellle/targets.vim'
 call vundle#end()
 
 filetype plugin indent on
