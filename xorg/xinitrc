@@ -33,6 +33,7 @@ if [[ "$CONFIG" == work ]]; then
 else
 	gajim &
 fi
+xset s off
 xset dpms 120 120 120
 xset m 7/4 7
 
