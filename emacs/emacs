@@ -158,3 +158,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'prog-mode-hook (lambda () (setq c-backslash-max-column 100)))
 
 (setq inhibit-startup-message t)
+(setq confirm-kill-emacs 'y-or-n-p)
