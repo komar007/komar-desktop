@@ -8,3 +8,4 @@ for d in xorg vim bash mutt gdb tig; do
 		ln -s `pwd`/$f ~/.`basename $f`
 	done
 done
+ln -s `pwd`/slock ~/.slock

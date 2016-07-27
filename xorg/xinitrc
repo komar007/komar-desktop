@@ -29,7 +29,7 @@ if [[ "$CONFIG" == work ]]; then
 	gajim &
 	thunderbird &
         ~/scripts/stbstatus_updater.sh &
-	xautolock -corners '0+00' -locker pyxtrlock -cornerdelay 2 -cornerredelay 10 -time 3 &
+	xautolock -corners '0+00' -locker ~/.slock/slock_wrapper.sh -cornerdelay 2 -cornerredelay 10 -time 3 &
 else
 	gajim &
 fi
