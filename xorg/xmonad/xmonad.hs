@@ -112,7 +112,9 @@ scratchpads = [
     NS "alsamixer" "urxvt -name scratchmixer -e alsamixer"
         (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3),
     NS "bc"        "urxvt -name bc -e bc -l"
-        (resource =? "bc")           (urxvtFloating 0.7 0.2 0.3 0.6)]
+        (resource =? "bc")           (urxvtFloating 0.7 0.2 0.3 0.6),
+    NS "notepad"   "urxvt -name notepad -e ~/.xmonad/notepad.sh"
+        (resource =? "notepad")      (urxvtFloating 0.3 0.2 0.4 0.6)]
     where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
 
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
@@ -293,6 +295,7 @@ myKeys xmproc = [
     ("M-s",               namedScratchpadAction scratchpads "urxvt"),
     ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
     ("M-x",               namedScratchpadAction scratchpads "bc"),
+    ("M-c",               namedScratchpadAction scratchpads "notepad"),
     ("M-d",               changeDir xpconfig),
     ("M-S-z",             selectSearchBrowser browser mySearchEngine),
     ("M-z",               promptSearchBrowser xpconfig browser mySearchEngine),
