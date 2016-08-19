@@ -47,6 +47,7 @@
  'xcscope
  'fiplr
  'dtrt-indent
+ 'highlight-escape-sequences
  )
 ;; ---
 
@@ -148,6 +149,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'dtrt-indent)
 (dtrt-indent-mode)
+
+(require 'highlight-escape-sequences)
+(hes-mode)
+(put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
+(put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face)
 
 ;; style
 
