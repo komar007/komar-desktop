@@ -53,22 +53,22 @@ browser = "chromium"
 
 golden = toRational (((sqrt 5) - 1)/2)
 
-tall ratio = R.ResizableTall 1 delta ratio []
+tall ratio numMaster = R.ResizableTall numMaster delta ratio []
     where delta = (3/100)
 
-myTall r = named "tall" $ tall r
-myWide r = named "wide" $ Mirror $ tall r
+myTall r n = named "tall" $ tall r n
+myWide r n = named "wide" $ Mirror $ tall r n
 myFull   = named "full" $ noBorders (tabbedBottom shrinkText tabTheme)
 mySimpleFull = named "full" $ noBorders Full
 
-defaultSet r =
-    myTall r ||| myWide r ||| myFull
-defaultMSet r =
-    myWide r ||| myTall r ||| myFull
-defaultWSet r =
-    myFull   ||| myTall r ||| myWide r
-defaultVSet r =
-    mySimpleFull ||| myTall r ||| myWide r
+defaultSet r n =
+    myTall r n ||| myWide r n ||| myFull
+defaultMSet r n =
+    myWide r n ||| myTall r n ||| myFull
+defaultWSet r n =
+    myFull   ||| myTall r n ||| myWide r n
+defaultVSet r n =
+    mySimpleFull ||| myTall r n ||| myWide r n
 
 webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
 vncSpaces = map (("vnc"++) . show) [1..2]
@@ -79,13 +79,13 @@ myLayoutHook = workspaceDir "~" $ smartBorders $
     (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspace "mail" $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
-    (onWorkspace "temp" $ norm) $
-    norm
+    (onWorkspace "temp" $ norm 0.5 2) $
+    (norm golden 1)
     where
-    stats = defaultMSet golden
-    web   = defaultWSet golden
-    vnc   = defaultVSet golden
-    norm  = avoidStruts $ defaultSet golden
+    stats    = defaultMSet golden 1
+    web      = defaultWSet golden 1
+    vnc      = defaultVSet golden 1
+    norm r n = avoidStruts $ defaultSet r n
 
 iconDir = "/home/komar/.xmonad/dzen2_img/"
 wrapSpace = wrap "^p(8)" "^p(1)"
@@ -121,6 +121,7 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
+    resource  =? "tempterm"   --> doF (W.shift "temp"),
     isIM                      --> doF (W.shift "im"),
     isMail                    --> doF (W.shift "mail"),
     resource  =? "scratchcmd" --> (doRectFloat $ W.RationalRect 0.1 0.1 0.8 0.8),

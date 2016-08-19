@@ -25,6 +25,9 @@ xset r rate 250 20
 	sleep 1
 	urxvt -name stats -e htop &
 ) &
+for i in `seq 1 1 4`; do
+	urxvt -name tempterm &
+done
 if [[ "$CONFIG" == work ]]; then
 	gajim &
 	thunderbird &
