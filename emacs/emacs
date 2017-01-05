@@ -48,6 +48,8 @@
  'fiplr
  'dtrt-indent
  'highlight-escape-sequences
+ 'modern-cpp-font-lock
+ 'zoom-window
  )
 ;; ---
 
@@ -55,6 +57,9 @@
 
 ;; END packages
 
+(setq mouse-yank-at-point t)
+
+;;(setq evil-search-module 'evil-search)
 (require 'evil)
 (global-evil-leader-mode)
 (evil-mode t)
@@ -80,6 +85,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+
+(require 'zoom-window)
+(define-key evil-window-map (kbd "o") 'zoom-window-zoom)
+(setq zoom-window-mode-line-color "DarkGreen")
 
 (require 'hl-line)
 (global-hl-line-mode)
@@ -136,7 +145,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'xcscope)
 (cscope-setup)
+
+(defvar my-cpp-other-file-alist '(("\\.cpp\\'" (".h" ".hpp")) ("\\.c\\'" (".h")) ("\\.cc\\'" (".h" ".hpp")) ("\\.h\\'" (".cpp" ".c" ".cc"))))
+(setq-default ff-other-file-alist 'my-cpp-other-file-alist)
+
 (evil-leader/set-key
+  "h" 'ff-get-other-file
+  "a" 'evil-forward-arg
+  "A" 'evil-backward-arg
   "g" 'cscope-find-global-definition
   "s" 'cscope-find-this-symbol
   "c" 'cscope-find-functions-calling-this-function
@@ -162,6 +178,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq comment-style 'extra-line)
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'prog-mode-hook (lambda () (setq c-backslash-max-column 100)))
+
+(c-set-offset 'innamespace 0)
+
+(require 'modern-cpp-font-lock)
+(modern-c++-font-lock-global-mode t)
 
 (setq inhibit-startup-message t)
 (setq confirm-kill-emacs 'y-or-n-p)
