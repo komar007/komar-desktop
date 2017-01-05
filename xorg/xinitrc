@@ -9,7 +9,7 @@ else
 	CONFIG=desktop
 fi
 if [[ "$CONFIG" == work ]]; then
-	xrandr --output DVI-I-1 --rotate left --left-of VGA-1
+	xrandr --output HDMI1 --rotate left --left-of HDMI2
 fi
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
