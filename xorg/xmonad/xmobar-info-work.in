@@ -1,0 +1,32 @@
+Config {
+    font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+    bgColor = "black",
+    fgColor = "#555753",
+    iconRoot = ICON_ROOT,
+    iconOffset = ICON_OFFSET,
+    position = Static { xpos = 0, ypos = -1, width = 1000, height = 13 },
+    lowerOnStart = False,
+    commands = [
+        Run Cpu [
+            "-L","3",
+            "-H","50",
+            "-t","<icon=cpu.xbm/><total>%",
+            "--normal","#719a4b", "--high","#a53333"
+        ] 10,
+        Run Memory [
+            "-t","<icon=mem.xbm/><usedratio>%",
+            "--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
+        ] 10,
+        Run Swap [
+            "-t", "<usedratio>%",
+            "--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
+        ] 10,
+        Run Com  "/home/komar/scripts/stbstatus_show.sh" [] "stb" 20,
+        Run StdinReader
+    ],
+    sepChar = "X",
+    alignSep = "}{",
+    template = "XmemoryX/XswapX XcpuX <fc=#cccccc>|</fc> stb: XstbX"
+}
+
+-- vim:ft=haskell

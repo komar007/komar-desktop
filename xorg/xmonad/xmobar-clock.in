@@ -2,6 +2,8 @@ Config {
         font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
         bgColor = "black",
         fgColor = "#555753",
+        iconRoot = ICON_ROOT,
+        iconOffset = ICON_OFFSET,
         position = Static { xpos = POS, ypos = -1, width = WIDTH, height = 13 },
         lowerOnStart = False,
         commands = [ Run Com  "/home/komar/.xmonad/morning.sh" [] "morning" 100,
@@ -17,7 +19,7 @@ Config {
 #ifdef SIDE_LEFT
         template = "}{ %EPKT% <fc=#d79921>%date%</fc>"
 #else
-        template = "}{ %morning% %EPKT% <fc=#d79921>%date%</fc>"
+        template = "}{ <fc=#aaaaaa><icon=enter.xbm/></fc> %morning% %EPKT% <fc=#d79921>%date%</fc>"
 #endif
 }
 
