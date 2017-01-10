@@ -80,6 +80,9 @@ myLayoutHook = workspaceDir "~" $ smartBorders $
     (onWorkspace "mail" $ avoidStruts web) $
     (onWorkspaces vncSpaces $ vnc) $
     (onWorkspace "temp" $ norm 0.5 2) $
+#ifdef CONFIG_WORK
+    (onWorkspace "stb" $ norm golden 2) $
+#endif
     (norm golden 1)
     where
     stats    = defaultMSet golden 1
@@ -125,6 +128,9 @@ myConditions = composeAll [
     isIM                      --> doF (W.shift "im"),
     isMail                    --> doF (W.shift "mail"),
     resource  =? "scratchcmd" --> (doRectFloat $ W.RationalRect 0.1 0.1 0.8 0.8),
+#ifdef CONFIG_WORK
+    resource  =? "stb"        --> doF (W.shift "stb"),
+#endif
     isFullscreen              --> doFullFloat]
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
           isMail = className =? "Thunderbird"
@@ -167,7 +173,11 @@ myTopics =
     , ti "c2"    "~"
     , ti "d2"    "~"
     , ti "c3"    "~"
+#ifdef CONFIG_WORK
+    , ti "stb"   "~"
+#else
     , ti "d3"    "~"
+#endif
     , ti "sys1"  "~"
     , ti "ds1"   "~"
     , ti "sys2"  "~"

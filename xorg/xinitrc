@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cpp ~/.Xdefaults.edit > ~/.Xdefaults
+cpp -P ~/.Xdefaults.edit > ~/.Xdefaults
 if [[ -a ~/.desktop_type ]]; then
 	CONFIG=`cat ~/.desktop_type`
 elif [[ -a /proc/acpi/battery/BAT0/ ]]; then
@@ -8,6 +8,13 @@ elif [[ -a /proc/acpi/battery/BAT0/ ]]; then
 else
 	CONFIG=desktop
 fi
+
+if [[ "$CONFIG" == work ]]; then
+	cpp -P -DCONFIG_WORK    ~/.xmonad/xmonad.hs.in > ~/.xmonad/xmonad.hs
+else
+	cpp -P -DCONFIG_DESKTOP ~/.xmonad/xmonad.hs.in > ~/.xmonad/xmonad.hs
+fi
+
 if [[ "$CONFIG" == work ]]; then
 	xrandr --output HDMI1 --rotate left --left-of HDMI2
 fi
@@ -33,6 +40,12 @@ if [[ "$CONFIG" == work ]]; then
 	thunderbird &
         ~/scripts/stbstatus_updater.sh &
 	xautolock -corners '0+00' -locker ~/.slock/slock_wrapper.sh -cornerdelay 2 -cornerredelay 10 -time 3 &
+	urxvt -name stb -e ~/scripts/run_stb.sh 5444 &
+	urxvt -name stb -e ~/scripts/run_stb.sh 15444 &
+	urxvt -name stb -e ~/scripts/run_stb.sh 25444 &
+	sleep 0.5
+	urxvt -name stb &
+	urxvt -name stb &
 else
 	gajim &
 fi
