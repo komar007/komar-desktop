@@ -1,10 +1,12 @@
+#include <xmobar.rc>
+
 Config {
         font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
         bgColor = "black",
         fgColor = "#555753",
         iconRoot = ICON_ROOT,
         iconOffset = ICON_OFFSET,
-        position = Static { xpos = POS, ypos = -1, width = WIDTH, height = 13 },
+        position = Static { xpos = POS, ypos = YPOS, width = WIDTH, height = HEIGHT },
         lowerOnStart = False,
         commands = [ Run Com  "/home/komar/.xmonad/morning.sh" [] "morning" 100,
                      Run Weather "EPKT" [
@@ -19,7 +21,7 @@ Config {
 #ifdef SIDE_LEFT
         template = "}{ %EPKT% <fc=#d79921>%date%</fc>"
 #else
-        template = "}{ <fc=#aaaaaa><icon=enter.xbm/></fc> %morning% %EPKT% <fc=#d79921>%date%</fc>"
+        template = "}{ %morning% %EPKT% <fc=#d79921>%date%</fc>"
 #endif
 }
 

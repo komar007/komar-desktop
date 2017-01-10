@@ -36,6 +36,9 @@ function low_mid_high()
 if [ -x "$HOME/.slock/antime.sh" ]; then
 	should_start=$(date -d "$SHOULD_START" +%s)
 	time_start=$("$HOME/.slock/antime.sh" | head -n 1 | cut -d' ' -f 2)
+	if [ -z "$time_start" ]; then
+		exit
+	fi
 	start_diff=$[$time_start - $should_start]
 	time_now=$(date +%s)
 	day=$[$time_now - $time_start]
@@ -47,5 +50,5 @@ if [ -x "$HOME/.slock/antime.sh" ]; then
 	day_h=$(TZ= date +%R -d @$day)
 	time_part=$(color_xmobar "$time_start_h" $color_time)
 	day_part=$(color_xmobar "$day_h" $color_day)
-	echo "$time_part ($day_part)"
+	echo "<fc=#aaaaaa><icon=enter.xbm/></fc>$time_part ($day_part)"
 fi
