@@ -1,19 +1,24 @@
 Config {
-	font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
-	bgColor = "black",
-	fgColor = "#555753",
-	position = Static { xpos = POS, ypos = -1, width = WIDTH, height = 13 },
-	lowerOnStart = False,
-	commands = [ Run Weather "EPKT" [
-			"-t", " <tempC>°C",
-			"-L","10","-H","30",
-			"--normal","#b8bb26", "--high", "#fb4934", "--low","#83a5d8"
-		] 18000,
-		Run Date "%a %b %_d %k:%M:%S" "date" 10
-	],
-	sepChar = "%",
-	alignSep = "}{",
-	template = "}{ %EPKT% <fc=#d79921>%date%</fc>"
+        font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*",
+        bgColor = "black",
+        fgColor = "#555753",
+        position = Static { xpos = POS, ypos = -1, width = WIDTH, height = 13 },
+        lowerOnStart = False,
+        commands = [ Run Com  "/home/komar/.xmonad/morning.sh" [] "morning" 100,
+                     Run Weather "EPKT" [
+                        "-t", " <tempC>°C",
+                        "-L","10","-H","30",
+                        "--normal","#b8bb26", "--high", "#fb4934", "--low","#83a5d8"
+                     ] 3000,
+                     Run Date "%a %b %_d %k:%M:%S" "date" 10
+        ],
+        sepChar = "%",
+        alignSep = "}{",
+#ifdef SIDE_LEFT
+        template = "}{ %EPKT% <fc=#d79921>%date%</fc>"
+#else
+        template = "}{ %morning% %EPKT% <fc=#d79921>%date%</fc>"
+#endif
 }
 
 -- vim:ft=haskell

@@ -28,8 +28,8 @@ if [[ $CONFIG == desktop ]]; then
     /usr/bin/xmobar /tmp/xmobar-clock &
 elif [[ $CONFIG == work ]]; then
     /usr/bin/xmobar ~/.xmonad/xmobar-info-work &
-    cpp -DPOS=1000 -DWIDTH=200 ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock1
-    cpp -DPOS=2680 -DWIDTH=200 ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock2
+    cpp -DPOS=1000 -DWIDTH=200 -DSIDE_LEFT  ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock1
+    cpp -DPOS=2630 -DWIDTH=250 -DSIDE_RIGHT ~/.xmonad/xmobar-clock.in | sed '/^#/d' > /tmp/xmobar-clock2
     /usr/bin/xmobar /tmp/xmobar-clock1 &
     /usr/bin/xmobar /tmp/xmobar-clock2 &
 elif [[ $CONFIG == laptop ]]; then
