@@ -10,7 +10,7 @@ Config {
         lowerOnStart = False,
         commands = [ Run Com  "/home/komar/.xmonad/morning.sh" [] "morning" 100,
                      Run Weather "EPKT" [
-                        "-t", " <tempC>°C",
+                        "-t", "<tempC>°C",
                         "-L","10","-H","30",
                         "--normal","#b8bb26", "--high", "#fb4934", "--low","#83a5d8"
                      ] 3000,
@@ -19,7 +19,7 @@ Config {
         sepChar = "%",
         alignSep = "}{",
 #ifdef SIDE_LEFT
-        template = "}{ %EPKT% <fc=#d79921>%date%</fc>"
+        template = "}{ <fc=#d79921>%date%</fc>"
 #else
         template = "}{ %morning% %EPKT% <fc=#d79921>%date%</fc>"
 #endif
