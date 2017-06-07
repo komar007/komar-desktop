@@ -50,6 +50,7 @@
  'highlight-escape-sequences
  'modern-cpp-font-lock
  'zoom-window
+ 'general
  )
 ;; ---
 
@@ -149,6 +150,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defvar my-cpp-other-file-alist '(("\\.cpp\\'" (".h" ".hpp")) ("\\.c\\'" (".h")) ("\\.cc\\'" (".h" ".hpp")) ("\\.h\\'" (".cpp" ".c" ".cc"))))
 (setq-default ff-other-file-alist 'my-cpp-other-file-alist)
 
+(require 'general)
+
+(fset 'uml-preview
+   [?m ?_ ?? ?@ ?s ?t ?a ?r ?t ?u ?m ?l return ?V ?/ ?@ ?e ?n ?d ?u ?m ?l return ?: ?w ?  ?! ?~ ?/ ?s ?c ?r ?i ?p ?t ?s ?/ ?p ?l ?a ?n ?t ?u ?m ?l ?. ?s ?h return ?` ?_])
+
+(fset 'uml-open
+   [?: ?e ?/ ?t ?m ?p ?/ ?p ?l ?a ?n ?t ?u ?m ?l ?. ?o ?u ?t ?p ?u ?t return ?: ?a ?u ?t ?o ?- ?r ?e ?v ?e ?r ?t ?- ?m ?o ?d ?e return])
+
 (evil-leader/set-key
   "h" 'ff-get-other-file
   "a" 'evil-forward-arg
@@ -156,7 +165,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "g" 'cscope-find-global-definition
   "s" 'cscope-find-this-symbol
   "c" 'cscope-find-functions-calling-this-function
-  "f" 'cscope-find-this-file)
+  "f" 'cscope-find-this-file
+  "u" 'uml-preview
+  "U" 'uml-open
+  "r" 'git-gutter:revert-hunk)
+
 
 (require 'fiplr)
 (setq fiplr-ignored-globs '((directories (".*"))
@@ -183,6 +196,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'modern-cpp-font-lock)
 (modern-c++-font-lock-global-mode t)
+
 
 (setq inhibit-startup-message t)
 (setq confirm-kill-emacs 'y-or-n-p)
