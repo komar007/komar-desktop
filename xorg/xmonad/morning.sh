@@ -33,22 +33,33 @@ function low_mid_high()
 	fi
 }
 
+#            2d ago   yesterday        today
+WKTM_LOW=("#6a2119"   "#93352a"    ""       )
+WKTM_MID=("#2a2c28"   "#40423d"    "#719a4b")
+ WKTM_HI=("#364924"   "#456429"    "#fb4934")
+
+num=0
 if [ -x "$HOME/.slock/antime.sh" ]; then
 	should_start=$(date -d "$SHOULD_START" +%s)
-	time_start=$("$HOME/.slock/antime.sh" | head -n 1 | cut -d' ' -f 2)
-	if [ -z "$time_start" ]; then
-		exit
-	fi
-	start_diff=$[$time_start - $should_start]
-	time_now=$(date +%s)
-	day=$[$time_now - $time_start]
+	"$HOME/.slock/antime.sh" | head -n 3 | tac | while read data; do
+		time_start=$(echo "$data" | cut -d " " -f 1)
+		day=$(echo "$data" | cut -d " " -f 2)
+		start_diff=$[$time_start - $should_start]
+		time_now=$(date +%s)
 
-	color_time=$(low_mid_high $start_diff -$MAXDIFF $MAXDIFF "#719a4b" "" "#fb4934")
-	color_day=$(low_mid_high $day $WORK_TIME $[$WORK_TIME+$LEAVE_EXTRA] "" "#719a4b" "#fb4934")
+		color_time=$(low_mid_high $start_diff -$MAXDIFF $MAXDIFF "#719a4b" "" "#fb4934")
+		color_day=$(low_mid_high $day $WORK_TIME $[$WORK_TIME+$LEAVE_EXTRA]\
+			                 "${WKTM_LOW[$num]}" "${WKTM_MID[$num]}" "${WKTM_HI[$num]}")
 
-	time_start_h=$(date +%R -d @$time_start)
-	day_h=$(TZ= date +%R -d @$day)
-	time_part=$(color_xmobar "$time_start_h" $color_time)
-	day_part=$(color_xmobar "$day_h" $color_day)
-	echo "<fc=#aaaaaa><icon=enter.xbm/></fc>$time_part ($day_part)"
+		time_start_h=$(date +%R -d @$time_start)
+		day_h=$(TZ= date +%R -d @$day)
+		time_part=$(color_xmobar "$time_start_h" $color_time)
+		day_part=$(color_xmobar "$day_h" $color_day)
+		if [ "$num" -ne 2 ]; then
+			echo -n "$day_part "
+		else
+			echo -n "<fc=#cccccc><icon=enter.xbm/></fc>$time_part ($day_part)"
+		fi
+		num=$[$num+1]
+	done
 fi

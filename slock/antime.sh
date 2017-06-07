@@ -4,6 +4,7 @@ last_lock1=""
 last_lock2=""
 prev_unlock=""
 prev_lock=""
+now=$(date +%s)
 tac ~/.slock/slock_wrapper.log | while read timestamp action; do
 	case "$action" in
 		lock)
@@ -24,14 +25,15 @@ tac ~/.slock/slock_wrapper.log | while read timestamp action; do
 				d=$(date -d @$unlock +%D)
 				fst_d=$(date -d @$prev_unlock +%D)
 				if [ "$d" != "$fst_d" ]; then
-					if [ -n "$last_lock1" ]; then
-						time=$[$last_lock1 - $prev_unlock]
-						echo $prev_unlock $time
-					else
-						echo $prev_unlock
-					fi
+					lock_time=${last_lock1:-$now}
+					time=$[$lock_time - $prev_unlock]
+					echo $prev_unlock $time $sum_time
+					sum_time=0
 				fi
 			fi
+			p_lock=${prev_lock:-$now}
+			period=$[$p_lock - $unlock]
+			sum_time=$[$sum_time + $period]
 			prev_unlock=$unlock
 			;;
 	esac
