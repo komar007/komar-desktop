@@ -8,41 +8,46 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'luochen1990/rainbow'
-Plugin 'komar007/gruvbox'
+Plugin 'morhetz/gruvbox'
 Plugin 'elzr/vim-json'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
-Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/cscope_macros.vim'
-"Plugin 'wting/gitsessions.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'wellle/targets.vim'
+Plugin 'cloudhead/neovim-fuzzy'
+Plugin 'tpope/vim-sleuth'
+Plugin 'vim-scripts/a.vim'
 call vundle#end()
 
 filetype plugin indent on
 
 " -- basic behaviour
+set hidden
 syntax on             " Enable syntax highlighting
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
+set sessionoptions=buffers
 set ignorecase smartcase
 set autoindent smartindent
 set hlsearch incsearch
 set grepprg=grep\ -nH\ $*
-set cinoptions=:0,l1,t0,g0
+set cinoptions=:0,l1,t0,g0,N-s
 
 " -- look and feel
-colorscheme jellybeans-m " dirty hack
+let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_italicize_comments=0
 let g:gruvbox_underline=1
 colorscheme gruvbox
+set background=dark
 set cursorline
 set number
 set wildmenu
 set wildmode=longest,list,list,full
 set mouse=a
+set timeoutlen=500
 
 setlocal spelllang=pl
 
@@ -53,9 +58,8 @@ autocmd FileType latex                setlocal spell
 autocmd FileType c,cpp                compiler gcc
 autocmd FileType c,cpp                set formatoptions=tcqlron textwidth=78
 autocmd FileType c,cpp                set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-autocmd FileType c,cpp                nnoremap <Leader>h :e %<.h<CR>
-autocmd FileType c                    nnoremap <Leader>c :e %<.c<CR>
-autocmd FileType cpp                  nnoremap <Leader>c :e %<.cpp<CR>
+
+nmap <Leader> :A<CR>
 
 autocmd FileType pascal               compiler fpc
 autocmd FileType haskell              set expandtab
@@ -97,7 +101,7 @@ nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
 :command SanitizeXML :%s/>/>\r/g | :%s/</\r</g | :%g/^\s*$/d | :normal gg=G
 :command FixStrays :%s/\(^\| \)\([auiwzoAUIWZO]\) /\1\2\~/g
 
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 let g:rainbow_active = 1
@@ -144,9 +148,22 @@ let g:netrw_browsex_viewer = "chromium-browser"
 
 set tags=./tags;/
 
-" -- CtrlP config
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_by_filename = 1
+nnoremap <C-p> :FuzzyOpen<CR>
 
 set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
+
+if has("nvim")
+    set inccommand=split
+endif
+
+let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_sign_added = "▕▐"
+let g:gitgutter_sign_removed = "▁▁"
+let g:gitgutter_sign_modified = "▕▐"
+let g:gitgutter_sign_modified_removed = "▕▁"
+let g:gitgutter_sign_removed_first_line = "▔"
+let g:gitgutter_eager = 1
+let g:gitgutter_realtime = 1
+highlight GitGutterAdd ctermfg=71 ctermbg=237
+highlight GitGutterChange ctermfg=214 ctermbg=237
+highlight GitGutterChangeDelete ctermfg=208 ctermbg=237
