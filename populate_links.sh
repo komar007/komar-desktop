@@ -9,3 +9,5 @@ for d in xorg vim bash mutt gdb tig; do
 	done
 done
 ln -s `pwd`/slock ~/.slock
+mkdir -f ~/.icons
+ln -s `pwd`/icons/Neutral_Plus ~/.icons/

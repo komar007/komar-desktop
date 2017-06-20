@@ -18,6 +18,7 @@ fi
 if [[ "$CONFIG" == work ]]; then
 	xrandr --output HDMI1 --rotate left --left-of HDMI2
 fi
+xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 if [[ "$CONFIG" != desktop ]]; then
