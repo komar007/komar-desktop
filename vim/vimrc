@@ -36,6 +36,9 @@ set hlsearch incsearch
 set grepprg=grep\ -nH\ $*
 set cinoptions=:0,l1,t0,g0,N-s
 
+autocmd BufEnter * let &titlestring = "vim - " . expand("%:t")
+set title
+
 " -- look and feel
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_italicize_comments=0
