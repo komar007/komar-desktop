@@ -26,8 +26,8 @@ URxvt.fading: 50
 *color1:  #cc241d
 *color9:  #fb4934
 ! DarkGreen + Green
-*color2:  #98971a
-*color10: #b8bb26
+*color2:  #7a7919
+*color10: #c5c821
 ! DarkYellow + Yellow
 *color3:  #d79921
 *color11: #fabd2f
