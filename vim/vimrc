@@ -15,11 +15,15 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/conflict-marker.vim'
 Plugin 'vim-scripts/cscope_macros.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'PeterRincker/vim-argumentative'
 Plugin 'wellle/targets.vim'
 Plugin 'cloudhead/neovim-fuzzy'
 Plugin 'tpope/vim-sleuth'
 Plugin 'vim-scripts/a.vim'
+Plugin 'bogado/file-line'
 call vundle#end()
+
+set updatetime=250
 
 filetype plugin indent on
 
@@ -59,15 +63,16 @@ map <F2> :set cursorcolumn!<CR>
 " -- filetype customs
 autocmd FileType latex                setlocal spell
 autocmd FileType c,cpp                compiler gcc
-autocmd FileType c,cpp                set formatoptions=tcqlron textwidth=78
+autocmd FileType c,cpp                set formatoptions=tcqlronj textwidth=78
 autocmd FileType c,cpp                set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType c,cpp                set errorformat=%f:%l:%c:\ error:\ %m,%f:%l:%c:\ warning:\ %m
 
 nmap <Leader> :A<CR>
 
 autocmd FileType pascal               compiler fpc
 autocmd FileType haskell              set expandtab
 autocmd FileType java,cs,python,json  set tabstop=4 shiftwidth=4 expandtab
-autocmd FileType make                 set tabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType make                 set tabstop=8 shiftwidth=8 noexpandtab
 autocmd FileType html,xhtml,eruby,xml set tabstop=2 shiftwidth=2 expandtab
 
 autocmd BufNewFile,BufRead *.h,*.c set filetype=c
@@ -158,6 +163,8 @@ set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
 if has("nvim")
     set inccommand=split
 endif
+
+set fillchars=vert:┆
 
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_sign_added = "▕▐"
