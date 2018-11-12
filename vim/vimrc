@@ -21,6 +21,7 @@ Plugin 'cloudhead/neovim-fuzzy'
 Plugin 'tpope/vim-sleuth'
 Plugin 'vim-scripts/a.vim'
 Plugin 'bogado/file-line'
+Plugin 'vim-scripts/camelcasemotion'
 call vundle#end()
 
 set updatetime=250
