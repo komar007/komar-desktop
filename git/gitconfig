@@ -10,3 +10,7 @@
 
 [include]
 	path = ~/.gitconfig.local
+[http]
+	cookiefile = /home/michal/.gitcookies
+[push]
+	default = matching
