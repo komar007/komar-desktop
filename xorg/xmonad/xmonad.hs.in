@@ -1,3 +1,5 @@
+#include <xmonad.rc>
+
 import System.IO
 import qualified Data.Map as M
 import Data.Ratio ((%))
@@ -51,7 +53,7 @@ import XMonad.Util.WorkspaceCompare
 
 import XMonad.Prompt.Input
 
-browser = "chromium"
+browser = BROWSER_CMD
 
 golden = toRational (((sqrt 5) - 1)/2)
 
@@ -119,7 +121,7 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
 scratchpads = [
     NS "urxvt"     "urxvt -name scratchpad"
         (resource =? "scratchpad")   (urxvtFloating 0 0.7 1 0.301),
-    NS "alsamixer" "urxvt -name scratchmixer -e alsamixer"
+    NS MIXER_CMD ("urxvt -name scratchmixer -e " ++ MIXER_CMD)
         (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3),
     NS "bc"        "urxvt -name bc -e bc -l"
         (resource =? "bc")           (urxvtFloating 0.7 0.2 0.3 0.6),
@@ -142,11 +144,7 @@ myConditions = composeAll [
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
           isMail = className =? "Thunderbird"
 
-#ifdef CONFIG_WORK
-defaultFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-#else
-defaultFont = "xft:xos4 Terminus:pixelsize=20"
-#endif
+defaultFont = xstr(DEFAULT_FONT)
 
 tabTheme = defaultTheme {
     fontName             = defaultFont,
@@ -327,7 +325,7 @@ myKeys xmproc = [
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
     ("M-p",               shellPromptHere xpconfig),
     ("M-s",               namedScratchpadAction scratchpads "urxvt"),
-    ("M-a",               namedScratchpadAction scratchpads "alsamixer"),
+    ("M-a",               namedScratchpadAction scratchpads MIXER_CMD),
     ("M-x",               namedScratchpadAction scratchpads "bc"),
     ("M-c",               namedScratchpadAction scratchpads "notepad"),
     ("M-d",               changeDir xpconfig),

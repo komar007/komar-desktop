@@ -1,4 +1,0 @@
-#define DEFAULT_FONT "xft:xos4 Terminus:pixelsize=20"
-#define ICON_OFFSET 8
-#define HEIGHT 22
-#define YPOS 0

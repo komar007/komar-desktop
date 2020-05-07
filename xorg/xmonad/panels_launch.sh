@@ -20,7 +20,7 @@ while [ ! -p "$FIFO" ]; do
     sleep 1
 done
 
-FN=$(cpp -P -I"$DIR" - <<< '#include "xmobar.rc"'$'\n''DEFAULT_FONT' | cut -d: -f2- | cut -d\" -f1)
+FN=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''DEFAULT_FONT' | cut -d: -f2-)
 
 # in case cat dies because of broken pipe
 while true; do
