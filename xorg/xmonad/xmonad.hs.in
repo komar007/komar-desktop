@@ -95,7 +95,12 @@ myLayoutHook = workspaceDir "~" $ smartBorders $
     vnc      = defaultVSet golden 1
     norm r n = avoidStruts $ defaultSet r n
 
-iconDir = "/home/komar/.xmonad/dzen2_img/"
+#ifdef CONFIG_WORK
+iconDir = "/home/komar/.xmonad/dzen2_img_small/"
+#else
+iconDir = "/home/komar/.xmonad/dzen2_img_large/"
+#endif
+
 wrapSpace = wrap "^p(8)" "^p(1)"
 preIcon i = wrap ("^i(" ++ iconDir ++ i ++ ")") "^p(1)"
 

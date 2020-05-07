@@ -1,12 +1,11 @@
 #!/bin/bash
 
-FIFO_PREFIX=/tmp/xmobar_panel_fifo
-FIFO="${FIFO_PREFIX}_$RANDOM"
+FIFO=/tmp/xmobar_panel_fifo
 
-rm "${FIFO_PREFIX}"_* -fr
-
-mkfifo "$FIFO"
-echo "$FIFO" > ${FIFO_PREFIX}
+if [ ! -p "$FIFO" ]; then
+	rm -fr "$FIFO"
+	mkfifo "$FIFO"
+fi
 while true; do
 	cat > $FIFO
 	sleep 1
