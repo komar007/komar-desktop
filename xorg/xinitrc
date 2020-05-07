@@ -29,8 +29,6 @@ xset r rate 250 20
 (
 	urxvt -name stats -e bash -c "tail -f /var/log/messages | ccze" &
 	sleep 1
-	urxvt -name stats -e ncmpcpp &
-	sleep 1
 	urxvt -name stats -e htop &
 ) &
 for i in `seq 1 1 4`; do
@@ -48,7 +46,7 @@ if [[ "$CONFIG" == work ]]; then
 	urxvt -name stb &
 	urxvt -name stb &
 else
-	gajim &
+	echo
 fi
 xset s off
 xset dpms 120 120 120

@@ -38,7 +38,7 @@ function share()
 # avoid multiple aliasing
 unalias vi ls grep e t pdf1 pdf2 pdf3 less tig 2>/dev/null
 
-export EDITOR="vim"
+export EDITOR="nvim"
 alias vi='editor'
 alias ls="ls --color=always"
 alias grep="grep --colour=always"

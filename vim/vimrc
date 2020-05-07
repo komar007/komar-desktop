@@ -178,3 +178,5 @@ let g:gitgutter_realtime = 1
 highlight GitGutterAdd ctermfg=71 ctermbg=237
 highlight GitGutterChange ctermfg=214 ctermbg=237
 highlight GitGutterChangeDelete ctermfg=208 ctermbg=237
+
+set updatetime=100
