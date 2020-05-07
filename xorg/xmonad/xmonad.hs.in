@@ -144,10 +144,10 @@ myConditions = composeAll [
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
           isMail = className =? "Thunderbird"
 
-defaultFont = xstr(DEFAULT_FONT)
+guiFont = xstr(GUI_FONT)
 
 tabTheme = defaultTheme {
-    fontName             = defaultFont,
+    fontName             = guiFont,
     activeColor          = "#111111",
     inactiveColor        = "#000000",
     urgentColor          = "#222222",
@@ -157,25 +157,17 @@ tabTheme = defaultTheme {
     activeTextColor      = "#c4a000",
     inactiveTextColor    = "#aaaaaa",
     urgentTextColor      = "#dd0000",
-#ifdef CONFIG_WORK
-    decoHeight           = 12
-#else
-    decoHeight           = 20
-#endif
+    decoHeight           = HEIGHT
 }
 
 xpconfig = defaultXPConfig {
-    font        = defaultFont,
+    font        = guiFont,
     bgColor     = "#000000",
     fgColor     = "#aaaaaa",
     bgHLight    = "#cccccc",
     fgHLight    = "#000000",
     promptBorderWidth = 0,
-#ifdef CONFIG_WORK
-    height = 10
-#else
-    height = 20
-#endif
+    height = HEIGHT
 }
 
 data TopicItem = TI { topicName :: Topic   -- (22b)

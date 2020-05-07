@@ -1,5 +1,6 @@
 #include <xmonad_helper.inc>
 
+#define GUI_FONT xft:xos4 Terminus:pixelsize=18
 #define DEFAULT_FONT xft:xos4 Terminus:pixelsize=20
 #define ICON_OFFSET 8
 #define HEIGHT 22
