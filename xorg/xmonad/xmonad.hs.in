@@ -1,6 +1,5 @@
 import System.IO
 import qualified Data.Map as M
-import qualified System.IO.UTF8
 import Data.Ratio ((%))
 import XMonad
 import XMonad.ManageHook
@@ -27,6 +26,8 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.MagicFocus
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.LayoutScreens
+import XMonad.Layout.TwoPane
 import qualified XMonad.Layout.HintedTile as H
 import qualified XMonad.Layout.ResizableTile as R
 import XMonad.Prompt
@@ -61,12 +62,9 @@ myTall r n = named "tall" $ tall r n
 myWide r n = named "wide" $ Mirror $ tall r n
 myFull     = named "full" $ noBorders (tabbedBottom shrinkText tabTheme)
 mySimpleFull  = named "full" $ noBorders Full
-mySimpleFloat = named "float" $ simplestFloat
 
 defaultSet r n =
     myTall r n ||| myWide r n ||| myFull
-defaultFloatSet r n =
-    mySimpleFloat ||| myTall r n ||| myWide r n ||| myFull
 defaultMSet r n =
     myWide r n ||| myTall r n ||| myFull
 defaultWSet r n =
@@ -87,7 +85,6 @@ myLayoutHook = workspaceDir "~" $ smartBorders $
 #ifdef CONFIG_WORK
     (onWorkspace "stb" $ norm golden 2) $
 #endif
-    (onWorkspace "float" $ defaultFloatSet golden 1) $
     (norm golden 1)
     where
     stats    = defaultMSet golden 1
@@ -131,7 +128,7 @@ scratchpads = [
     where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
 
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
-myManageHook = myScratchpadManageHook <+> myConditions <+> manageDocks <+> manageHook defaultConfig
+myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook defaultConfig
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "tempterm"   --> doF (W.shift "temp"),
@@ -145,7 +142,14 @@ myConditions = composeAll [
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
           isMail = className =? "Thunderbird"
 
+#ifdef CONFIG_WORK
+defaultFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+#else
+defaultFont = "xft:xos4 Terminus:pixelsize=20"
+#endif
+
 tabTheme = defaultTheme {
+    fontName             = defaultFont,
     activeColor          = "#111111",
     inactiveColor        = "#000000",
     urgentColor          = "#222222",
@@ -155,10 +159,12 @@ tabTheme = defaultTheme {
     activeTextColor      = "#c4a000",
     inactiveTextColor    = "#aaaaaa",
     urgentTextColor      = "#dd0000",
+#ifdef CONFIG_WORK
     decoHeight           = 12
+#else
+    decoHeight           = 20
+#endif
 }
-
-defaultFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 
 xpconfig = defaultXPConfig {
     font        = defaultFont,
@@ -167,7 +173,11 @@ xpconfig = defaultXPConfig {
     bgHLight    = "#cccccc",
     fgHLight    = "#000000",
     promptBorderWidth = 0,
+#ifdef CONFIG_WORK
     height = 10
+#else
+    height = 20
+#endif
 }
 
 data TopicItem = TI { topicName :: Topic   -- (22b)
@@ -235,9 +245,7 @@ myTopicConfig = defaultTopicConfig
     }
 
 myConf xmproc =
-#ifndef CONFIG_WORK
     docks $
-#endif
     defaultConfig {
         startupHook = setWMName "LG3D",
         manageHook = manageSpawn <+> myManageHook <+> dynamicMasterHook,
