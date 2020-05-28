@@ -23,11 +23,11 @@ Config {
             "-t", "<usedratio>%",
             "--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
         ] 10,
-        Run Com  "/home/komar/scripts/stbstatus_show.sh" [] "stb" 20,
-        Run Com  "/home/komar/.xmonad/mpds.sh" []          "mpc"  10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["fan2"]    "fan"  10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["Tdie"]   "tcpu" 10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["Tctl"]   "tmb"  10,
+        Run Com  "/home/komar/scripts/stbstatus_show.sh" [] "stb"         20,
+        Run Com  "/home/komar/.xmonad/mpds.sh" []           "mpc"         10,
+        Run Com  "/home/komar/.xmonad/sens.sh" ["fan2"]     "fancpu"      10,
+        Run Com  "/home/komar/.xmonad/sens.sh" ["fan3"]     "fanchassis"  10,
+        Run Com  "/home/komar/.xmonad/sens.sh" ["Tdie"]     "tcpu"        10,
         Run StdinReader
     ],
     sepChar = "X",
@@ -35,7 +35,7 @@ Config {
 #ifdef CONFIG_WORK
     template = "XmemoryX/XswapX XcpuX <fc=#cccccc>|</fc> stb: XstbX"
 #else
-    template = "XmemoryX/XswapX XcpuX <icon=fan.xbm/><fc=#777777>XfanXrpm</fc> <fc=#cccccc>|</fc> <icon=temp.xbm/>C <icon=cpu.xbm/><fc=#777777>XtcpuX</fc> <icon=mb.xbm/><fc=#777777>XtmbX</fc> }{ XmpcX"
+    template = "XmemoryX/XswapX XcpuX <icon=fan.xbm/><fc=#777777>XfancpuX</fc> <icon=fan.xbm/><fc=#777777>XfanchassisX</fc> <fc=#cccccc>|</fc> <icon=cpu.xbm/><fc=#777777>XtcpuX°</fc> }{ XmpcX"
 #endif
 }
 
