@@ -3,27 +3,27 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.desktop_config/xorg/xmonad"
 
 cpp -P -I"$DIR" ~/.Xdefaults.edit > ~/.Xdefaults
-if [[ -a ~/.desktop_type ]]; then
+if [ -f ~/.desktop_type ]; then
 	CONFIG=`cat ~/.desktop_type`
-elif [[ -a /proc/acpi/battery/BAT0/ ]]; then
+elif [ -f /proc/acpi/battery/BAT0/ ]; then
 	CONFIG=laptop
 else
 	CONFIG=desktop
 fi
 
-if [[ "$CONFIG" == work ]]; then
+if [ "$CONFIG" = work ]; then
 	cpp -P -I"$DIR" -DCONFIG_WORK    ~/.xmonad/xmonad.hs.in > ~/.xmonad/xmonad.hs
 else
 	cpp -P -I"$DIR" -DCONFIG_DESKTOP ~/.xmonad/xmonad.hs.in > ~/.xmonad/xmonad.hs
 fi
 
-if [[ "$CONFIG" == work ]]; then
+if [ "$CONFIG" = work ]; then
 	xrandr --output HDMI1 --rotate left --left-of HDMI2
 fi
 xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
-if [[ "$CONFIG" != desktop ]]; then
+if [ "$CONFIG" != desktop ]; then
 	xmodmap ~/.Xmodmap
 fi
 xset r rate 250 20
@@ -36,7 +36,7 @@ xset r rate 250 20
 for i in `seq 1 1 4`; do
 	urxvt -name tempterm &
 done
-if [[ "$CONFIG" == work ]]; then
+if [ "$CONFIG" = work ]; then
 	gajim &
 	thunderbird &
         ~/scripts/stbstatus_updater.sh &
