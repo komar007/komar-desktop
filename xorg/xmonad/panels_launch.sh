@@ -22,10 +22,16 @@ done
 
 FN=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''GUI_FONT' | cut -d: -f2-)
 
+if [[ $CONFIG == desktop ]]; then
+    DZEN_X=1920
+else
+    DZEN_X=1200
+fi
+
 # in case cat dies because of broken pipe
 while true; do
 	cat "$FIFO"
-done | /usr/bin/dzen2 -bg black -x 1920 -ta l -fn "$FN" &
+done | /usr/bin/dzen2 -bg black -x "$DZEN_X" -ta l -fn "$FN" &
 echo $! > $PIDS
 sleep 0.1
 if [[ $CONFIG == desktop ]]; then
