@@ -167,3 +167,5 @@ function get_ps1()
 	echo -e "$twoline"
 }
 PS1=$(get_ps1)
+
+export GDK_DPI_SCALE=1.6
