@@ -29,24 +29,24 @@ fi
 xset r rate 250 20
 # sleeps to make sure the order is correct
 (
-	urxvt -name stats -e bash -c "tail -f /var/log/messages | ccze" &
+	~/.xmonad/terminal.sh stats -e bash -c "tail -f /var/log/messages | ccze" &
 	sleep 1
-	urxvt -name stats -e htop &
+	~/.xmonad/terminal.sh stats -e htop &
 ) &
 for i in `seq 1 1 4`; do
-	urxvt -name tempterm &
+	~/.xmonad/terminal.sh tempterm &
 done
 if [ "$CONFIG" = work ]; then
 	gajim &
 	thunderbird &
         ~/scripts/stbstatus_updater.sh &
 	xautolock -corners '0+00' -locker ~/.slock/slock_wrapper.sh -cornerdelay 2 -cornerredelay 10 -time 3 &
-	urxvt -name stb -e ~/scripts/run_stb.sh 5444 &
-	urxvt -name stb -e ~/scripts/run_stb.sh 15444 &
-	urxvt -name stb -e ~/scripts/run_stb.sh 25444 &
+	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 5444 &
+	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 15444 &
+	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 25444 &
 	sleep 0.5
-	urxvt -name stb &
-	urxvt -name stb &
+	~/.xmonad/terminal.sh stb &
+	~/.xmonad/terminal.sh stb &
 else
 	echo
 fi

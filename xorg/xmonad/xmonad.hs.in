@@ -119,15 +119,15 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
 }
 
 scratchpads = [
-    NS "urxvt"     "urxvt -name scratchpad"
-        (resource =? "scratchpad")   (urxvtFloating 0 0.7 1 0.301),
-    NS MIXER_CMD ("urxvt -name scratchmixer -e " ++ MIXER_CMD)
-        (resource =? "scratchmixer") (urxvtFloating 0.15 0 0.7 0.3),
-    NS "bc"        "urxvt -name bc -e bc -l"
-        (resource =? "bc")           (urxvtFloating 0.7 0.2 0.3 0.6),
-    NS "notepad"   "urxvt -name notepad -e ~/.xmonad/notepad.sh"
-        (resource =? "notepad")      (urxvtFloating 0.3 0.2 0.4 0.6)]
-    where urxvtFloating x y w h = customFloating $ W.RationalRect x y w h
+    NS "scratchpad"     "~/.xmonad/terminal.sh scratchpad"
+        (resource =? "scratchpad")   (terminalFloating 0 0.7 1 0.301),
+    NS MIXER_CMD ("~/.xmonad/terminal.sh scratchmixer -e " ++ MIXER_CMD)
+        (resource =? "scratchmixer") (terminalFloating 0.15 0 0.7 0.3),
+    NS "bc"        "~/.xmonad/terminal.sh bc -e bc -l"
+        (resource =? "bc")           (terminalFloating 0.7 0.2 0.3 0.6),
+    NS "notepad"   "~/.xmonad/terminal.sh notepad -e ~/.xmonad/notepad.sh"
+        (resource =? "notepad")      (terminalFloating 0.3 0.2 0.4 0.6)]
+    where terminalFloating x y w h = customFloating $ W.RationalRect x y w h
 
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook defaultConfig
@@ -218,9 +218,9 @@ myTopics =
     ]
     where
         ti t d = TI t d shell
-        shell = spawnHere "urxvt"
+        shell = spawnHere "~/.xmonad/terminal.sh terminal"
         runLastPdf w = spawnHere $ "~/.xmonad/run_pdf.sh " ++ w
-        shellRemote host cmd = spawnHere $ "urxvt -e ssh " ++ host ++ " -t " ++ cmd
+        shellRemote host cmd = spawnHere $ "~/.xmonad/terminal.sh terminal -e ssh " ++ host ++ " -t " ++ cmd
 
 myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
@@ -245,7 +245,7 @@ myConf xmproc =
         modMask = mod4Mask,
         normalBorderColor = "#000000",
         focusedBorderColor = "#3465a4",
-        terminal = "urxvt",
+        terminal = "~/.xmonad/terminal.sh terminal",
         workspaces = myTopicNames,
         clickJustFocuses = True
 } `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
@@ -301,7 +301,7 @@ myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP"
 
 -- Runs command in scratchpad
 scratchPrompt :: String -> X ()
-scratchPrompt c = spawnHere $ "urxvt -name scratchcmd -e bash -ic '" ++ c ++ "'"
+scratchPrompt c = spawnHere $ "~/.xmonad/terminal.sh scratchcmd -e bash -ic '" ++ c ++ "'"
 
 -- taken from XMonad.Acrions.SpawnOn, because it is not exported...
 mkPrompt :: (String -> X ()) -> XPConfig -> X ()
@@ -316,7 +316,7 @@ myKeys xmproc = [
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
     ("M-p",               shellPromptHere xpconfig),
-    ("M-s",               namedScratchpadAction scratchpads "urxvt"),
+    ("M-s",               namedScratchpadAction scratchpads "scratchpad"),
     ("M-a",               namedScratchpadAction scratchpads MIXER_CMD),
     ("M-x",               namedScratchpadAction scratchpads "bc"),
     ("M-c",               namedScratchpadAction scratchpads "notepad"),
