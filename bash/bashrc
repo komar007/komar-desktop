@@ -99,9 +99,10 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
 
 # predicates
-p_is_git='-n "$(git rev-parse --git-dir 2> /dev/null)"'
-p_is_ssh='"$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\)'
-p_cmd_ok='$? -eq 0'
+p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
+p_is_git_clean='git diff-index --quiet HEAD --'
+p_is_ssh='[[ "$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\) ]]'
+p_cmd_ok='[[ $? -eq 0 ]]'
 # strings
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 p_git_desc='$(git describe 2>/dev/null)'
@@ -112,7 +113,7 @@ function p_if_else()
 	cond=$1
 	yes=$2
 	no=$3
-	echo -n "\$(if [[ $cond ]]; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
+	echo -n "\$(if $cond; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
 }
 function p_if()
 {
@@ -150,17 +151,19 @@ function get_ps1()
 	YELLOW='\[\e[01;33m\]'
 	RESET='\[\e[00m\]'
 
+	p_git_stats='$(git diff-index  --shortstat  HEAD -- | sed -r "s/[^,]+, ([0-9]+)[^,]+, ([0-9]+).*/'$GREEN'+\1'$RED'-\2/")'
+
 	prev_status="$(p_if_else "$p_cmd_ok" '✔' "$BLINKRED\$?$RESET")"
 	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
-	branch_token="$(p_if "$p_is_git" "$GRAY[$RED$p_git_branch$GRAY]$RESET ")"
+	branch_token="$(p_if "$p_is_git" "${YELLOW}$p_git_branch$GRAY$p_git_stats$RESET ")"
 	right_tag="$(p_right "$p_time")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
 	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
 
 	twoline=""
-	twoline+="$GRAY┌╴[$prev_status$GRAY] $branch_token$GRAY[$BLUE\w$GRAY]$right_tag$RESET\n"
-	twoline+="$GRAY└╴$GREEN\u$GRAY@$ssh_tag$LGREEN\h"
+	twoline+="$GRAY░ $prev_status$GRAY $branch_token$GRAY$BLUE\w$GRAY$right_tag$RESET\n"
+	twoline+="$GRAY░ $GREEN\u$GRAY@$ssh_tag$LGREEN\h"
 	twoline+=" $BLUE\W \\\$$RESET $(p_set_title $title)"
 
 	echo -e "$twoline"
