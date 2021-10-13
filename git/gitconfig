@@ -15,3 +15,5 @@
 	cookiefile = /home/michal/.gitcookies
 [push]
 	default = matching
+[init]
+	templatedir = ~/.git_template
