@@ -25,9 +25,13 @@ Plugin 'vim-scripts/camelcasemotion'
 Plugin 'mzlogin/vim-markdown-toc'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'rust-lang/rust.vim'
 call vundle#end()
 
-set updatetime=250
+" -- neovide
+set gfn=Jetbrains\ Mono:h9
+let g:neovide_cursor_animation_length=0.07
+let g:neovide_cursor_trail_size=0.05
 
 filetype plugin indent on
 
@@ -49,8 +53,9 @@ set title
 
 " -- look and feel
 let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_italicize_comments=0
+let g:gruvbox_italicize_comments=1
 let g:gruvbox_underline=1
+let g:gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
 set cursorline
@@ -161,6 +166,7 @@ let g:netrw_browsex_viewer = "chromium-browser"
 set tags=./tags;/
 
 nnoremap <C-p> :FuzzyOpen<CR>
+nnoremap <silent> <C-6> <C-^>
 
 set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
 
@@ -178,9 +184,9 @@ let g:gitgutter_sign_modified_removed = "▕▁"
 let g:gitgutter_sign_removed_first_line = "▔"
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
-highlight GitGutterAdd ctermfg=71 ctermbg=237
-highlight GitGutterChange ctermfg=214 ctermbg=237
-highlight GitGutterChangeDelete ctermfg=208 ctermbg=237
+highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F ctermbg=237 guibg=#3C3836
+highlight GitGutterChange ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
+highlight GitGutterChangeDelete ctermfg=208 guifg=#FB4934 ctermbg=237 guibg=#3C3836
 
 set updatetime=100
 set nocscopeverbose
