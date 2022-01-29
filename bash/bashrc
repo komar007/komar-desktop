@@ -89,7 +89,6 @@ _expand()
 	return 0;
 }
 
-~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 export LESS_TERMCAP_mb=$'\E[1;31m'   # blink
 export LESS_TERMCAP_md=$'\E[1;32m'   # bold

@@ -1,32 +1,28 @@
 set nocompatible
-
 filetype off
 
-" -- plugins
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'bling/vim-airline'
-Plugin 'luochen1990/rainbow'
-Plugin 'morhetz/gruvbox'
-Plugin 'elzr/vim-json'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'rhysd/conflict-marker.vim'
-Plugin 'vim-scripts/cscope_macros.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'PeterRincker/vim-argumentative'
-Plugin 'wellle/targets.vim'
-Plugin 'cloudhead/neovim-fuzzy'
-Plugin 'tpope/vim-sleuth'
-Plugin 'vim-scripts/a.vim'
-Plugin 'bogado/file-line'
-Plugin 'vim-scripts/camelcasemotion'
-Plugin 'mzlogin/vim-markdown-toc'
-Plugin 'pangloss/vim-javascript'
-Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'rust-lang/rust.vim'
-call vundle#end()
+call plug#begin()
+Plug 'bling/vim-airline'
+Plug 'luochen1990/rainbow'
+Plug 'morhetz/gruvbox'
+Plug 'elzr/vim-json'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/conflict-marker.vim'
+Plug 'vim-scripts/cscope_macros.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'wellle/targets.vim'
+Plug 'cloudhead/neovim-fuzzy'
+Plug 'tpope/vim-sleuth'
+Plug 'vim-scripts/a.vim'
+Plug 'bogado/file-line'
+Plug 'vim-scripts/camelcasemotion'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'rust-lang/rust.vim'
+call plug#end()
 
 " -- neovide
 set gfn=Jetbrains\ Mono:h9
