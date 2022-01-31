@@ -2,9 +2,8 @@ set nocompatible
 filetype off
 
 call plug#begin()
-Plug 'bling/vim-airline'
-Plug 'luochen1990/rainbow'
-Plug 'morhetz/gruvbox'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'gruvbox-community/gruvbox'
 Plug 'elzr/vim-json'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'airblade/vim-gitgutter'
@@ -21,11 +20,25 @@ Plug 'vim-scripts/camelcasemotion'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'rust-lang/rust.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'nvim-lua/plenary.nvim' " for telescope
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'simrat39/rust-tools.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 call plug#end()
 
 " -- neovide
-set gfn=Jetbrains\ Mono:h9
+set gfn=Jetbrains\ Mono:h8.5
 let g:neovide_cursor_animation_length=0.07
 let g:neovide_cursor_trail_size=0.05
 
@@ -54,6 +67,7 @@ let g:gruvbox_underline=1
 let g:gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
+highlight Comment ctermfg=59 guifg=#5f5f5f
 set cursorline
 set number
 set wildmenu
@@ -97,63 +111,8 @@ match ExtraWhitespace /\s\+$\|^\ [^*]?/
 
 let g:Tex_DefaultTargetFormat = 'pdf'
 
-" -- snippet config [DEPRECATED]
-function! ReloadSnippets( snippets_dir, ft )
-    if strlen( a:ft ) == 0
-        let filetype = "_"
-    else
-        let filetype = a:ft
-    endif
-
-    call ResetSnippets()
-    call GetSnippets( a:snippets_dir, filetype )
-endfunction
-
-nmap ,rr :call ReloadSnippets(snippets_dir, &filetype)<CR>
-
 :command SanitizeXML :%s/>/>\r/g | :%s/</\r</g | :%g/^\s*$/d | :normal gg=G
 :command FixStrays :%s/\(^\| \)\([auiwzoAUIWZO]\) /\1\2\~/g
-
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-
-let g:rainbow_active = 1
-let g:rainbow_conf = {
-\   'parentheses': [
-\       'start=/(/ end=/)/ fold',
-\       'start=/\[/ end=/\]/ fold',
-\       'start=/{/ end=/}/ fold'
-\   ],
-\   'ctermfgs': [
-\       'brown',
-\       'Darkblue',
-\       'darkgray',
-\       'darkgreen',
-\       'darkcyan',
-\       'darkred',
-\       'darkmagenta',
-\       'brown',
-\       'gray',
-\       'black',
-\       'darkmagenta',
-\       'Darkblue',
-\       'darkgreen',
-\       'darkcyan',
-\       'darkred',
-\       'red',
-\       'blue',
-\       'green',
-\       'yellow',
-\       'cyan',
-\       'magenta',
-\       'lightblue',
-\       'lightgreen',
-\       'lightyellow',
-\       'lightcyan',
-\       'lightmagenta'
-\    ],
-\   'operators': '_,\|;\|==\|!=\|!\||\|&\|\^\|\~\|+\|-\|:\|?\|=\|*\|->\|\.\|<\|>_'
-\}
 
 set laststatus=2
 
@@ -161,7 +120,7 @@ let g:netrw_browsex_viewer = "chromium-browser"
 
 set tags=./tags;/
 
-nnoremap <C-p> :FuzzyOpen<CR>
+" easier combo than ctrl+shift+6
 nnoremap <silent> <C-6> <C-^>
 
 set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
@@ -172,17 +131,71 @@ endif
 
 set fillchars=vert:┆
 
+" signs/gutter
+set signcolumn=yes
 let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_sign_added = "▕▐"
-let g:gitgutter_sign_removed = "▁▁"
-let g:gitgutter_sign_modified = "▕▐"
-let g:gitgutter_sign_modified_removed = "▕▁"
-let g:gitgutter_sign_removed_first_line = "▔"
+let g:gitgutter_sign_added = "▍"
+let g:gitgutter_sign_removed = "◢"
+let g:gitgutter_sign_modified = "▍"
+let g:gitgutter_sign_modified_removed = "▍"
+let g:gitgutter_sign_removed_first_line = "◥"
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
 highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F ctermbg=237 guibg=#3C3836
 highlight GitGutterChange ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
-highlight GitGutterChangeDelete ctermfg=208 guifg=#FB4934 ctermbg=237 guibg=#3C3836
+highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3836
+
+" diagnostics
+lua <<END
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+  },
+})
+
+local types = {"Error", "Warn", "Hint", "Info"}
+for i,type in pairs(types) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { numhl = hl })
+end
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+END
+highlight DiagnosticSignError ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3836
+highlight DiagnosticSignWarn ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
+highlight DiagnosticSignHint ctermbg=237 guibg=#3C3836
+highlight DiagnosticSignInfo ctermfg=71 guifg=#5FAF5F ctermbg=237 guibg=#3C3836
+highlight! link Pmenu Normal
 
 set updatetime=100
 set nocscopeverbose
+
+" telescope
+runtime telescope.lua
+nnoremap <C-p> :lua telescope_findfiles()<CR>
+nnoremap <Leader><C-p> :lua telescope_buffers()<CR>
+
+runtime treesitter.lua
+runtime lsp.lua
+
+" nvim-cmp
+set completeopt=menu,menuone,noselect
+runtime completion.lua
+
+" lualine.nvim configuration
+runtime lualine.lua
+
+" vsnip keys
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
