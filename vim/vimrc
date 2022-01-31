@@ -22,6 +22,7 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'vim-scripts/a.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/camelcasemotion'
+Plugin 'mzlogin/vim-markdown-toc'
 call vundle#end()
 
 set updatetime=250
@@ -180,3 +181,4 @@ highlight GitGutterChange ctermfg=214 ctermbg=237
 highlight GitGutterChangeDelete ctermfg=208 ctermbg=237
 
 set updatetime=100
+set nocscopeverbose
