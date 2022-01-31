@@ -23,6 +23,8 @@ Plugin 'vim-scripts/a.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/camelcasemotion'
 Plugin 'mzlogin/vim-markdown-toc'
+Plugin 'pangloss/vim-javascript'
+Plugin 'maxmellon/vim-jsx-pretty'
 call vundle#end()
 
 set updatetime=250
