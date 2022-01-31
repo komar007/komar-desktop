@@ -18,6 +18,10 @@ URxvt.searchable-scrollback: 1-s
 URxvt.modifier: alt
 URxvt.fading: 50
 
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-equal:  font-size:reset
+
 ! ==== /terminal ========================================== !
 
 *foreground: #ebdbb2
