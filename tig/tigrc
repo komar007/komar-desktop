@@ -1,2 +1,3 @@
 bind main R ?git revert %(commit)
 bind main P ?git pg %(commit)
+set show-untracked = false
