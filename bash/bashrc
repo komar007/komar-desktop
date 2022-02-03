@@ -168,3 +168,4 @@ function get_ps1()
 PS1=$(get_ps1)
 
 export GDK_DPI_SCALE=1.6
+export PATH=$PATH:~/.cargo/bin:~/.npm-global/bin/:~/.local/bin
