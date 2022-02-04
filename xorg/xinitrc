@@ -39,14 +39,7 @@ done
 if [ "$CONFIG" = work ]; then
 	gajim &
 	thunderbird &
-        ~/scripts/stbstatus_updater.sh &
 	xautolock -corners '0+00' -locker ~/.slock/slock_wrapper.sh -cornerdelay 2 -cornerredelay 10 -time 3 &
-	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 5444 &
-	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 15444 &
-	~/.xmonad/terminal.sh stb -e ~/scripts/run_stb.sh 25444 &
-	sleep 0.5
-	~/.xmonad/terminal.sh stb &
-	~/.xmonad/terminal.sh stb &
 else
 	echo
 fi
