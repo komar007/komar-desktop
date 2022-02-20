@@ -50,7 +50,7 @@ syntax on             " Enable syntax highlighting
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
-set sessionoptions=buffers
+set sessionoptions=buffers,curdir,folds,tabpages
 set ignorecase smartcase
 set autoindent smartindent
 set hlsearch incsearch
@@ -67,7 +67,7 @@ let g:gruvbox_underline=1
 let g:gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
-highlight Comment ctermfg=59 guifg=#5f5f5f
+highlight Comment ctermfg=243 guifg=#7f7f7f
 set cursorline
 set number
 set wildmenu
@@ -123,8 +123,6 @@ set tags=./tags;/
 " easier combo than ctrl+shift+6
 nnoremap <silent> <C-6> <C-^>
 
-set sessionoptions=blank,buffers,curdir,folds,tabpages,localoptions
-
 if has("nvim")
     set inccommand=split
 endif
@@ -168,8 +166,8 @@ for i,type in pairs(types) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { numhl = hl })
 end
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 END
+
 highlight DiagnosticSignError ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3836
 highlight DiagnosticSignWarn ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
 highlight DiagnosticSignHint ctermbg=237 guibg=#3C3836
@@ -181,8 +179,8 @@ set nocscopeverbose
 
 " telescope
 runtime telescope.lua
-nnoremap <C-p> :lua telescope_findfiles()<CR>
-nnoremap <Leader><C-p> :lua telescope_buffers()<CR>
+nnoremap <C-p> :lua telescope_buffers()<CR>
+nnoremap <Leader><C-p> :lua telescope_findfiles()<CR>
 
 runtime treesitter.lua
 runtime lsp.lua
@@ -199,3 +197,8 @@ imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab
 smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+
+" next/prev problem
+nnoremap <silent> ]l :lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> [l :lua vim.diagnostic.goto_prev()<CR>
