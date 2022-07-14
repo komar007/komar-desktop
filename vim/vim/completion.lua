@@ -30,6 +30,9 @@ local kind_icons = {
 }
 
 cmp.setup({
+  completion = {
+    autocomplete = false,
+  },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -71,3 +74,10 @@ cmp.setup({
     ghost_text = true,
   },
 })
+
+vim.cmd([[
+  augroup CmpDebounceAuGroup
+    au!
+    au TextChangedI * lua require("debounce").debounce()
+  augroup end
+]])
