@@ -1,6 +1,14 @@
 require("telescope").setup {
   defaults = {
-    path_display={"truncate"}
+    path_display={"truncate"},
+    mappings = {
+      n = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer
+      },
+      i = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer
+      },
+    },
   },
   extensions = {
     ["ui-select"] = {

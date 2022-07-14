@@ -35,6 +35,8 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'inkarkat/vim-ingo-library' " required by inkarkat/vim-EnhancedJumps
+Plug 'inkarkat/vim-EnhancedJumps'
 call plug#end()
 
 " -- neovide
@@ -202,3 +204,9 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 " next/prev problem
 nnoremap <silent> ]l :lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> [l :lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> gl :lua vim.diagnostic.open_float()<CR>
+
+" EnhancedJumps
+let g:EnhancedJumps_no_mappings = 1
+nmap <Leader><C-o> <Plug>EnhancedJumpsRemoteOlder
+nmap <Leader><C-i> <Plug>EnhancedJumpsRemoteNewer
