@@ -29,9 +29,9 @@ fi
 xset r rate 250 20
 # sleeps to make sure the order is correct
 (
-	~/.xmonad/terminal.sh stats -e bash -c "tail -f /var/log/messages | ccze" &
+	~/.xmonad/terminal.sh stats bash -c "tail -f /var/log/messages | ccze" &
 	sleep 1
-	~/.xmonad/terminal.sh stats -e htop &
+	~/.xmonad/terminal.sh stats htop &
 ) &
 for i in `seq 1 1 4`; do
 	~/.xmonad/terminal.sh tempterm &
