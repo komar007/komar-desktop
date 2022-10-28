@@ -27,6 +27,7 @@ Plug 'p00f/nvim-ts-rainbow'
 Plug 'nvim-lua/plenary.nvim' " for telescope
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'rust-lang/rust.vim'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -85,7 +86,7 @@ map <F2> :set cursorcolumn!<CR>
 autocmd FileType latex                setlocal spell
 autocmd FileType c,cpp                compiler gcc
 autocmd FileType c,cpp                set formatoptions=tcqlronj textwidth=78
-autocmd FileType c,cpp                set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType c,cpp,rust           set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 autocmd FileType c,cpp                set errorformat=%f:%l:%c:\ error:\ %m,%f:%l:%c:\ warning:\ %m
 
 nmap <Leader> :A<CR>
