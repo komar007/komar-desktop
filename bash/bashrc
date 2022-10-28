@@ -162,8 +162,8 @@ function get_ps1()
 	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
 
 	twoline=""
-	twoline+="$GRAY░ $prev_status$GRAY $branch_token$GRAY$BLUE\w$GRAY$right_tag$RESET\n"
-	twoline+="$GRAY░ $GREEN\u$GRAY@$ssh_tag$LGREEN\h"
+	twoline+="$GREEN░ $prev_status$GRAY $branch_token$GRAY$BLUE\w$GRAY$right_tag$RESET\n"
+	twoline+="$GREEN░ $GREEN\u$GRAY@$ssh_tag$LGREEN\h"
 	twoline+=" $BLUE\W \\\$$RESET $(p_set_title $title)"
 
 	echo -e "$twoline"
