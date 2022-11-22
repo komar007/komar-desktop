@@ -148,7 +148,9 @@ highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3
 " diagnostics
 lua <<END
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = {
+    prefix = '●',
+  },
   signs = true,
   underline = true,
   update_in_insert = false,
@@ -170,10 +172,6 @@ for i,type in pairs(types) do
 end
 END
 
-highlight DiagnosticSignError ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3836
-highlight DiagnosticSignWarn ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
-highlight DiagnosticSignHint ctermbg=237 guibg=#3C3836
-highlight DiagnosticSignInfo ctermfg=71 guifg=#5FAF5F ctermbg=237 guibg=#3C3836
 highlight! link Pmenu Normal
 
 set updatetime=100
