@@ -11,7 +11,7 @@ local on_lsp_attach = function(client)
   vim.api.nvim_buf_set_keymap(0, 'n', 'td', ':lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', ':lua vim.lsp.buf.signature_help()<CR>', {noremap = true, silent = true})
   -- action shortcuts
-  vim.api.nvim_buf_set_keymap(0, 'n', 'ga', ':Telescope lsp_code_actions theme=get_cursor<CR>', {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, 'n', 'ga', ':lua vim.lsp.buf.code_action()<CR>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', '<leader>r', ':lua vim.lsp.buf.rename()<CR>', {noremap = true, silent = true})
 end
 
@@ -27,13 +27,8 @@ require('lspconfig').dockerls.setup(defcfg)
 require('lspconfig').vimls.setup(defcfg)
 
 require('rust-tools').setup({
-  tools = {
-    autoSetHints = true,
-  },
+  server = defcfg, -- configuration for rust-analyzer (it cannot be setup separately)
 })
--- git clone https://github.com/rust-analyzer/rust-analyzer.git
--- cargo xtask install --server
-require('lspconfig').rust_analyzer.setup(defcfg)
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
@@ -42,4 +37,3 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "rounded",
 })
-
