@@ -25,7 +25,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'nvim-lua/plenary.nvim' " for telescope
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'stevearc/dressing.nvim'
 Plug 'rust-lang/rust.vim'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'

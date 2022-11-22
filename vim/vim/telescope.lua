@@ -11,12 +11,8 @@ require("telescope").setup {
     },
   },
   extensions = {
-    ["ui-select"] = {
-      require("telescope.themes").get_ivy {}
-    }
   }
 }
-require("telescope").load_extension("ui-select")
 
 local main_theme = require('telescope.themes').get_ivy({
   layout_config = {
