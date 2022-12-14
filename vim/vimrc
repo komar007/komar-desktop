@@ -111,6 +111,8 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#902020
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|^\ [^*]?/
 match ExtraWhitespace /\s\+$\|^\ [^*]?/
 
+highlight PmenuSel guifg=#ffffff ctermfg=236
+
 let g:Tex_DefaultTargetFormat = 'pdf'
 
 :command SanitizeXML :%s/>/>\r/g | :%s/</\r</g | :%g/^\s*$/d | :normal gg=G

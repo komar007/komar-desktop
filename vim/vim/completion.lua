@@ -30,6 +30,15 @@ local kind_icons = {
 }
 
 cmp.setup({
+  window = {
+    completion = {
+      border = 'rounded',
+      scrollbar = '║',
+    },
+    documentation = {
+      border = 'rounded',
+    },
+  },
   completion = {
     autocomplete = false,
   },
