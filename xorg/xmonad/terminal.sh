@@ -6,7 +6,11 @@ NAME=$1
 shift
 
 if [ "$T" = alacritty ]; then
-        alacritty --class "$NAME" "$@"
+        if [ $# -gt 0 ]; then
+                alacritty --class "$NAME" -e "$@"
+        else
+                alacritty --class "$NAME"
+        fi
 elif [ "$T" = urxvt ]; then
         if [ $# -gt 0 ]; then
                 urxvt -name "$NAME" -e "$@"
