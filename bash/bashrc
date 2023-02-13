@@ -141,6 +141,14 @@ function p_right()
 
 function get_ps1()
 {
+	if grep -q rxvt <<< "$TERM"; then
+		PLUS=+
+		MINUS=-
+	else
+		PLUS=" "
+		MINUS=" "
+	fi
+
 	GRAY='\[\e[00;30m\]'
 	BLINKRED='\[\e[5;31m\]'
 	RED='\[\e[01;31m\]'
