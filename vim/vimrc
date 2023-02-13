@@ -112,6 +112,8 @@ highlight ExtraWhitespace ctermbg=red guibg=#902020
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=#902020
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|^\ [^*]?/
 match ExtraWhitespace /\s\+$\|^\ [^*]?/
+autocmd TermOpen,TermEnter * highlight clear ExtraWhitespace
+autocmd TermLeave,TermClose * highlight ExtraWhitespace ctermbg=red guibg=#902020
 
 highlight PmenuSel guifg=#ffffff ctermfg=236
 
