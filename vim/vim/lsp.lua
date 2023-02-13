@@ -4,8 +4,8 @@ local on_lsp_attach = function(client)
   -- code navigation shortcuts
   vim.api.nvim_buf_set_keymap(0, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', {noremap = true, silent = true})
-  vim.api.nvim_buf_set_keymap(0, 'n', 'gr', ':Telescope lsp_references<CR>', {noremap = true, silent = true})
-  vim.api.nvim_buf_set_keymap(0, 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gr', ':lua telescope_references()<CR>', {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gi', ':lua telescope_implementations()<CR>', {noremap = true, silent = true})
   -- docs and info
   vim.api.nvim_buf_set_keymap(0, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', 'td', ':lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
