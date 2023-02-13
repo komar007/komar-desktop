@@ -136,7 +136,7 @@ function p_set_title()
 function p_right()
 {
 	cmd="$*"
-	echo -n "\[\e[s\r\e[\$[\$COLUMNS-\$(wc -c <<< $cmd)+1]C$cmd\e[u\]"
+	echo -n "\[\e7\r\e[\$[\$COLUMNS-\$(wc -c <<< $cmd)+1]C$cmd\e8\]"
 }
 
 function get_ps1()
