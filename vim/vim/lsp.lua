@@ -25,6 +25,10 @@ require('lspconfig').pylsp.setup(defcfg)
 require('lspconfig').dockerls.setup(defcfg)
 -- npm install -g vim-language-server
 require('lspconfig').vimls.setup(defcfg)
+-- npm i -g vscode-langservers-extracted
+require('lspconfig').eslint.setup(defcfg)
+-- npm i -g dockerfile-language-server-nodejs
+require('lspconfig').dockerls.setup(defcfg)
 
 require('rust-tools').setup({
   server = defcfg, -- configuration for rust-analyzer (it cannot be setup separately)
