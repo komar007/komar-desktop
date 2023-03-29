@@ -181,7 +181,9 @@ END
 highlight! link Pmenu Normal
 
 set updatetime=100
-set nocscopeverbose
+if exists('+nocscopeverbose')
+  set nocscopeverbose
+endif
 
 " telescope
 runtime telescope.lua
