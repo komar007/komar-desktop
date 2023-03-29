@@ -8,7 +8,7 @@ local on_lsp_attach = function(client)
   vim.api.nvim_buf_set_keymap(0, 'n', 'gi', ':lua telescope_implementations()<CR>', {noremap = true, silent = true})
   -- docs and info
   vim.api.nvim_buf_set_keymap(0, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
-  vim.api.nvim_buf_set_keymap(0, 'n', 'td', ':lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gt', ':lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', ':lua vim.lsp.buf.signature_help()<CR>', {noremap = true, silent = true})
   -- action shortcuts
   vim.api.nvim_buf_set_keymap(0, 'n', 'ga', ':lua vim.lsp.buf.code_action()<CR>', {noremap = true, silent = true})
