@@ -53,3 +53,12 @@ end
 telescope_implementations = function(config)
   require('telescope.builtin').lsp_implementations(fullscreen_horizontal_theme)
 end
+telescope_grep_string = function(config)
+  require('telescope.builtin').grep_string(fullscreen_horizontal_theme)
+end
+telescope_definitions = function(config)
+  require('telescope.builtin').lsp_definitions(fullscreen_horizontal_theme)
+end
+telescope_type_definitions = function(config)
+  require('telescope.builtin').lsp_type_definitions(fullscreen_horizontal_theme)
+end
