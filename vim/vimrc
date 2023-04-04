@@ -77,6 +77,7 @@ set number
 set wildmenu
 set wildmode=longest,list,list,full
 set mouse=a
+set mousemodel=extend
 set timeoutlen=500
 
 setlocal spelllang=pl
@@ -147,9 +148,10 @@ let g:gitgutter_sign_modified_removed = "▍"
 let g:gitgutter_sign_removed_first_line = "◥"
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
-highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F ctermbg=237 guibg=#3C3836
-highlight GitGutterChange ctermfg=214 guifg=#FABD2F ctermbg=237 guibg=#3C3836
-highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00 ctermbg=237 guibg=#3C3836
+highlight SignColumn guibg=#1d2021 ctermbg=234
+highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F
+highlight GitGutterChange ctermfg=214 guifg=#FABD2F
+highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00
 
 " diagnostics
 lua <<END
