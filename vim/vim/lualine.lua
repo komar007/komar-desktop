@@ -1,19 +1,17 @@
 local colors = {
-  grey     = '#a0a1a7',
   black    = '#111111',
-  white    = '#f3f3f3',
-  lgreen   = '#83a598',
-  bg       = '#202328',
+  bg_outer = '#3a3430',
+  bg_mid   = '#2a2420',
+  bg_inner = '#1d2021',
   fg       = '#bbc2cf',
   darkfg   = '#6b727f',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
-  darkblue = '#081633',
   green    = '#98be65',
+  green_i  = '#587e45',
   orange   = '#fe8019',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
+  violet   = '#8981c1',
+  marine   = '#318fcf',
   red      = '#fb4934',
 }
 
@@ -33,15 +31,15 @@ local conditions = {
 
 local theme = {
   normal = {
-    a = { fg = colors.fg, bg = '#3a3430'},
-    b = { fg = colors.fg, bg = '#2a2420' },
-    c = { fg = colors.darkfg, bg = '#1d2021' },
-    x = { fg = colors.darkfg, bg = '#1d2021' },
-    y = { fg = colors.darkfg, bg = '#2a2420' },
-    z = { fg = colors.darkfg, bg = '#3a3430'},
+    a = { fg = colors.fg, bg = colors.bg_outer },
+    b = { fg = colors.fg, bg = colors.bg_mid },
+    c = { fg = colors.darkfg, bg = colors.bg_inner },
+    x = { fg = colors.darkfg, bg = colors.bg_inner },
+    y = { fg = colors.darkfg, bg = colors.bg_mid },
+    z = { fg = colors.darkfg, bg = colors.bg_outer },
   },
-  insert = { c = { fg = colors.black, bg = colors.green } },
-  visual = { c = { fg = colors.black, bg = colors.orange } },
+  insert = { c = { fg = colors.black, bg = colors.green_i } },
+  visual = { c = { fg = colors.black, bg = colors.marine } },
   replace = { c = { fg = colors.black, bg = colors.violet } },
 }
 
@@ -187,7 +185,7 @@ require('lualine').setup {
           alternate_file = '⬌', -- Text to show to identify the alternate file
         },
         buffers_color = {
-          active = { fg = colors.fg, bg = '#1d2021' },
+          active = { fg = colors.fg, bg = colors.bg_inner },
           inactive = { fg = colors.darkfg }
         },
       },
