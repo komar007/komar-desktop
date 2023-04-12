@@ -191,6 +191,7 @@ endif
 runtime telescope.lua
 nnoremap <C-p> :lua telescope_buffers()<CR>
 nnoremap <Leader><C-p> :lua telescope_findfiles()<CR>
+nnoremap <C-*> :lua telescope_grep_string()<CR>
 
 runtime treesitter.lua
 runtime lsp.lua
@@ -218,3 +219,5 @@ nnoremap <silent> gl :lua vim.diagnostic.open_float()<CR>
 let g:EnhancedJumps_no_mappings = 1
 nmap <Leader><C-o> <Plug>EnhancedJumpsRemoteOlder
 nmap <Leader><C-i> <Plug>EnhancedJumpsRemoteNewer
+
+:command Fmt lua vim.lsp.buf.format()
