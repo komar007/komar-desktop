@@ -153,6 +153,10 @@ highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F
 highlight GitGutterChange ctermfg=214 guifg=#FABD2F
 highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00
 
+highlight LspReferenceText gui=reverse,bold cterm=reverse,bold
+highlight LspReferenceWrite guifg='#df4432' ctermfg=red gui=reverse,bold cterm=reverse,bold
+highlight LspReferenceRead guifg='#acaf26' ctermfg=green gui=reverse,bold cterm=reverse,bold
+
 " diagnostics
 lua <<END
 vim.diagnostic.config({
@@ -182,7 +186,7 @@ END
 
 highlight! link Pmenu Normal
 
-set updatetime=100
+set updatetime=500
 if exists('+nocscopeverbose')
   set nocscopeverbose
 endif
