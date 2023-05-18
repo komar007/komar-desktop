@@ -153,6 +153,15 @@ highlight GitGutterAdd ctermfg=71 guifg=#5FAF5F
 highlight GitGutterChange ctermfg=214 guifg=#FABD2F
 highlight GitGutterChangeDelete ctermfg=202 guifg=#ff5f00
 
+highlight DiagnosticSignError guifg='#3c3836' guibg='#fb4934' ctermfg=237 ctermbg=167 gui=bold
+highlight DiagnosticSignHint guifg='#3c3836' guibg='#8ec07c' ctermfg=237 ctermbg=108
+highlight DiagnosticSignInfo guifg='#3c3836' guibg='#83a598' ctermfg=237 ctermbg=109
+highlight DiagnosticSignWarn guifg='#3c3836' guibg='#fabd2f' ctermfg=237 ctermbg=214 gui=bold
+
+highlight DiagnosticSignErrorLine guibg='#331106'
+highlight DiagnosticSignHintLine guibg='#062201'
+highlight DiagnosticSignWarnLine guibg='#332206'
+
 highlight LspReferenceText gui=reverse,bold cterm=reverse,bold
 highlight LspReferenceWrite guifg='#df4432' ctermfg=red gui=reverse,bold cterm=reverse,bold
 highlight LspReferenceRead guifg='#acaf26' ctermfg=green gui=reverse,bold cterm=reverse,bold
@@ -180,7 +189,8 @@ vim.diagnostic.config({
 local types = {"Error", "Warn", "Hint", "Info"}
 for i,type in pairs(types) do
   local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { numhl = hl })
+  local lhl = "DiagnosticSign" .. type .. "Line"
+  vim.fn.sign_define(hl, { numhl = hl, linehl = lhl })
 end
 END
 
