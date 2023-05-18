@@ -21,7 +21,7 @@ Plug 'mzlogin/vim-markdown-toc'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSInstallSync'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 Plug 'HiPhish/nvim-ts-rainbow2'
 Plug 'nvim-lua/plenary.nvim' " for telescope
 Plug 'nvim-telescope/telescope.nvim'
