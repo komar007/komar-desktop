@@ -48,7 +48,17 @@ require('lspconfig').eslint.setup(defcfg)
 require('lspconfig').dockerls.setup(defcfg)
 
 require('rust-tools').setup({
-  server = defcfg, -- configuration for rust-analyzer (it cannot be setup separately)
+  server = {
+    capabilities = capabilities,
+    on_attach = on_lsp_attach,
+    settings = {
+      ['rust-analyzer'] = {
+        check = {
+          command = "clippy",
+        }
+      },
+    },
+  },
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
