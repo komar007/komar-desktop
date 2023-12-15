@@ -86,6 +86,7 @@ set timeoutlen=500
 setlocal spelllang=pl
 
 map <F2> :set cursorcolumn!<CR>
+map <F3> :IndentLinesToggle<CR>
 
 " -- filetype customs
 autocmd FileType latex                setlocal spell
