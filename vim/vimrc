@@ -38,6 +38,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'inkarkat/vim-ingo-library' " required by inkarkat/vim-EnhancedJumps
 Plug 'inkarkat/vim-EnhancedJumps'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " -- neovide
@@ -60,6 +61,8 @@ set autoindent smartindent
 set hlsearch incsearch
 set grepprg=grep\ -nH\ $*
 set cinoptions=:0,l1,t0,g0,N-s
+
+let g:indentLine_char = '⎸'
 
 autocmd BufEnter * let &titlestring = "vim - " . expand("%:t")
 set title
