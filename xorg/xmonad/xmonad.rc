@@ -6,4 +6,4 @@
 #define HEIGHT 22
 #define YPOS 0
 #define BROWSER_CMD "chromium --force-device-scale-factor=1.6"
-#define MIXER_CMD "pamix"
+#define MIXER_CMD "pulsemixer"
