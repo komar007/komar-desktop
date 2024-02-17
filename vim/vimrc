@@ -82,6 +82,10 @@ set wildmode=longest,list,list,full
 set mouse=a
 set mousemodel=extend
 set timeoutlen=500
+hi CursorLine ctermbg=237 guibg=#2c2826
+hi CursorColumn ctermbg=237 guibg=#2c2826
+hi! link StatusLine Normal
+hi! link StatusLineNC Normal
 
 setlocal spelllang=pl
 
