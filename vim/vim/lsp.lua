@@ -53,6 +53,11 @@ require('rust-tools').setup({
     on_attach = on_lsp_attach,
     settings = {
       ['rust-analyzer'] = {
+        diagnostics = {
+          enable = true,
+          disabled = {"unresolved-proc-macro"},
+          enableExperimental = true,
+        },
         check = {
           command = "clippy",
         }

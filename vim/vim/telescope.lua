@@ -1,6 +1,6 @@
 require("telescope").setup {
   defaults = {
-    path_display={"smart"},
+    path_display={"truncate"},
     mappings = {
       n = {
         ['<c-d>'] = require('telescope.actions').delete_buffer
@@ -19,7 +19,10 @@ require('telescope').load_extension('fzf')
 require('dressing').setup({
   input = {
     prompt_align = "left",
-    anchor = "NW",
+    override = function(conf)
+      conf.anchor = "NW";
+      return conf
+    end,
   },
   select = {
     telescope = require('telescope.themes').get_cursor(),
