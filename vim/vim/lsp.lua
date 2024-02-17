@@ -46,6 +46,8 @@ require('lspconfig').vimls.setup(defcfg)
 require('lspconfig').eslint.setup(defcfg)
 -- npm i -g dockerfile-language-server-nodejs
 require('lspconfig').dockerls.setup(defcfg)
+-- npm i -g dockerfile-language-server-nodejs
+require('lspconfig').kotlin_language_server.setup(defcfg)
 
 require('rust-tools').setup({
   server = {
