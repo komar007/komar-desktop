@@ -43,7 +43,8 @@ Plug 'sotte/presenting.vim'
 call plug#end()
 
 " -- neovide
-set gfn=Jetbrains\ Mono:h8.5
+set gfn=Jetbrains\ Mono\ Light:h9
+set linespace=-4
 let g:neovide_cursor_animation_length=0.07
 let g:neovide_cursor_trail_size=0.05
 let g:neovide_scroll_animation_length=0
