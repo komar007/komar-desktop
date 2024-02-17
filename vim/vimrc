@@ -18,8 +18,8 @@ Plug 'vim-scripts/a.vim'
 Plug 'bogado/file-line'
 Plug 'vim-scripts/camelcasemotion'
 Plug 'mzlogin/vim-markdown-toc'
-Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
+"Plug 'pangloss/vim-javascript'
+"Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 Plug 'HiPhish/nvim-ts-rainbow2'
@@ -39,6 +39,7 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'inkarkat/vim-ingo-library' " required by inkarkat/vim-EnhancedJumps
 Plug 'inkarkat/vim-EnhancedJumps'
 Plug 'Yggdroot/indentLine'
+Plug 'sotte/presenting.vim'
 call plug#end()
 
 " -- neovide
