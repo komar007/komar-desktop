@@ -38,6 +38,7 @@ import XMonad.Prompt.Workspace
 import XMonad.Actions.Search
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.Plane
+import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.GridSelect
 import XMonad.Actions.Promote
@@ -120,7 +121,7 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
 
 scratchpads = [
     NS "scratchpad"     "~/.xmonad/terminal.sh scratchpad"
-        (resource =? "scratchpad")   (terminalFloating 0 0.7 1 0.301),
+        (resource =? "scratchpad")   (terminalFloating 0 0.5 1 0.5),
     NS MIXER_CMD ("~/.xmonad/terminal.sh scratchmixer " ++ MIXER_CMD)
         (resource =? "scratchmixer") (terminalFloating 0.15 0 0.7 0.3),
     NS "bc"        "~/.xmonad/terminal.sh bc bc -l"
@@ -312,6 +313,12 @@ mkPrompt cb c = do
 scratchCmdPrompt = mkPrompt scratchPrompt
 
 myKeys xmproc = [
+    ("M-w",               viewScreen def 0),
+    ("M-e",               viewScreen def 1),
+    ("M-r",               viewScreen def 2),
+    ("M-S-w",             sendToScreen def 0),
+    ("M-S-e",             sendToScreen def 1),
+    ("M-S-r",             sendToScreen def 2),
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
@@ -328,7 +335,7 @@ myKeys xmproc = [
     ("M-n",               scratchCmdPrompt xpconfig),
     ("M-<Esc>",           goToSelected defaultGSConfig),
     ("M-<Return>",        promote),
-    ("M-r",               sendMessage ToggleStruts),
+    ("M-b",               sendMessage ToggleStruts),
     ("M-g n",             promptWSGroupAdd xpconfig "name group: "),
     ("M-g g",             promptWSGroupView xpconfig "go to group: "),
     ("M-g d",             promptWSGroupForget xpconfig "drop group: "),
