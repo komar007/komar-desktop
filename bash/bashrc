@@ -157,13 +157,14 @@ function get_ps1()
 	LGREEN='\[\e[00;32m\]'
 	CYAN='\[\e[01;36m\]'
 	YELLOW='\[\e[01;33m\]'
+	LYELLOW='\[\e[00;33m\]'
 	RESET='\[\e[00m\]'
 
 	p_git_stats='$(git diff-index  --shortstat  HEAD -- 2>/dev/null | sed -r "s/[^,]+, ([0-9]+)[^,]+(, ([0-9]+).*)?/ '$GREEN$PLUS'\1 '$RED$MINUS'\3/")'
 
 	prev_status="$(p_if_else "$p_cmd_ok" '✔' "$BLINKRED\$?$RESET")"
 	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
-	branch_token="$(p_if "$p_is_git" "${YELLOW}$p_git_branch$GRAY$p_git_stats$RESET ")"
+	branch_token="$(p_if "$p_is_git" "${YELLOW}⎇ ${LYELLOW}$p_git_branch$GRAY$p_git_stats$RESET ")"
 	right_tag="$(p_right "$p_time")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
