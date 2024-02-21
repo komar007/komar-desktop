@@ -1,0 +1,77 @@
+[bell]
+animation = "EaseOutExpo"
+color = "#444444"
+duration = 60
+
+[colors.cursor]
+cursor = "CellForeground"
+text = "CellBackground"
+
+[colors.dim]
+black = "#484848"
+blue = "#4585d8"
+cyan = "#689d6a"
+green = "#7a7919"
+magenta = "#b16286"
+red = "#cc241d"
+white = "#bdae93"
+yellow = "#d79921"
+
+[colors.normal]
+black = "#7c6f64"
+blue = "#83a5d8"
+cyan = "#8ec07c"
+green = "#959801"
+magenta = "#d3869b"
+red = "#fb4934"
+white = "#ebdbb2"
+yellow = "#fabd2f"
+
+[colors.primary]
+background = "#000000"
+bright_foreground = "#f9f5d7"
+dim_foreground = "#f2e5bc"
+foreground = "#fbf1c7"
+
+[colors.selection]
+background = "CellForeground"
+text = "CellBackground"
+
+[colors.vi_mode_cursor]
+cursor = "CellForeground"
+text = "CellBackground"
+
+[font]
+size = 9
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Light"
+
+[font.offset]
+y = -4
+
+[font.glyph_offset]
+y = -2
+
+[[keyboard.bindings]]
+action = "SearchBackward"
+key = "S"
+mode = "~Search"
+mods = "Alt"
+
+[scrolling]
+history = 32768
+multiplier = 5
