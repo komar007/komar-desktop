@@ -162,7 +162,7 @@ function get_ps1()
 
 	p_git_stats='$(git diff-index  --shortstat  HEAD -- 2>/dev/null | sed -r "s/[^,]+, ([0-9]+)[^,]+(, ([0-9]+).*)?/ '$GREEN$PLUS'\1 '$RED$MINUS'\3/")'
 
-	prev_status="$(p_if_else "$p_cmd_ok" '✔' "$BLINKRED\$?$RESET")"
+	prev_status="$(p_if_else "$p_cmd_ok" '󰸞' "$BLINKRED\$?$RESET")"
 	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
 	branch_token="$(p_if "$p_is_git" "${YELLOW}⎇ ${LYELLOW}$p_git_branch$GRAY$p_git_stats$RESET ")"
 	right_tag="$(p_right "$p_time")"
