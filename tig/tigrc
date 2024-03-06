@@ -1,19 +1,19 @@
 bind main R ?git revert %(commit)
 bind main P ?git pg %(commit)
 set show-untracked = false
+set vertical-split = mixed
 
 set main-view-date = custom
 set main-view-date-format = "%Y-%m-%d"
 set main-view = date:relative author:full commit-title:graph=true,refs=true
 set diff-view = line-number:display=false text:commit-title-overflow=true
-set diff-options = --pretty=short
 set git-colors = no
 set truncation-delimiter  = ~
 
 # Color base: https://github.com/ninjabreakbot/tig-gruvbox
 
 # General colors
-color default         246     234 # was 235
+color default         246      16 # was 235
 color cursor          223     236
 color status      default default
 color title-focus default default
