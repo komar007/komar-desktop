@@ -89,7 +89,7 @@ color "Primary key fingerprint: " 72 default
 # grep view
 color grep.file	       	208 default bold
 color grep.line-number  241 default bold
-color grep.delimite     241 default bold
+color grep.delimiter    241 default bold
 color delimiter         142 default bold
 
 # lines in digraph
