@@ -165,7 +165,7 @@ function get_ps1()
 
 	prev_status="$(p_if_else "$p_cmd_ok" '󰸞' "$BLINKRED\$?$RESET")"
 	ssh_tag="$(p_if "$p_is_ssh" $YELLOW'ssh:'$RESET)"
-	nix_tag="$(p_if "$p_is_nixshell" $YELLOW'󱄅:$NIX_SHELL_NAME'$RESET)"
+	nix_tag="$(p_if "$p_is_nixshell" $BLUE'󱄅'$GRAY'$NIX_SHELL_NAME '$RESET)"
 	branch_token="$(p_if "$p_is_git" "${YELLOW}⎇ ${LYELLOW}$p_git_branch$GRAY$p_git_stats$RESET ")"
 	right_tag="$(p_right "$p_time")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
@@ -173,9 +173,9 @@ function get_ps1()
 	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
 
 	twoline=""
-	twoline+="$GREEN░ $prev_status$GRAY $branch_token$GRAY$BLUE\w$GRAY$right_tag$RESET\n"
+	twoline+="$GREEN░ $prev_status$GRAY $branch_token$nix_tag$BLUE\w$GRAY$right_tag$RESET\n"
 	twoline+="$GREEN░ $GREEN\u$GRAY@$ssh_tag$LGREEN\h"
-	twoline+="$nix_tag $BLUE\W \\\$$RESET $(p_set_title $title)"
+	twoline+=" $BLUE\W \\\$$RESET $(p_set_title $title)"
 
 	echo -e "$twoline"
 }
