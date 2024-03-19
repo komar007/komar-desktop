@@ -137,7 +137,7 @@ function p_set_title()
 function p_right()
 {
 	cmd="$*"
-	echo -n "\[\e7\r\e[\$[\$COLUMNS-\$(wc -c <<< $cmd)+1]C$cmd\e8\]"
+	echo -n "\[\e7\r\e[\$[\$COLUMNS-\$(wc -m <<< $cmd)+1]C$cmd\e8\]"
 }
 
 RESET="\[$(tput sgr0)\]"
