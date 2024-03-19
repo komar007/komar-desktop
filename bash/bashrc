@@ -144,10 +144,11 @@ RESET="\[$(tput sgr0)\]"
 INVERT="\[$(tput rev)\]"
 
 GRAY="\[$(tput setaf 0)\]"
+BGRAY="\[$(tput bold setaf 0)\]"
 BLINKRED="\[$(tput blink setaf 1)\]"
-BRED="\[$(tput bold setaf 1)\]"
+RED="\[$(tput setaf 1)\]"
 BBLUE="\[$(tput bold setaf 4)\]"
-BGREEN="\[$(tput bold setaf 2)\]"
+BLUE="\[$(tput setaf 4)\]"
 GREEN="\[$(tput setaf 2)\]"
 BYELLOW="\[$(tput bold setaf 3)\]"
 YELLOW="\[$(tput setaf 3)\]"
@@ -168,19 +169,21 @@ function get_ps1()
 	SECTION_BEGIN="${BG_GRAY}${BLACK}"
 	SECTION_END="${BLACK}${INVERT}$RESET"
 
-	p_git_stats='$(git diff-index  --shortstat  HEAD -- 2>/dev/null | sed -r "s/[^,]+, ([0-9]+)[^,]+(, ([0-9]+).*)?/ '${BGREEN}$PLUS'\1 '${BRED}$MINUS'\3/")'
+	p_git_stats='$(git diff-index  --shortstat  HEAD -- 2>/dev/null | sed -r "s/[^,]+, ([0-9]+)[^,]+(, ([0-9]+).*)?/ '${GREEN}$PLUS'\1 '${RED}$MINUS'\3/")'
 
-	prev_status="$(p_if_else "$p_cmd_ok" "${BGREEN}" "${BLINKRED}${INVERT}\$?${RESET}${BLINKRED}${RESET}")"
+	prev_status="$(p_if_else "$p_cmd_ok" "${GREEN}" "${BLINKRED}${INVERT}\$?${RESET}${BLINKRED}")"${RESET}
 	ssh_tag="$(p_if "$p_is_ssh" ${BYELLOW}ssh:${RESET})"
 	nix_tag="$(p_if "$p_is_nixshell" ${SECTION_BEGIN}${BBLUE}󱄅${GRAY}'$NIX_SHELL_NAME'${SECTION_END})"
-	branch_token="$(p_if "$p_is_git" "${SECTION_BEGIN}${BYELLOW}⎇ ${YELLOW}$p_git_branch${GRAY}$p_git_stats${SECTION_END}${RESET}")"
+	branch_token="$(p_if "$p_is_git" "${SECTION_BEGIN}${YELLOW}⎇ $p_git_branch${GRAY}$p_git_stats${SECTION_END}${RESET}")"
 	right_tag="$(p_right "$p_time")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
 
 	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
 
 	twoline=""
-	twoline+="$prev_status$branch_token$nix_tag ${BGREEN}\u${GRAY}@$ssh_tag${GREEN}\h${GRAY}:${BBLUE}\w${GRAY}$right_tag${RESET}\n"
+	twoline+="$prev_status$branch_token$nix_tag"
+	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY}"
+	twoline+="$right_tag${RESET}\n"
 	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title $title)"
 
 	echo -e "$twoline"
