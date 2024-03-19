@@ -7,16 +7,6 @@ duration = 60
 cursor = "CellForeground"
 text = "CellBackground"
 
-[colors.bright]
-black = "#484848"
-blue = "#4585d8"
-cyan = "#689d6a"
-green = "#7a7919"
-magenta = "#b16286"
-red = "#cc241d"
-white = "#bdae93"
-yellow = "#d79921"
-
 [colors.normal]
 black = "#7c6f64"
 blue = "#83a5d8"
