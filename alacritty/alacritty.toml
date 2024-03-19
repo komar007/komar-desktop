@@ -7,7 +7,7 @@ duration = 60
 cursor = "CellForeground"
 text = "CellBackground"
 
-[colors.dim]
+[colors.bright]
 black = "#484848"
 blue = "#4585d8"
 cyan = "#689d6a"
@@ -21,7 +21,7 @@ yellow = "#d79921"
 black = "#7c6f64"
 blue = "#83a5d8"
 cyan = "#8ec07c"
-green = "#959801"
+green = "#c5c821"
 magenta = "#d3869b"
 red = "#fb4934"
 white = "#ebdbb2"
