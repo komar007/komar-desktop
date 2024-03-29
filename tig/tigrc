@@ -27,7 +27,7 @@ color date            172 default
 color author          109 default
 color mode            166 default
 color overflow        241 default
-color directory       106 default bold
+color directory         4 default bold
 color file            223 default
 color file-size   default default
 color grep.file       166 default
