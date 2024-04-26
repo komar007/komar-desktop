@@ -3,6 +3,9 @@ animation = "EaseOutExpo"
 color = "#444444"
 duration = 60
 
+[cursor.style]
+blinking = "Always"
+
 [colors.cursor]
 cursor = "CellForeground"
 text = "CellBackground"
