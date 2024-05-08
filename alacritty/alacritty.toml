@@ -59,12 +59,58 @@ y = -4
 [font.glyph_offset]
 y = -2
 
-[[keyboard.bindings]]
-action = "SearchBackward"
-key = "S"
-mode = "~Search"
-mods = "Alt"
-
 [scrolling]
 history = 32768
 multiplier = 5
+
+# unbind unnecessary defaults
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "-"
+action = "None"
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "="
+action = "None"
+
+# font size control
+
+[[keyboard.bindings]]
+mods = "Control | Shift"
+key = "_"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+mods = "Control | Shift"
+key = "+"
+action = "IncreaseFontSize"
+
+# Special combos that are hard (or impossible) to achieve using regular terminal codes
+# They use Unicode PUA from E100 onwards and can be later bound for example in tmux
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "-"
+chars = "\uE100"
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "m"
+chars = "\uE101"
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "Enter"
+chars = "\uE102"
+
+[[keyboard.bindings]]
+mods = "Control|Shift"
+key = "j"
+chars = "\uE103"
+
+[[keyboard.bindings]]
+mods = "Control|Shift"
+key = "k"
+chars = "\uE104"
