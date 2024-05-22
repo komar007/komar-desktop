@@ -41,7 +41,7 @@ unalias vi ls grep e t pdf1 pdf2 pdf3 less tig 2>/dev/null
 export EDITOR="nvim"
 alias vi='editor'
 alias ls="ls --color=always"
-alias grep="grep --colour=always"
+alias grep="grep --colour=auto"
 alias e="e -F"
 alias t="ps -p $$ -o start_time"
 alias notify="~/.desktop_config/bash/notify.sh"
