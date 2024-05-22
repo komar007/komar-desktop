@@ -103,6 +103,7 @@ p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
 p_is_git_clean='git diff-index --quiet HEAD --'
 p_is_ssh='[[ "$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\) ]]'
 p_is_nixshell='[ -n "$NIX_SHELL_NAME" ]'
+p_is_venv='[ -n "$VIRTUAL_ENV" ]'
 p_cmd_ok='[[ $? -eq 0 ]]'
 # strings
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
@@ -177,7 +178,8 @@ function get_ps1()
 
 	prev_status="$(p_if_else "$p_cmd_ok" "${GREEN}" "${BLINKRED}${INVERT}\$?${RESET}${BLINKRED}")"${RESET}
 	ssh_tag="$(p_if "$p_is_ssh" ${BYELLOW}ssh:${RESET})"
-	nix_tag="$(p_if "$p_is_nixshell" ${SECTION_BEGIN}${BBLUE}󱄅${GRAY}'$NIX_SHELL_NAME'${SECTION_END})"
+	nix_tag="$(p_if "$p_is_nixshell" ${SECTION_BEGIN}\ ${BBLUE}󱄅\ ${GRAY}'$NIX_SHELL_NAME'${SECTION_END})"
+	venv_tag="$(p_if "$p_is_venv" ${SECTION_BEGIN}\ ${BBLUE}\ ${GRAY}'$(realpath --relative-to="$(pwd)" "$VIRTUAL_ENV")'${SECTION_END})"
 	branch_token="$(p_if "$p_is_git" "${SECTION_BEGIN}${YELLOW}⎇ $p_git_branch${GRAY}$p_git_stats${SECTION_END}${RESET}")"
 	right_tag="$(p_right "$p_time")"
 	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
@@ -185,7 +187,7 @@ function get_ps1()
 	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
 
 	twoline=""
-	twoline+="$prev_status$branch_token$nix_tag"
+	twoline+="$prev_status$branch_token$nix_tag$venv_tag"
 	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY}"
 	twoline+="$right_tag${RESET}\n"
 	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title $title)"
@@ -194,5 +196,7 @@ function get_ps1()
 }
 PS1=$(get_ps1)
 
-export GDK_DPI_SCALE=1.6
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export PATH=$PATH:~/.cargo/bin:~/.npm-global/bin/:~/.local/bin
+
+export GDK_DPI_SCALE=1.6
