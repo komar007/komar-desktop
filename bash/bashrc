@@ -45,6 +45,9 @@ alias grep="grep --colour=auto"
 alias e="e -F"
 alias t="ps -p $$ -o start_time"
 alias notify="~/.desktop_config/bash/notify.sh"
+if [ -f ~/.config/nvim/nvim_wrapper ]; then
+	alias nvim="~/.config/nvim/nvim_wrapper"
+fi
 for prog in kicad pcbnew eeschema oowriter ooimpress oocalc oobase oodraw audacity libreoffice; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
