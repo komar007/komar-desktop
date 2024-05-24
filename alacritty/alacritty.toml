@@ -101,7 +101,7 @@ key = "m"
 chars = "\uE101"
 
 [[keyboard.bindings]]
-mods = "Control"
+mods = "Control|Shift"
 key = "Enter"
 chars = "\uE102"
 
