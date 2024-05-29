@@ -200,6 +200,10 @@ function get_ps1()
 PS1=$(get_ps1)
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PATH=$PATH:~/.cargo/bin:~/.npm-global/bin/:~/.local/bin
+PATH=~/.cargo/bin:$PATH
+PATH=~/go/bin:$PATH
+PATH=~/.npm-global/bin/:$PATH
+PATH=~/.local/bin:$PATH
+export PATH
 
 export GDK_DPI_SCALE=1.6
