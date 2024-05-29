@@ -199,6 +199,7 @@ function get_ps1()
 }
 PS1=$(get_ps1)
 
+export NIX_SHELL_PRESERVE_PROMPT=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 PATH=~/.cargo/bin:$PATH
 PATH=~/go/bin:$PATH
