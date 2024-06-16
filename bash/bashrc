@@ -101,6 +101,8 @@ export LESS_TERMCAP_so=$'\E[7m'      # standout
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
 
+# SHELL PROMPT SECTION
+
 # predicates
 p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
 p_is_git_clean='git diff-index --quiet HEAD --'
@@ -198,6 +200,129 @@ function get_ps1()
 	echo -e "$twoline"
 }
 PS1=$(get_ps1)
+
+
+# GLOBAL HISTORY SECTION
+
+# Trim the input from whitespace and convert to a json-friendlt string literal
+function _trim_jsonize_string()
+{
+	jq -MR --slurp '. | gsub("^\\s+|\\s+$";"")'
+}
+
+# Remove the history item number from the output of "history 1"
+# Note: it is only guaranteed to work with a single item of history, because it may be multi-line
+function _remove_history_id()
+{
+	sed -r '1s/\s+[0-9]+\s+//'
+}
+
+# Output the input lines as they are or "null" if the input is empty
+function _or_null()
+{
+	awk '//{x=1;print} END{if(!x)print("null")}'
+}
+
+_LAST_HIST=""
+# Prepare a single-line json-formatted command history entry
+function _format_history_entry()
+{
+	local HIST
+	HIST=$(history 1 | head)
+	[ "$HIST" = "$_LAST_HIST" ] && return
+	_LAST_HIST="$HIST"
+	(
+		date +%s
+		[ -n "$TMUX" ] \
+			&& tmux display-message -p '#S' | _trim_jsonize_string \
+			|| echo null
+		HISTTIMEFORMAT="%s%n" history 1 \
+			| head -n 1 \
+			| _remove_history_id \
+			| _or_null
+		HISTTIMEFORMAT="" history 1 \
+			| _remove_history_id \
+			| _trim_jsonize_string
+		pwd | _trim_jsonize_string
+		[ -n "$OLDPWD" ] \
+			&& echo "$OLDPWD" | _trim_jsonize_string \
+			|| echo null
+		date +%s%N | _trim_jsonize_string
+	) \
+		| jq -Mc --slurp '{
+			cmd: .[3],
+			start: .[2],
+			end: .[0],
+			cwd: .[4],
+			prev_cwd: .[5],
+			tmux_session: .[1],
+			id: .[6]
+		} | del(..|nulls)
+		  | select(.cmd != "")'
+}
+
+read -r -d '' _JQ_COLORS <<-'EOF'
+def colors: {
+ "meta": "\u001b[34m",
+ "standout": "\u001b[31m",
+ "reset": "\u001b[0m",
+};
+EOF
+
+# fzf single history item renderer
+read -r -d '' _FZF_ENTRY_JQ <<-'EOF'
+"\(.id) "
++ "\(colors.meta)\(.start | strftime("%a %d %b %Y %H:%M:%S"))\(colors.reset) "
++ "\(.cmd)"
++ (if .end - .start > 1 then " \(colors.standout)(took: \(.end - .start)s)" else "" end)
++ "\u0000"
+EOF
+_FZF_ENTRY_JQ="$_JQ_COLORS$_FZF_ENTRY_JQ"
+
+# fzf preview window renderer
+read -r -d '' _FZF_PREVIEW_JQ <<-'EOF'
+select(.id == $id)
+| "$ \(.cmd)\n\n\(colors.meta)"
+  + "took: \(.end - .start)s\n"
+  + "@ \(.start | strftime("%a %d %b %Y %H:%M:%S"))\n"
+  + "tmux session: \(.tmux_session)\n"
+  + (if .prev_cwd then "previous CWD: \(.prev_cwd)\n" else "" end)
+  + "CWD: \(.cwd)\n"
+EOF
+_FZF_PREVIEW_JQ="$_JQ_COLORS$_FZF_PREVIEW_JQ"
+
+_GLOBAL_HISTORY_FILE=$HOME/.global_history
+
+# Show a fuzzy-search prompt with global history and let the user select one item
+function _search_global_history()
+{
+	local command
+	local id
+	id=$(tac "$_GLOBAL_HISTORY_FILE" \
+		| jq -jr "$_FZF_ENTRY_JQ" \
+		| fzf-tmux -p 100%,90% -y 0 \
+			-- \
+			--ansi \
+			--read0 \
+			--with-nth=2.. \
+			--preview "jq -r --arg id {1} '$_FZF_PREVIEW_JQ' '$_GLOBAL_HISTORY_FILE'" \
+			--preview-window=wrap \
+			--color=hl:yellow:bold \
+			--color=hl+:yellow:bold \
+		| head -n 1 \
+		| cut -d' ' -f 1)
+	[ -z "$id" ] && return
+	command=$(jq -r "select(.id == \"$id\") | .cmd" "$_GLOBAL_HISTORY_FILE")
+	READLINE_LINE="$command"
+	READLINE_POINT=${#command}
+}
+bind -x '"\C-g":_search_global_history'
+
+# save the last history item in global history
+PROMPT_COMMAND="_format_history_entry >> '$_GLOBAL_HISTORY_FILE'"
+
+
+# ENVIRONMENT VARIABLES
 
 export NIX_SHELL_PRESERVE_PROMPT=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
