@@ -223,10 +223,11 @@ _LAST_HIST=""
 # Prepare a single-line json-formatted command history entry
 function _format_history_entry()
 {
-	local HIST
-	HIST=$(history 1 | head)
-	[ "$HIST" = "$_LAST_HIST" ] && return
-	_LAST_HIST="$HIST"
+	last_exit_code=$?
+	local hist
+	hist=$(history 1 | head)
+	[ "$hist" = "$_LAST_HIST" ] && return
+	_LAST_HIST="$hist"
 	(
 		date +%s
 		[ -n "$TMUX" ] \
@@ -243,6 +244,7 @@ function _format_history_entry()
 		[ -n "$OLDPWD" ] \
 			&& echo "$OLDPWD" | _trim_jsonize_string \
 			|| echo null
+		echo $last_exit_code
 		date +%s%N | _trim_jsonize_string
 	) \
 		| jq -Mc --slurp '{
@@ -252,7 +254,8 @@ function _format_history_entry()
 			cwd: .[4],
 			prev_cwd: .[5],
 			tmux_session: .[1],
-			id: .[6]
+			exit_code: .[6],
+			id: .[7]
 		} | del(..|nulls)
 		  | select(.cmd != "")'
 }
@@ -268,9 +271,10 @@ EOF
 # fzf single history item renderer
 read -r -d '' _FZF_ENTRY_JQ <<-'EOF'
 "\(.id) "
-+ "\(colors.meta)\(.start | strftime("%a %d %b %Y %H:%M:%S"))\(colors.reset) "
-+ "\(.cmd)"
-+ (if .end - .start > 1 then " \(colors.standout)(took: \(.end - .start)s)" else "" end)
++ "\(colors.meta)\(.start | strftime("%a %d %b %Y %H:%M:%S"))\(colors.reset)"
++ (if (.exit_code // 0) != 0 then " \(colors.standout)[failed]\(colors.reset)" else "" end)
++ " \(.cmd)"
++ (if .end - .start > 1 then " \(colors.standout)(took: \(.end - .start)s)\(colors.reset)" else "" end)
 + "\u0000"
 EOF
 _FZF_ENTRY_JQ="$_JQ_COLORS$_FZF_ENTRY_JQ"
@@ -279,7 +283,9 @@ _FZF_ENTRY_JQ="$_JQ_COLORS$_FZF_ENTRY_JQ"
 read -r -d '' _FZF_PREVIEW_JQ <<-'EOF'
 select(.id == $id)
 | "$ \(.cmd)\n\n\(colors.meta)"
-  + "took: \(.end - .start)s\n"
+  + (if (.exit_code // 0) != 0 then "\(colors.standout)" else "" end)
+  + "exit code: \(.exit_code)\(colors.meta)\n"
+  + "execution time: \(.end - .start)s\n"
   + "@ \(.start | strftime("%a %d %b %Y %H:%M:%S"))\n"
   + "tmux session: \(.tmux_session)\n"
   + (if .prev_cwd then "previous CWD: \(.prev_cwd)\n" else "" end)
