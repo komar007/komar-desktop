@@ -20,41 +20,18 @@ if [ -f ~/.bashrc_orig ]; then
 fi
 unset command_not_found_handle
 
-# Put your fun stuff here.
 
-function editor()
-{
-	E=gvim
-	[[ -z $DISPLAY ]] && E=vim
-	$E $* > /dev/null 2>&1
-}
+# ALIASES
 
-function share()
-{
-	scp "$1" komar@komar.be:/var/www/space.komar.be/htdocs/
-	echo http://space.komar.be/`basename "$1"`
-}
-
-# avoid multiple aliasing
-unalias vi ls grep e t pdf1 pdf2 pdf3 less tig 2>/dev/null
-
-export EDITOR="nvim"
-alias vi='editor'
+unalias -a
 alias ls="ls --color=always"
 alias grep="grep --colour=auto"
 alias e="e -F"
 alias t="ps -p $$ -o start_time"
-alias notify="~/.desktop_config/bash/notify.sh"
-if [ -f ~/.config/nvim/nvim_wrapper ]; then
-	alias nvim="~/.config/nvim/nvim_wrapper"
-fi
+[ -f ~/.config/nvim/nvim_wrapper ] && alias nvim="~/.config/nvim/nvim_wrapper"
 for prog in kicad pcbnew eeschema oowriter ooimpress oocalc oobase oodraw audacity libreoffice; do
 	alias $prog="GTK2_RC_FILES=/usr/share/themes/Default/ $prog"
 done
-
-alias pdf1="qpdfview --unique --instance pdf1"
-alias pdf2="qpdfview --unique --instance pdf2"
-alias pdf3="qpdfview --unique --instance pdf3"
 
 function less_set_title()
 {
@@ -62,7 +39,7 @@ function less_set_title()
 	echo -e "\e];less $@ [$dir]\a"
 	less "$@"
 }
-alias less="less_set_title"
+alias less=less_set_title
 
 function tig_set_title()
 {
@@ -79,7 +56,34 @@ function tig_set_title()
 	echo -e "\e];$title [$dir]\a"
 	tig "$@"
 }
-alias tig="tig_set_title"
+alias tig=tig_set_title
+
+
+# UTILITIES
+
+prepend_path() {
+    [[ ":$PATH:" != *":$1:"* ]] && PATH="$1${PATH:+":$PATH"}"
+}
+
+function share()
+{
+	scp "$1" komar@komar.be:/var/www/space.komar.be/htdocs/
+	echo http://space.komar.be/`basename "$1"`
+}
+
+function notify() {
+	NOBLOCK=0
+	if [ "$1" == "--noblock" ]; then
+		NOBLOCK=1
+		shift
+	fi
+	[ -n "$*" ] && echo -ne "\e]0;$*\a"
+	echo -ne "$*...\a"
+	[ "$NOBLOCK" -eq 0 ] && read
+}
+
+
+# COMPLETION
 
 if [ -f /usr/share/mc/mc.gentoo ]; then
 	. /usr/share/mc/mc.gentoo
@@ -93,15 +97,7 @@ _expand()
 }
 
 
-export LESS_TERMCAP_mb=$'\E[1;31m'   # blink
-export LESS_TERMCAP_md=$'\E[1;32m'   # bold
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[7m'      # standout
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
-
-# SHELL PROMPT SECTION
+# SHELL PROMPT
 
 # predicates
 p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
@@ -202,7 +198,7 @@ function get_ps1()
 PS1=$(get_ps1)
 
 
-# GLOBAL HISTORY SECTION
+# GLOBAL HISTORY
 
 # Trim the input from whitespace and convert to a json-friendlt string literal
 function _trim_jsonize_string()
@@ -324,12 +320,22 @@ PROMPT_COMMAND="_format_history_entry >> '$_GLOBAL_HISTORY_FILE'"
 
 # ENVIRONMENT VARIABLES
 
+export LESS_TERMCAP_mb=$'\E[1;31m'   # blink
+export LESS_TERMCAP_md=$'\E[1;32m'   # bold
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[7m'      # standout
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
+
 export NIX_SHELL_PRESERVE_PROMPT=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-PATH=~/.cargo/bin:$PATH
-PATH=~/go/bin:$PATH
-PATH=~/.npm-global/bin/:$PATH
-PATH=~/.local/bin:$PATH
-export PATH
+
+export EDITOR="nvim"
+
+prepend_path ~/.cargo/bin
+prepend_path ~/go/bin
+prepend_path ~/.npm-global/bin
+prepend_path ~/.local/bin
 
 export GDK_DPI_SCALE=1.6
