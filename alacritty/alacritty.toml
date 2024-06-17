@@ -102,11 +102,6 @@ chars = "\uE101"
 
 [[keyboard.bindings]]
 mods = "Control|Shift"
-key = "Enter"
-chars = "\uE102"
-
-[[keyboard.bindings]]
-mods = "Control|Shift"
 key = "j"
 chars = "\uE103"
 
