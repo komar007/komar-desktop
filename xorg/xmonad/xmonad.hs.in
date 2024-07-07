@@ -132,7 +132,7 @@ scratchpads = [
     where terminalFloating x y w h = customFloating $ W.RationalRect x y w h
 
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
-myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook defaultConfig
+myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook def
 myConditions = composeAll [
     resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "tempterm"   --> doF (W.shift "temp"),
@@ -148,7 +148,7 @@ myConditions = composeAll [
 
 guiFont = xstr(GUI_FONT)
 
-tabTheme = defaultTheme {
+tabTheme = def {
     fontName             = guiFont,
     activeColor          = "#111111",
     inactiveColor        = "#000000",
@@ -162,7 +162,7 @@ tabTheme = defaultTheme {
     decoHeight           = HEIGHT
 }
 
-xpconfig = defaultXPConfig {
+xpconfig = def {
     font        = guiFont,
     bgColor     = "#000000",
     fgColor     = "#aaaaaa",
@@ -177,7 +177,7 @@ data TopicItem = TI { topicName :: Topic   -- (22b)
                     , topicAction :: X ()
                     }
 
-myTopics :: [TopicItem]
+myTopics :: [Main.TopicItem]
 myTopics =
     [ ti "NSP"   "~"
     , ti "c1"    "/home/komar"
@@ -194,32 +194,32 @@ myTopics =
     , ti "ds1"   "~"
     , ti "sys2"  "~"
     , ti "ds2"   "~"
-    , TI "web1"  "~/Pobrania"
+    , Main.TI "web1"  "~/Pobrania"
         (spawnHere browser)
-    , TI "web2"  "~/Pobrania"
+    , Main.TI "web2"  "~/Pobrania"
         (spawnHere browser)
-    , TI "pdf1"  "~/Pobrania"
+    , Main.TI "pdf1"  "~/Pobrania"
         (runLastPdf "pdf1")
-    , TI "pdf2"  "~/Pobrania"
+    , Main.TI "pdf2"  "~/Pobrania"
         (runLastPdf "pdf2")
-    , TI "pdf3"  "~/Pobrania"
+    , Main.TI "pdf3"  "~/Pobrania"
         (runLastPdf "pdf3")
     , ti "im"    "~"
-    , TI "irc"   "~" (shellRemote "kserver" "screen -x irssi")
-    , TI "kserver" "~" (shellRemote "kserver" "bash")
+    , Main.TI "irc"   "~" (shellRemote "kserver" "screen -x irssi")
+    , Main.TI "kserver" "~" (shellRemote "kserver" "bash")
     , ti "temp"  "~/temp"
     , ti "stats" "~"
     , ti "mail"  "~"
     , ti "vm1"  "~/VMs"
     , ti "vm2"  "~/VMs"
-    , TI "vnc1"  "~"
+    , Main.TI "vnc1"  "~"
         (spawnHere "vncviewer")
-    , TI "vnc2"  "~"
+    , Main.TI "vnc2"  "~"
         (spawnHere "vncviewer")
     , ti "float" "~"
     ]
     where
-        ti t d = TI t d shell
+        ti t d = Main.TI t d shell
         shell = spawnHere "~/.xmonad/terminal.sh terminal"
         runLastPdf w = spawnHere $ "~/.xmonad/run_pdf.sh " ++ w
         shellRemote host cmd = spawnHere $ "~/.xmonad/terminal.sh terminal -e ssh " ++ host ++ " -t " ++ cmd
@@ -228,17 +228,17 @@ myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
 
 myTopicConfig :: TopicConfig
-myTopicConfig = defaultTopicConfig
-    { topicDirs = M.fromList $ map (\(TI n d _) -> (n,d)) myTopics
+myTopicConfig = def
+    { topicDirs = M.fromList $ map (\(Main.TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
     , defaultTopic = "web1"
     , maxTopicHistory = 10
-    , topicActions = M.fromList $ map (\(TI n _ a) -> (n,a)) myTopics
+    , topicActions = M.fromList $ map (\(Main.TI n _ a) -> (n,a)) myTopics
     }
 
 myConf xmproc =
     docks $
-    defaultConfig {
+    def {
         startupHook = setWMName "LG3D",
         manageHook = manageSpawn <+> myManageHook <+> dynamicMasterHook,
         layoutHook = myLayoutHook,
@@ -290,7 +290,7 @@ main = do
     checkTopicConfig myTopicNames myTopicConfig
     xmproc <- spawnPipe $ "bash ~/.xmonad/xmonad_pipe.sh"
     xmonad
-        $ withUrgencyHookC myDzenUrgencyHook urgencyConfig {remindWhen = Every 2}
+        $ withUrgencyHookC myDzenUrgencyHook def {remindWhen = Every 2}
         $ withUrgencyHook myBlinkUrgencyHook
         $ myConf xmproc
 
@@ -336,7 +336,7 @@ myKeys xmproc = [
     ("M-;",               sendMessage R.MirrorShrink),
     ("M-'",               sendMessage R.MirrorExpand),
     ("M-n",               scratchCmdPrompt xpconfig),
-    ("M-<Esc>",           goToSelected defaultGSConfig),
+    ("M-<Esc>",           goToSelected def),
     ("M-<Return>",        promote),
     ("M-b",               sendMessage ToggleStruts),
     ("M-g n",             promptWSGroupAdd xpconfig "name group: "),
