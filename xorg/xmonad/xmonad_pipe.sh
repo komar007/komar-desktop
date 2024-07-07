@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 FIFO=/tmp/xmobar_panel_fifo
 

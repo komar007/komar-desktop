@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 WORK_TIME=$[8*3600]
 SHOULD_START="08:30:00"

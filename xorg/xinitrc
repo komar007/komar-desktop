@@ -48,4 +48,4 @@ xset dpms 120 120 120
 xset m 7/4 7
 
 (sleep 1 && ~/.xmonad/panels_launch.sh &)
-ulimit -s 16000 && exec /usr/bin/xmonad
+ulimit -s 16000 && exec xmonad
