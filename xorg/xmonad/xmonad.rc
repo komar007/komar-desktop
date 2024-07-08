@@ -7,5 +7,5 @@
 #define ICON_OFFSET -2
 #define HEIGHT 18
 #define YPOS 0
-#define BROWSER_CMD "chromium --force-device-scale-factor=1.6"
+#define BROWSER_CMD "firefox"
 #define MIXER_CMD "pulsemixer"
