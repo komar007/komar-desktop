@@ -146,7 +146,7 @@ myConditions = composeAll [
     where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
           isMail = className =? "Thunderbird"
 
-guiFont = xstr(GUI_FONT)
+guiFont = xstr(XMONAD_FONT)
 
 tabTheme = def {
     fontName             = guiFont,

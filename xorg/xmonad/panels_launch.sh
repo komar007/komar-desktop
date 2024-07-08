@@ -20,7 +20,8 @@ while [ ! -p "$FIFO" ]; do
     sleep 1
 done
 
-FN=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''GUI_FONT' | cut -d: -f2-)
+FN=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''DZEN2_FONT')
+HEIGHT=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''HEIGHT')
 
 if [[ $CONFIG == desktop ]]; then
     DZEN_X=1920
@@ -31,7 +32,7 @@ fi
 # in case cat dies because of broken pipe
 while true; do
 	cat "$FIFO"
-done | dzen2 -bg black -x "$DZEN_X" -ta l -fn "$FN" &
+done | dzen2 -bg black -h $HEIGHT -x "$DZEN_X" -ta l -fn "$FN" &
 echo $! > $PIDS
 sleep 0.1
 if [[ $CONFIG == desktop ]]; then

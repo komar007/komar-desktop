@@ -1,7 +1,7 @@
 #include <xmonad.rc>
 
 Config {
-    font = xstr(GUI_FONT),
+    font = xstr(XMOBAR_FONT),
     bgColor = "black",
     fgColor = "#555753",
     iconRoot = ICON_ROOT,
