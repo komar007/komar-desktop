@@ -23,20 +23,10 @@ Config {
             "-t", "<usedratio>%",
             "--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
         ] 10,
-        Run Com  "/bin/cat" ["/tmp/stbstatus"]              "stb"         20,
-        Run Com  "/home/komar/.xmonad/mpds.sh" []           "mpc"         10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["fan2"]     "fancpu"      10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["fan3"]     "fanchassis"  10,
-        Run Com  "/home/komar/.xmonad/sens.sh" ["Tdie"]     "tcpu"        10,
         Run StdinReader
     ],
     sepChar = "X",
-    alignSep = "}{",
-#ifdef CONFIG_WORK
-    template = "XmemoryX/XswapX XcpuX <fc=#cccccc>|</fc> XstbX"
-#else
-    template = "XmemoryX/XswapX XcpuX <icon=fan.xbm/><fc=#777777>XfancpuX</fc> <icon=fan.xbm/><fc=#777777>XfanchassisX</fc> <fc=#cccccc>|</fc> <icon=cpu.xbm/><fc=#777777>XtcpuX°</fc> }{ XmpcX"
-#endif
+    template = "XmemoryX/XswapX XcpuX"
 }
 
 -- vim:ft=haskell
