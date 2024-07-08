@@ -117,6 +117,7 @@
       xsel
       dzen2
       xmobar
+      htop
 
       firefox
       google-chrome
