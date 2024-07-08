@@ -106,6 +106,7 @@
       pstree # required by PS1
       jq # required by PS1
       fzf
+      ripgrep
       tmux
 
       xmonad-with-packages
