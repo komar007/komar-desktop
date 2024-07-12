@@ -20,6 +20,7 @@ if [ -f ~/.bashrc_orig ]; then
 fi
 unset command_not_found_handle
 
+HISTCONTROL=
 
 # ALIASES
 
@@ -100,16 +101,23 @@ _expand()
 # SHELL PROMPT
 
 # predicates
+# shellcheck disable=SC2016
 p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
-p_is_git_clean='git diff-index --quiet HEAD --'
+# shellcheck disable=SC2016
+p_command_executed='[ -n "$_LAST_TIME" ]'
+# shellcheck disable=SC2016
 p_is_ssh='[[ "$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\) ]]'
+# shellcheck disable=SC2016
 p_is_nixshell='[ -n "$NIX_SHELL_NAME" ]'
+# shellcheck disable=SC2016
 p_is_venv='[ -n "$VIRTUAL_ENV" ]'
-p_cmd_ok='[[ $? -eq 0 ]]'
+# shellcheck disable=SC2016
+p_cmd_ok='[[ $_LAST_EXIT_CODE -eq 0 ]]'
 # strings
+# shellcheck disable=SC2016
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
-p_git_desc='$(git describe 2>/dev/null)'
-p_time='$(date +%H:%M:%S)'
+# shellcheck disable=SC2016
+p_time='$(date +" %H:%M:%S ")'
 
 function p_if_else()
 {
@@ -121,6 +129,11 @@ function p_if_else()
 function p_if()
 {
 	p_if_else "$1" "$2" ""
+}
+
+function p_if_last_cmd_succ()
+{
+	p_if_else "[[ \$_LAST_EXIT_CODE -eq 0 ]]" "$1" "$2"
 }
 
 function p_token()
@@ -136,10 +149,20 @@ function p_set_title()
 	title="$*"
 	echo -n "\[\e]0;$title\a\]"
 }
+function print_n()
+{
+	yes ┈ | head -n "$1" | tr -d '\n'
+}
 function p_right()
 {
-	cmd="$*"
-	echo -n "\[\e7\r\e[\$[\$COLUMNS-\$(wc -m <<< $cmd)+1]C$cmd\e8\]"
+	cmd1="$1"
+	cmd2="$2"
+	dim_color="$(tput sgr0 setaf 0)"
+	choose_color="$(p_if_last_cmd_succ "${DIMBLUE}" "${DIMRED}")"
+	h_line="\r\$(print_n \$COLUMNS)"
+	back_to_2="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + 1)))"
+	back_to_1="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + \$(wc -m <<< \"$cmd1\"))))"
+	echo -n "$choose_color\[\e7$h_line$back_to_2$dim_color$cmd2$back_to_1$cmd1\e8\]${RESET}"
 }
 
 RESET="\[$(tput sgr0)\]"
@@ -147,9 +170,10 @@ INVERT="\[$(tput rev)\]"
 
 GRAY="\[$(tput setaf 0)\]"
 BGRAY="\[$(tput bold setaf 0)\]"
-BLINKRED="\[$(tput blink setaf 1)\]"
 RED="\[$(tput setaf 1)\]"
+DIMRED="\[$(tput dim setaf 1)\]"
 BBLUE="\[$(tput bold setaf 4)\]"
+DIMBLUE="\[$(tput dim setaf 4)\]"
 BLUE="\[$(tput setaf 4)\]"
 GREEN="\[$(tput setaf 2)\]"
 BYELLOW="\[$(tput bold setaf 3)\]"
@@ -171,27 +195,32 @@ function get_ps1()
 	SECTION_BEGIN="${BG_GRAY}${BLACK}"
 	SECTION_END="${BLACK}${INVERT}$RESET"
 
+	# shellcheck disable=SC2016
 	p_git_stats=' $(git diff-index  --shortstat  HEAD -- 2>/dev/null \
 	    | sed -r -e "s/[^,]+, ([0-9]+[^,]+)(, ([0-9]+.*))?/\1 \3/" \
 	             -e "s/([0-9]+) [a-z]+\(\+\)/'${GREEN}$PLUS'\1/g" \
 		     -e "s/([0-9]+) [a-z]+\(\-\)/'${RED}$MINUS'\1/g" \
 		     -e "s/ +$//")'
 
-	prev_status="$(p_if_else "$p_cmd_ok" "${GREEN}" "${BLINKRED}${INVERT}\$?${RESET}${BLINKRED}")"${RESET}
-	ssh_tag="$(p_if "$p_is_ssh" ${BYELLOW}ssh:${RESET})"
-	nix_tag="$(p_if "$p_is_nixshell" ${SECTION_BEGIN}\ ${BBLUE}󱄅\ ${GRAY}'$NIX_SHELL_NAME'${SECTION_END})"
-	venv_tag="$(p_if "$p_is_venv" ${SECTION_BEGIN}\ ${BBLUE}\ ${GRAY}'$(realpath --relative-to="$(pwd)" "$VIRTUAL_ENV")'${SECTION_END})"
+	prev_status="$(p_if_else "$p_cmd_ok" "${BLUE}" "${RED}${INVERT}\$?${RESET}${RED}")"${RESET}
+	ssh_tag="$(p_if "$p_is_ssh" "${BYELLOW}ssh:${RESET}")"
+	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${GRAY}'$NIX_SHELL_NAME'${SECTION_END}")"
+	# shellcheck disable=SC2016,SC2089
+	venv_path='$(realpath --relative-to="$(pwd)" "$VIRTUAL_ENV" 2>/dev/null)'
+	venv_tag="$(p_if "$p_is_venv" "${SECTION_BEGIN} ${BBLUE} ${GRAY}$venv_path${SECTION_END}")"
 	branch_token="$(p_if "$p_is_git" "${SECTION_BEGIN}${YELLOW}⎇ $p_git_branch${GRAY}$p_git_stats${SECTION_END}${RESET}")"
-	right_tag="$(p_right "$p_time")"
-	title="\\w $(p_if "$p_is_git" "on $p_git_branch")"
+	# shellcheck disable=SC2016
+	last_exec_time="$(p_if "$p_command_executed" '$(echo \  $_LAST_TIME)s ')"
+	right_tag="$(p_right "$last_exec_time" "$p_time")"
+	title="bash: \\W $(p_if "$p_is_git" "on $p_git_branch")"
 
-	ssh_tag=$(eval echo $ssh_tag) # needs to be evaluated just once
+	ssh_tag=$(eval echo "$ssh_tag") # needs to be evaluated just once
 
-	twoline=""
+	twoline="$right_tag"
 	twoline+="$prev_status$branch_token$nix_tag$venv_tag"
-	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY}"
-	twoline+="$right_tag${RESET}\n"
-	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title $title)"
+	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY} "
+	twoline+="${RESET}\n"
+	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title "$title")"
 
 	echo -e "$twoline"
 }
@@ -223,11 +252,6 @@ _LAST_HIST=""
 # Prepare a single-line json-formatted command history entry
 function _format_history_entry()
 {
-	last_exit_code=$?
-	local hist
-	hist=$(history 1 | head)
-	[ "$hist" = "$_LAST_HIST" ] && return
-	_LAST_HIST="$hist"
 	(
 		date +%s
 		[ -n "$TMUX" ] \
@@ -244,7 +268,7 @@ function _format_history_entry()
 		[ -n "$OLDPWD" ] \
 			&& echo "$OLDPWD" | _trim_jsonize_string \
 			|| echo null
-		echo $last_exit_code
+		echo "$_LAST_EXIT_CODE"
 		date +%s%N | _trim_jsonize_string
 	) \
 		| jq -Mc --slurp '{
@@ -258,6 +282,26 @@ function _format_history_entry()
 			id: .[7]
 		} | del(..|nulls)
 		  | select(.cmd != "")'
+}
+
+function _prompt_command()
+{
+	_LAST_EXIT_CODE=$?
+	local last_start
+	local end
+	local hist
+	hist=$(history 1 | head)
+	if [ "$hist" = "$_LAST_HIST" ]; then
+		_LAST_TIME=
+		return
+	fi
+	_LAST_HIST="$hist"
+	last_start=$(HISTTIMEFORMAT="%s%n" history 1 \
+		| head -n 1 \
+		| _remove_history_id)
+	end=$(date +%s)
+	_LAST_TIME=$((end-last_start))
+	_format_history_entry >> "$_GLOBAL_HISTORY_FILE"
 }
 
 read -r -d '' _JQ_COLORS <<-'EOF'
@@ -323,7 +367,7 @@ function _search_global_history()
 bind -x '"\C-g":_search_global_history'
 
 # save the last history item in global history
-PROMPT_COMMAND="_format_history_entry >> '$_GLOBAL_HISTORY_FILE'"
+PROMPT_COMMAND="_prompt_command"
 
 
 # ENVIRONMENT VARIABLES
