@@ -383,6 +383,8 @@ export LESS_TERMCAP_us=$'\E[1;4;34m' # underline
 export FZF_DEFAULT_OPTS=" \
 	--color=hl:yellow:bold:underline \
 	--color=hl+:yellow:bold \
+	--bind=\"ctrl-u:preview-up\"
+	--bind=\"ctrl-d:preview-down\"
 "
 
 export NIX_SHELL_PRESERVE_PROMPT=1
