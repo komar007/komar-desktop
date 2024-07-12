@@ -37,7 +37,7 @@ done
 function less_set_title()
 {
 	dir="$(pwd)"
-	echo -e "\e];less $@ [$dir]\a"
+	echo "$(tput tsl)less $@ [$dir]$(tput fsl)"
 	less "$@"
 }
 alias less=less_set_title
@@ -54,7 +54,7 @@ function tig_set_title()
 	if [ -n "$argline" ]; then
 		title+=" $argline"
 	fi
-	echo -e "\e];$title [$dir]\a"
+	echo "$(tput tsl)$title [$dir]$(tput fsl)"
 	tig "$@"
 }
 alias tig=tig_set_title
