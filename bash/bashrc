@@ -159,8 +159,8 @@ function p_right()
 	cmd2="$2"
 	dim_color="$(tput sgr0 setaf 0)"
 	choose_color="$(p_if_last_cmd_succ "${DIMBLUE}" "${DIMRED}")"
-	h_line="\r\$(print_n \$COLUMNS)"
-	back_to_2="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + 1)))"
+	h_line="\r\$(print_n \$((COLUMNS-1)))"
+	back_to_2="\$(tput cub \$(wc -m <<< \"$cmd2\"))"
 	back_to_1="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + \$(wc -m <<< \"$cmd1\"))))"
 	echo -n "$choose_color\[\e7$h_line$back_to_2$dim_color$cmd2$back_to_1$cmd1\e8\]${RESET}"
 }
