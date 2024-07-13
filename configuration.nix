@@ -39,6 +39,7 @@
 
   services.xserver = {
     enable = true;
+    videoDrivers = ["intel"];
     displayManager.startx.enable = true;
     xkb = {
       layout = "pl";
@@ -128,11 +129,20 @@
     nerdfonts
   ];
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+  };
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-sdk
+      intel-media-driver
+      libvdpau-va-gl
+    ];
   };
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   services.openssh.enable = true;
 
