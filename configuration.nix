@@ -147,7 +147,7 @@
   services.openssh.enable = true;
 
   services.logind.extraConfig = ''
-    HandlePowerKey="suspend"
+    HandlePowerKey=suspend
   '';
 
   # This value determines the NixOS release from which the default
