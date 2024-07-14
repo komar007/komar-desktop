@@ -147,11 +147,14 @@ function p_token()
 function p_set_title()
 {
 	title="$*"
+	# shellcheck disable=SC2028
 	echo -n "\[\e]0;$title\a\]"
 }
-function print_n()
+function print_hline()
 {
-	yes ┈ | head -n "$1" | tr -d '\n'
+	setterm -linewrap off
+	yes ┈ | head -n $COLUMNS | tr -d '\n'
+	setterm -linewrap on
 }
 function p_right()
 {
@@ -159,9 +162,10 @@ function p_right()
 	cmd2="$2"
 	dim_color="$(tput sgr0 setaf 0)"
 	choose_color="$(p_if_last_cmd_succ "${DIMBLUE}" "${DIMRED}")"
-	h_line="\r\$(print_n \$((COLUMNS-1)))"
+	h_line="\$(print_hline)"
 	back_to_2="\$(tput cub \$(wc -m <<< \"$cmd2\"))"
 	back_to_1="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + \$(wc -m <<< \"$cmd1\"))))"
+	# shellcheck disable=SC2028
 	echo -n "$choose_color\[\e7$h_line$back_to_2$dim_color$cmd2$back_to_1$cmd1\e8\]${RESET}"
 }
 
