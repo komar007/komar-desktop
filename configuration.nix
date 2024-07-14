@@ -106,10 +106,13 @@
 
       lua-language-server
       nixd
+      alejandra
 
       mpv
       ifwifi
       super-slicer-latest
+
+      imagemagick
     ];
   };
 
@@ -123,6 +126,11 @@
     tig
     killall
     bc
+    zip
+
+    pciutils
+
+    openconnect
   ];
 
   fonts.packages = with pkgs; [
