@@ -147,9 +147,10 @@ function p_token()
 function p_set_title()
 {
 	title="$*"
+	# shellcheck disable=SC2028
 	echo -n "\[\e]0;$title\a\]"
 }
-function print_n()
+function print_h_line()
 {
 	yes ┈ | head -n "$1" | tr -d '\n'
 }
@@ -159,10 +160,26 @@ function p_right()
 	cmd2="$2"
 	dim_color="$(tput sgr0 setaf 0)"
 	choose_color="$(p_if_last_cmd_succ "${DIMBLUE}" "${DIMRED}")"
-	h_line="\r\$(print_n \$((COLUMNS-1)))"
+	h_line_len="\$((COLUMNS-\$(get_column)))"
+	h_line="\$(print_h_line $h_line_len)\b"
 	back_to_2="\$(tput cub \$(wc -m <<< \"$cmd2\"))"
 	back_to_1="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + \$(wc -m <<< \"$cmd1\"))))"
+	# shellcheck disable=SC2028
 	echo -n "$choose_color\[\e7$h_line$back_to_2$dim_color$cmd2$back_to_1$cmd1\e8\]${RESET}"
+}
+
+function get_column()
+{
+	local col
+	local _
+	exec < /dev/tty
+	oldstty=$(stty -g)
+	stty raw -echo min 0
+	tput u7 > /dev/tty
+	read -sr -d\; _
+	read -sr -dR col
+	stty "$oldstty"
+	echo "$((col-1))"
 }
 
 RESET="\[$(tput sgr0)\]"
@@ -202,6 +219,8 @@ function get_ps1()
 		     -e "s/([0-9]+) [a-z]+\(\-\)/'${RED}$MINUS'\1/g" \
 		     -e "s/ +$//")'
 
+	# shellcheck disable=SC2016
+	unfinished_line_marker="$(p_if '[ $(get_column) -ne 0 ]' "${RED}󰞓 ")"
 	prev_status="$(p_if_else "$p_cmd_ok" "${BLUE}" "${RED}${INVERT}\$?${RESET}${RED}")"${RESET}
 	ssh_tag="$(p_if "$p_is_ssh" "${BYELLOW}ssh:${RESET}")"
 	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${GRAY}'$NIX_SHELL_NAME'${SECTION_END}")"
@@ -216,8 +235,8 @@ function get_ps1()
 
 	ssh_tag=$(eval echo "$ssh_tag") # needs to be evaluated just once
 
-	twoline="$right_tag"
-	twoline+="$prev_status$branch_token$nix_tag$venv_tag"
+	twoline=""
+	twoline+="$right_tag$unfinished_line_marker$prev_status$branch_token$nix_tag$venv_tag"
 	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY} "
 	twoline+="${RESET}\n"
 	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title "$title")"
