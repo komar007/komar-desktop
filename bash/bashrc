@@ -152,9 +152,13 @@ function p_set_title()
 }
 function print_hline()
 {
-	setterm -linewrap off
-	yes ┈ | head -n $COLUMNS | tr -d '\n'
-	setterm -linewrap on
+	if grep -q tmux- <<< "$TERM"; then
+		setterm -linewrap off
+		yes ┈ | head -n $COLUMNS | tr -d '\n'
+		setterm -linewrap on
+	else
+		tput cuf $COLUMNS
+	fi
 }
 function p_right()
 {
