@@ -115,7 +115,6 @@
       pstree # required by PS1
       jq # required by PS1
       fzf
-      ripgrep
       tmux
 
       xmonad-with-packages
@@ -133,10 +132,6 @@
       cmake
       gcc
       rustup
-
-      lua-language-server
-      nixd
-      nixpkgs-fmt
 
       mpv
       super-slicer-latest
