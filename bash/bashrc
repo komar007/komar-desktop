@@ -187,6 +187,7 @@ GREEN="\[$(tput setaf 2)\]"
 BYELLOW="\[$(tput bold setaf 3)\]"
 YELLOW="\[$(tput setaf 3)\]"
 BLACK="\[$(tput setaf 16)\]"
+LGRAY="\[$(tput setaf 249)\]"
 
 BG_GRAY="\[$(tput setab 236)\]"
 
@@ -212,7 +213,7 @@ function get_ps1()
 
 	prev_status="$(p_if_else "$p_cmd_ok" "${BLUE}" "${RED}${INVERT}\$?${RESET}${RED}")"${RESET}
 	ssh_tag="$(p_if "$p_is_ssh" "${BYELLOW}ssh:${RESET}")"
-	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${GRAY}\$NIX_SHELL_NAME${SECTION_END}")"
+	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${LGRAY}\$NIX_SHELL_NAME${SECTION_END}")"
 	# shellcheck disable=SC2016,SC2089
 	venv_path='$(realpath --relative-to="$(pwd)" "$VIRTUAL_ENV" 2>/dev/null)'
 	venv_tag="$(p_if "$p_is_venv" "${SECTION_BEGIN} ${BBLUE} ${GRAY}$venv_path${SECTION_END}")"
