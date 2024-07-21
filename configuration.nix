@@ -142,7 +142,6 @@
       htop
 
       firefox
-      google-chrome
 
       gnumake
       cmake
@@ -150,9 +149,14 @@
       rustup
 
       mpv
+      geeqie
+      feh
+      scrot
+      imagemagick
+
       super-slicer-latest
 
-      imagemagick
+      davinci-resolve
     ];
   };
 
