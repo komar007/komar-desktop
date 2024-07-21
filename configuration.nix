@@ -2,6 +2,23 @@
 , pkgs
 , ...
 }: {
+  nixpkgs.overlays = [
+    (final: prev:
+      {
+        xorg = prev.xorg // {
+          xorgserver = prev.xorg.xorgserver.overrideAttrs (old: {
+            patches = old.patches ++ [
+              (final.fetchpatch
+                {
+                  url = "https://github.com/komar007/xserver/compare/xorg-server-21.1.13...xorg-server-21.1.13_test_no_tear.patch";
+                  sha256 = "sha256-xMyMMc8St6br+Lq8jS1SD8vOKONhoPJ8IwPU0Y6ct1M=";
+                })
+            ];
+          });
+        };
+      }
+    )
+  ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   imports = [
@@ -46,11 +63,10 @@
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "intel" ];
+    videoDrivers = [ "modesetting" ];
     displayManager.startx.enable = true;
     xkb = {
       layout = "pl";
-      variant = "";
     };
   };
   nixpkgs.config.packageOverrides = pkgs: {
@@ -61,12 +77,12 @@
     driSupport = true;
     driSupport32Bit = true;
     extraPackages = with pkgs; [
+      intel-compute-runtime
       intel-media-sdk
       intel-media-driver
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   services.printing.enable = true;
 
