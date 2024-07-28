@@ -40,6 +40,7 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    firewall.allowedTCPPorts = [ 80 ];
   };
 
   hardware.bluetooth = {
@@ -147,6 +148,11 @@
   };
 
   services.openssh.enable = true;
+
+  services.lighttpd = {
+    enable = true;
+    document-root = "/var/www";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
