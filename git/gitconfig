@@ -5,6 +5,7 @@
 	wip = commit -a -m wip
 	unwip = ![ \"$(git log -1 --pretty=format:%B | head -n 1)\" = wip ] && git uncommit || (echo NOT A WIP && exit 1)
 	pg = "!f(){ if [ -z \"$(git status --porcelain 2>/dev/null| egrep '^(M| M)')\" ]; then PREV=$(git rev-parse --abbrev-ref HEAD); R=push_branch; git checkout master -b $R && if ! git cherry-pick $1; then echo 'fix conflicts and exit shell' && git status && $SHELL && git cherry-pick --continue; fi && (git push origin HEAD:refs/for/master ; git checkout $PREV && git branch -D $R) || (git cherry-pick --abort ; git checkout $PREV && git branch -D $R); else echo 'dirty dir'; fi }; f"
+	as = !git rebase -i --autosquash $(git log --format='%H' HEAD^ | grep -m 1 --color=never -F $(git branch --format='-e %(objectname)'))
 [core]
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	autocrlf = false
