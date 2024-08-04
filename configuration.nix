@@ -110,6 +110,7 @@
     killall
     bc
     zip
+    file
 
     pciutils
 
