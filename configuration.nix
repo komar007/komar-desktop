@@ -147,6 +147,7 @@
     file
 
     pciutils
+    nvme-cli
 
     openconnect
   ];
@@ -186,7 +187,7 @@
       scrot
       imagemagick
 
-      super-slicer-latest
+      super-slicer-beta
 
       davinci-resolve
     ];
