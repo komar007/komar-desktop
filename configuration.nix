@@ -176,6 +176,8 @@
 
       firefox
 
+      unzip
+
       gnumake
       cmake
       gcc
@@ -186,10 +188,12 @@
       feh
       scrot
       imagemagick
+      gnuplot
 
       super-slicer-beta
 
       davinci-resolve
+      exiftool
     ];
   };
 
