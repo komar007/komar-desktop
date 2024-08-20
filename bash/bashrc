@@ -353,10 +353,13 @@ _GLOBAL_HISTORY_FILE=$HOME/.global_history
 function _search_global_history()
 {
 	local directory line bind_id bind id
+	local fzf_extra_opts=$1
 	bind_id=$(tac "$_GLOBAL_HISTORY_FILE" \
 		| jq -jr "$_FZF_ENTRY_JQ" \
 		| fzf-tmux -p 100%,90% -y 0 \
 			-- \
+			--scheme=history \
+			$fzf_extra_opts \
 			--ansi \
 			--read0 \
 			--with-nth=2.. \
@@ -384,6 +387,7 @@ function _search_global_history()
 	READLINE_POINT=${#line}
 }
 bind -x '"\C-g":_search_global_history'
+bind -x '"\C-r":_search_global_history "--exact --no-extended --bind ctrl-r:up"'
 
 # save the last history item in global history
 PROMPT_COMMAND="_prompt_command"
