@@ -5,7 +5,6 @@
 # that can't tolerate any output.  So make sure this doesn't display
 # anything or bad things will happen !
 
-
 # Test for an interactive shell.  There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
@@ -353,9 +352,8 @@ _GLOBAL_HISTORY_FILE=$HOME/.global_history
 # Show a fuzzy-search prompt with global history and let the user select one item
 function _search_global_history()
 {
-	local command
-	local id
-	id=$(tac "$_GLOBAL_HISTORY_FILE" \
+	local directory line bind_id bind id
+	bind_id=$(tac "$_GLOBAL_HISTORY_FILE" \
 		| jq -jr "$_FZF_ENTRY_JQ" \
 		| fzf-tmux -p 100%,90% -y 0 \
 			-- \
@@ -366,12 +364,24 @@ function _search_global_history()
 			--preview-window=wrap \
 			--color=hl:yellow:bold \
 			--color=hl+:yellow:bold \
-		| head -n 1 \
-		| cut -d' ' -f 1)
-	[ -z "$id" ] && return
-	command=$(jq -r "select(.id == \"$id\") | .cmd" "$_GLOBAL_HISTORY_FILE")
-	READLINE_LINE="$command"
-	READLINE_POINT=${#command}
+			--expect enter,ctrl-f \
+		| head -n 2 \
+		| xargs)
+	[ -z "$bind_id" ] && return
+	read -r bind id _ <<< "$bind_id"
+	case "$bind" in
+		enter)
+			# jq -r -> command string raw and unquoted
+			line=$(jq -r "select(.id == \"$id\") | .cmd" "$_GLOBAL_HISTORY_FILE")
+			;;
+		ctrl-f)
+			# no -r in jq -> directory string already nicely escaped and quoted
+			directory=$(jq "select(.id == \"$id\") | .cwd" "$_GLOBAL_HISTORY_FILE")
+			line="cd $directory"
+			;;
+	esac
+	READLINE_LINE="$line"
+	READLINE_POINT=${#line}
 }
 bind -x '"\C-g":_search_global_history'
 
