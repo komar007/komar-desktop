@@ -352,19 +352,27 @@ _GLOBAL_HISTORY_FILE=$HOME/.global_history
 # Show a fuzzy-search prompt with global history and let the user select one item
 function _search_global_history()
 {
-	local directory line bind_id bind id
+	local directory line bind_id bind id set_cursor preview
 	local fzf_extra_opts=$1
+	set_cursor="beginning-of-line"$(yes +forward-char | head -n "$READLINE_POINT" | tr -d '\n')
+	if [ $((LINES*3)) -gt "$COLUMNS" ]; then
+		preview=up
+	else
+		preview=right
+	fi
+	# shellcheck disable=SC2086
 	bind_id=$(tac "$_GLOBAL_HISTORY_FILE" \
 		| jq -jr "$_FZF_ENTRY_JQ" \
-		| fzf-tmux -p 100%,90% -y 0 \
-			-- \
+		| fzf \
+			-q "$READLINE_LINE" \
+			--bind "start:${set_cursor}" \
 			--scheme=history \
 			$fzf_extra_opts \
 			--ansi \
 			--read0 \
 			--with-nth=2.. \
 			--preview "jq -r --arg id {1} '$_FZF_PREVIEW_JQ' '$_GLOBAL_HISTORY_FILE'" \
-			--preview-window=wrap \
+			--preview-window=$preview,wrap \
 			--bind "ctrl-y:execute:\
 				jq -r 'select(.id == \"{1}\") | .cmd' $_GLOBAL_HISTORY_FILE \
 			        | head -c -1 \
