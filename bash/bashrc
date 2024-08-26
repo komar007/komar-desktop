@@ -365,6 +365,13 @@ function _search_global_history()
 			--with-nth=2.. \
 			--preview "jq -r --arg id {1} '$_FZF_PREVIEW_JQ' '$_GLOBAL_HISTORY_FILE'" \
 			--preview-window=wrap \
+			--bind "ctrl-y:execute:\
+				jq -r 'select(.id == \"{1}\") | .cmd' $_GLOBAL_HISTORY_FILE \
+			        | head -c -1 \
+				| tmux load-buffer -; \
+				tmux save-buffer - \
+			        | xsel -i --primary \
+			" \
 			--color=hl:yellow:bold \
 			--color=hl+:yellow:bold \
 			--expect enter,ctrl-f \
