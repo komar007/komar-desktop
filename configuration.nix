@@ -3,6 +3,9 @@
 , ...
 }: {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.overlays = [
+    (import ./tmux-override.nix)
+  ];
 
   system.replaceRuntimeDependencies = [{
     original = pkgs.xorg.xorgserver;
