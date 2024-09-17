@@ -38,6 +38,23 @@ WKTM_LOW=("#6a2119"   "#93352a"    ""       )
 WKTM_MID=("#2a2c28"   "#40423d"    "#719a4b")
  WKTM_HI=("#364924"   "#456429"    "#fb4934")
 
+function balance()
+{
+	B=$1
+	COL=$2
+
+	M=$(echo "scale=0;$B/60" | bc -l)
+	S=+
+	if [ $M -lt 0 ]; then
+		S=-
+		M=$((-$M))
+	fi
+	H=$(($M/60))
+	M=$(($M-$H*60))
+	text=$(printf "%c%d:%02d\n" "$S" "$H" "$M")
+	color_xmobar "$text" "$COL"
+}
+
 num=0
 if [ -x "$HOME/.slock/antime.sh" ]; then
 	should_start=$(date -d "$SHOULD_START" +%s)
@@ -58,7 +75,11 @@ if [ -x "$HOME/.slock/antime.sh" ]; then
 		if [ "$num" -ne 2 ]; then
 			echo -n "$day_part "
 		else
-			echo -n "<fc=#cccccc><icon=enter.xbm/></fc>$time_part ($day_part)"
+
+			bal=$($HOME/.slock/balance.sh)
+			color_bal=$(low_mid_high $bal -600 600 "${WKTM_LOW[1]}" "${WKTM_MID[1]}" "${WKTM_HI[1]}")
+			bal_text=$(balance "$bal" "$color_bal")
+			echo -n "<fc=#cccccc><icon=enter.xbm/></fc> [$bal_text] $time_part ($day_part)"
 		fi
 		num=$[$num+1]
 	done
