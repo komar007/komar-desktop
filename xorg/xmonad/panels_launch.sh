@@ -46,7 +46,7 @@ elif [[ $CONFIG == work ]]; then
     ICON_ROOT="$HOME/.xmonad/dzen2_img_small/"
     cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_WORK    -DPOS=0    -DWIDTH=1000 ~/.xmonad/xmobar-info.in               > /tmp/xmobar-info-work
     cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_WORK    -DPOS=1000 -DWIDTH=200 -DSIDE_LEFT   ~/.xmonad/xmobar-clock.in > /tmp/xmobar-clock1
-    cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_WORK    -DPOS=2560 -DWIDTH=320 -DSIDE_RIGHT  ~/.xmonad/xmobar-clock.in > /tmp/xmobar-clock2
+    cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_WORK    -DPOS=2800 -DWIDTH=320 -DSIDE_RIGHT  ~/.xmonad/xmobar-clock.in > /tmp/xmobar-clock2
     xmobar /tmp/xmobar-info-work &
     echo $! >> $PIDS
     xmobar /tmp/xmobar-clock1 &
