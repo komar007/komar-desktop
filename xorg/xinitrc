@@ -18,7 +18,8 @@ else
 fi
 
 if [ "$CONFIG" = work ]; then
-	xrandr --output HDMI1 --rotate left --left-of HDMI2
+	xrandr --output HDMI-1 --rotate left --left-of DP-3
+	xrandr --output DP-1 --rotate left --right-of DP-3
 fi
 xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr -solid '#000000'
