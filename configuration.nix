@@ -147,7 +147,10 @@
     zip
     file
 
+    man-pages
+
     pciutils
+    usbutils
     nvme-cli
 
     openconnect
