@@ -207,6 +207,15 @@
 
       dosbox
       wine
+      (jazz2.overrideAttrs (finalAttrs: previousAttrs: {
+        version = "3.0.0";
+        src = fetchFromGitHub {
+          owner = "deathkiller";
+          repo = "jazz2-native";
+          rev = finalAttrs.version;
+          hash = "sha256-t1bXREL/WWnYnSfCyAY5tus/Bq5V4HVHg9s7oltGoIg=";
+        };
+      }))
     ];
   };
 
