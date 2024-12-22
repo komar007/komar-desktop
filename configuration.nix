@@ -4,10 +4,10 @@
 }: {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.overlays = [
-    (import ./tmux-override.nix)
+    #(import ./tmux-override.nix)
   ];
 
-  system.replaceRuntimeDependencies = [{
+  system.replaceDependencies.replacements = [{
     original = pkgs.xorg.xorgserver;
     replacement = pkgs.xorg.xorgserver.overrideAttrs (old: {
       patches = old.patches ++ [
@@ -106,10 +106,9 @@
   nixpkgs.config.packageOverrides = pkgs: {
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       intel-compute-runtime
       intel-media-sdk
@@ -120,7 +119,6 @@
 
   services.printing.enable = true;
 
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
