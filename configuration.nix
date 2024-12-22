@@ -161,6 +161,7 @@
   ];
 
   users.users.komar = {
+    initialPassword = "test";
     isNormalUser = true;
     description = "Michał Trybus";
     extraGroups = [ "networkmanager" "wheel" ];
