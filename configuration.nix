@@ -194,11 +194,19 @@
       scrot
       imagemagick
       gnuplot
+      xcolor
 
       super-slicer-beta
 
       davinci-resolve
       exiftool
+      blender
+      gimp
+      unetbootin
+      spotifyd
+
+      dosbox
+      wine
     ];
   };
 
