@@ -1,6 +1,7 @@
 #include <xmonad.rc>
 
 import System.IO
+import System.Exit (exitSuccess)
 import qualified Data.Map as M
 import Data.Ratio ((%))
 import XMonad
@@ -313,12 +314,14 @@ mkPrompt cb c = do
 scratchCmdPrompt = mkPrompt scratchPrompt
 
 myKeys xmproc = [
-    ("M-w",               viewScreen def 0),
-    ("M-e",               viewScreen def 1),
-    ("M-r",               viewScreen def 2),
-    ("M-S-w",             sendToScreen def 0),
-    ("M-S-e",             sendToScreen def 1),
-    ("M-S-r",             sendToScreen def 2),
+    ("M-m",               spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi"),
+    ("M-S-m",             io exitSuccess),
+    ("M-q",               viewScreen def 0),
+    ("M-w",               viewScreen def 1),
+    ("M-e",               viewScreen def 2),
+    ("M-S-q",             sendToScreen def 0),
+    ("M-S-w",             sendToScreen def 1),
+    ("M-S-e",             sendToScreen def 2),
     ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
