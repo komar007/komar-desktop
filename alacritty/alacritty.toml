@@ -109,3 +109,8 @@ chars = "\uE103"
 mods = "Control|Shift"
 key = "k"
 chars = "\uE104"
+
+[[keyboard.bindings]]
+mods = "Control|Shift"
+key = "y"
+chars = "\uE105"
