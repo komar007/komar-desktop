@@ -95,6 +95,8 @@
     powerOnBoot = true;
   };
 
+  services.udisks2.enable = true;
+
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
@@ -216,6 +218,7 @@
           hash = "sha256-t1bXREL/WWnYnSfCyAY5tus/Bq5V4HVHg9s7oltGoIg=";
         };
       }))
+      calibre
     ];
   };
 
