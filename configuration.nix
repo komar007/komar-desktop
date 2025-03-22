@@ -226,6 +226,18 @@
     document-root = "/var/www";
   };
 
+  services.kanata = {
+    enable = true;
+    keyboards = {
+      generic = {
+        extraDefCfg = ''
+          process-unmapped-keys yes
+        '';
+        config = builtins.readFile ./kanata-generic.kbd;
+      };
+    };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
