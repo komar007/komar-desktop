@@ -13,8 +13,8 @@
       patches = old.patches ++ [
         (pkgs.fetchpatch
           {
-            url = "https://github.com/komar007/xserver/compare/xorg-server-21.1.13...xorg-server-21.1.13_test_no_tear.patch";
-            sha256 = "sha256-xMyMMc8St6br+Lq8jS1SD8vOKONhoPJ8IwPU0Y6ct1M=";
+            url = "https://github.com/komar007/xserver/compare/xorg-server-21.1.16...xorg-server-21.1.16_no_tear.patch";
+            sha256 = "sha256-zihVEOHX7BjlMjPu9WwyAUBnd5JWViuJ2jrtwC6Dbfc=";
           })
       ];
     });
