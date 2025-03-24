@@ -231,14 +231,7 @@
 
   services.kanata = {
     enable = true;
-    keyboards = {
-      generic = {
-        extraDefCfg = ''
-          process-unmapped-keys yes
-        '';
-        config = builtins.readFile ./kanata-generic.kbd;
-      };
-    };
+    keyboards."generic".config = builtins.readFile ./kanata-generic.kbd;
   };
 
   # This value determines the NixOS release from which the default
