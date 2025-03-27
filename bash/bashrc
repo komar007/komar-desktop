@@ -369,7 +369,7 @@ function _search_global_history()
 			--read0 \
 			--with-nth=2.. \
 			--preview "jq -r --arg id {1} '$_FZF_PREVIEW_JQ' '$_GLOBAL_HISTORY_FILE'" \
-			--preview-window=down,wrap,10 \
+			--preview-window=down,wrap,10,border-none \
 			--bind "ctrl-y:execute:\
 				jq -r 'select(.id == \"{1}\") | .cmd' $_GLOBAL_HISTORY_FILE \
 			        | head -c -1 \
