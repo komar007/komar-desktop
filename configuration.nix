@@ -1,7 +1,7 @@
-{ config
-, pkgs
-, ...
-}: {
+{ config, pkgs, nixpkgs-unstable, system, ...}:
+let
+  unstable = nixpkgs-unstable.legacyPackages.${system};
+in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.overlays = [
     #(import ./tmux-override.nix)
