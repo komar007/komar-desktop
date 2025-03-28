@@ -8,7 +8,7 @@ Extra keys are outside of the main area:
   ⎋  1  2  3  4  5  6  7  8  9  0   -   =   ⌫ ⌦
                                 p           \
   ⇪                  h  j  k  l
-                       n                   ⇧› f13
+  ‹⇧                   n                   ⇧› f13
   ‹⌃ ‹◆  ‹⌥                        ◆› menu ⌃›
 )
 
@@ -16,21 +16,21 @@ Extra keys are outside of the main area:
   @⎋ _  _  _  _  _  _  _  _  _  _   _   _   \ ⌦
                                 _          @⌫
   ‹⌃                 _  _  _  _
-                       _                    _ @fn
+  _                    _                    _ @fn
   XX @‹⌥ ‹◆                      menu   XX XX
 )
 (deflayer fn
   @` f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 _ _
                                 _           ⌫
   _                  _  _  _  _
-                       _                    _ _
+  _                    _                    _ _
   _  _   _                          _    _  _
 )
 (deflayer ⌥
   _  _  _  _  _  _  _  _  _  _  _   _   _   _ _
                                 @▲          _
   _                  @◀ @▼ @▲ @▶
-                       @▼                   _ _
+  _                    @▼                   _ _
   _  _   _                          _    _  _
 )
 
@@ -40,7 +40,7 @@ Extra keys are outside of the main area:
 )
 
 (defalias
-  (t! alias-⇧›-fork ⎋ `)
+  (t! alias-⇧›-fork ⎋ (fork ` (unmod `) (‹⇧)))
   (t! alias-⇧›-fork ` ⎋)
   (t! alias-⇧›-fork ⌫ \)
   fn (layer-while-held fn)
