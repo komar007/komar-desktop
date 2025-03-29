@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, system, ...}:
+{ config, pkgs, nixpkgs-unstable, komar-nvim, system, ...}:
 let
   unstable = nixpkgs-unstable.legacyPackages.${system};
 in {
@@ -167,60 +167,13 @@ in {
     isNormalUser = true;
     description = "Michał Trybus";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      pstree # required by PS1
-      jq # required by PS1
-      fzf
-      tmux
-
-      xmonad-with-packages
-      pulsemixer
-      alacritty
-      xsel
-      dzen2
-      xmobar
-      htop
-
-      firefox
-
-      unzip
-
-      gnumake
-      cmake
-      gcc
-      rustup
-
-      mpv
-      geeqie
-      feh
-      scrot
-      imagemagick
-      gnuplot
-      xcolor
-
-      super-slicer-beta
-
-      davinci-resolve
-      exiftool
-      blender
-      gimp
-      unetbootin
-      spotifyd
-
-      dosbox
-      wine
-      (jazz2.overrideAttrs (finalAttrs: previousAttrs: {
-        version = "3.0.0";
-        src = fetchFromGitHub {
-          owner = "deathkiller";
-          repo = "jazz2-native";
-          rev = finalAttrs.version;
-          hash = "sha256-t1bXREL/WWnYnSfCyAY5tus/Bq5V4HVHg9s7oltGoIg=";
-        };
-      }))
-      calibre
-    ];
   };
+
+  home-manager.users.komar =
+    { config, ... }: (import ./home-manager/home.nix) {
+      lib = pkgs.lib;
+      inherit pkgs komar-nvim system;
+    };
 
   services.openssh.enable = true;
 
