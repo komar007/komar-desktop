@@ -1,11 +1,17 @@
 { config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
   imports = [
     ./hardware-configuration.nix
+
+    ../modules/xserver.nix
+    ../modules/intel.nix
+    ../modules/audio.nix
   ];
 
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
   '';
+
+  services.xserver.videoDrivers = [ "modesetting" ];
 
   systemd =
     let
@@ -55,45 +61,7 @@
 
   services.udisks2.enable = true;
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "modesetting" ];
-    displayManager.startx.enable = true;
-    xkb = {
-      layout = "pl";
-    };
-  };
-  nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
-  };
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      intel-compute-runtime
-      intel-media-sdk
-      intel-media-driver
-      libvdpau-va-gl
-    ];
-  };
-
   services.printing.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-    pulse.enable = true;
-    extraConfig.pipewire-pulse."10-auto-connect" = {
-      "pulse.cmd" = [
-        { cmd = "load-module"; args = "module-switch-on-connect"; }
-      ];
-    };
-  };
 
   services.openssh.enable = true;
 
@@ -102,11 +70,5 @@
     document-root = "/var/www";
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 }
