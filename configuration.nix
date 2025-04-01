@@ -1,7 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, system, ...}:
-let
-  unstable = nixpkgs-unstable.legacyPackages.${system};
-in {
+{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.overlays = [
     #(import ./tmux-override.nix)
@@ -172,7 +169,7 @@ in {
   home-manager.users.komar =
     { config, ... }: (import ./home-manager/home.nix) {
       lib = pkgs.lib;
-      inherit pkgs komar-nvim system;
+      inherit pkgs komar-nvim;
     };
 
   services.openssh.enable = true;

@@ -14,14 +14,17 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
+      nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
+        inherit system;
+      };
+      komar-nvim = system: inputs.komar-nvim.packages.${system};
     in
     {
       nixosConfigurations = {
         home = nixpkgs.lib.nixosSystem {
-          specialArgs = with inputs; {
-            inherit nixpkgs-unstable;
-            inherit komar-nvim;
-            inherit system;
+          specialArgs = {
+            nixpkgs-unstable = nixpkgs-unstable system;
+            komar-nvim = komar-nvim system;
           };
           modules = [
             ./configuration.nix
@@ -32,9 +35,8 @@
       homeConfigurations = {
         komar = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { inherit system; };
-          extraSpecialArgs = with inputs; {
-            inherit system;
-            inherit komar-nvim;
+          extraSpecialArgs = {
+            komar-nvim = komar-nvim system;
           };
           modules = [ ./home-manager/home.nix ];
         };

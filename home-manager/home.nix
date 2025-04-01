@@ -1,8 +1,4 @@
-{ lib, pkgs, system, komar-nvim, ... }:
-let
-  komar = komar-nvim.packages.${system};
-in
-{
+{ lib, pkgs, komar-nvim, ... }: {
   nixpkgs = {
     config.allowUnfree = true;
   };
@@ -17,7 +13,7 @@ in
       fzf
       tmux
 
-      komar.nvim
+      komar-nvim.nvim
 
       xmonad-with-packages
       pulsemixer
