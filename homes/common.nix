@@ -14,13 +14,7 @@
 
     komar-nvim.nvim
 
-    xmonad-with-packages
-    pulsemixer
     alacritty
-    xsel
-    dzen2
-    xmobar
-    htop
 
     unzip
 

@@ -1,6 +1,7 @@
-{ lib, pkgs, komar-nvim, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ../modules/firefox.nix
+    ../modules/xmonad.nix
   ];
 
   home.packages = with pkgs; [
