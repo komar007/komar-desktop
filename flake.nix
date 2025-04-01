@@ -14,32 +14,43 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
+      nixpkgs-stable = system: import inputs.nixpkgs {
+        inherit system;
+      };
       nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
         inherit system;
       };
       komar-nvim = system: inputs.komar-nvim.packages.${system};
+
+      nixosConfiguration = name: nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          nixpkgs-unstable = nixpkgs-unstable system;
+          komar-nvim = komar-nvim system;
+        };
+        modules = [
+          ./machines/common.nix
+          ./machines/${name}
+        ];
+      };
+
+      homeConfiguration = name: home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs-stable system;
+        extraSpecialArgs = {
+          nixpkgs-unstable = nixpkgs-unstable system;
+          komar-nvim = komar-nvim system;
+        };
+        modules = [
+          ./homes/common.nix
+          ./homes/${name}
+        ];
+      };
     in
     {
       nixosConfigurations = {
-        home = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            nixpkgs-unstable = nixpkgs-unstable system;
-            komar-nvim = komar-nvim system;
-          };
-          modules = [
-            ./configuration.nix
-            inputs.home-manager.nixosModules.default
-          ];
-        };
+        home = nixosConfiguration "home";
       };
       homeConfigurations = {
-        komar = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { inherit system; };
-          extraSpecialArgs = {
-            komar-nvim = komar-nvim system;
-          };
-          modules = [ ./home-manager/home.nix ];
-        };
+        home = homeConfiguration "home";
       };
     };
 }
