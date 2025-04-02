@@ -60,6 +60,7 @@
       homeConfigurations = {
         thinkcentre = homeConfiguration "thinkcentre";
         framework = homeConfiguration "framework";
+        work = homeConfiguration "work";
       };
     };
 }
