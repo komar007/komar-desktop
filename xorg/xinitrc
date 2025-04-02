@@ -25,7 +25,6 @@ xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
 xset r rate 250 20
-~/.xmonad/terminal.sh stats htop &
 if [ "$CONFIG" = work ]; then
 	xautolock -corners '0+00' -locker ~/.slock/slock_wrapper.sh -cornerdelay 2 -cornerredelay 10 -time 3 &
 else
