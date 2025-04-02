@@ -24,9 +24,6 @@ fi
 xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr -solid '#000000'
 setxkbmap pl
-if [ "$CONFIG" != desktop ]; then
-	xmodmap ~/.Xmodmap
-fi
 xset r rate 250 20
 ~/.xmonad/terminal.sh stats htop &
 if [ "$CONFIG" = work ]; then
