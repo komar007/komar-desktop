@@ -108,7 +108,7 @@ preIcon i = wrap ("^i(" ++ iconDir ++ i ++ ")") "^p(1)"
 layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
 
 myLogHook pipe = dynamicLogWithPP $ dzenPP {
-    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ getSortByXineramaRule,
+    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ wsSorter,
     ppOutput  = hPutStrLn pipe,
     ppTitle   = dzenColor "#5d728d" "" . shorten 100,
     ppCurrent = dzenColor "#719e4b" "#333333" . preIcon "dcur.xbm",
@@ -118,7 +118,8 @@ myLogHook pipe = dynamicLogWithPP $ dzenPP {
     ppWsSep   = "^p(2)",
     ppSep     = dzenColor "#aaaaaa" "" "^p(3)|^p(3)",
     ppLayout  = dzenColor "#c0712c" "" . layoutNameToIcon
-}
+} where
+    wsSorter = getSortByXineramaPhysicalRule horizontalScreenOrderer
 
 scratchpads = [
     NS "scratchpad"     "~/.xmonad/terminal.sh scratchpad"
