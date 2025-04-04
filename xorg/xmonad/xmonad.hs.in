@@ -20,7 +20,7 @@ import XMonad.Util.Loggers
 import XMonad.StackSet as W hiding(layout, workspaces)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.WorkspaceDir
-import XMonad.Layout.Named
+import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
 import XMonad.Layout.IM
@@ -108,7 +108,7 @@ preIcon i = wrap ("^i(" ++ iconDir ++ i ++ ")") "^p(1)"
 layoutNameToIcon n = "^i(" ++ iconDir ++ "lay" ++ n ++ ".xbm)"
 
 myLogHook pipe = dynamicLogWithPP $ dzenPP {
-    ppSort    = fmap (.namedScratchpadFilterOutWorkspace) $ wsSorter,
+    ppSort    = fmap (.filterOutWs [scratchpadWorkspaceTag]) $ wsSorter,
     ppOutput  = hPutStrLn pipe,
     ppTitle   = dzenColor "#5d728d" "" . shorten 100,
     ppCurrent = dzenColor "#719e4b" "#333333" . preIcon "dcur.xbm",
@@ -233,7 +233,6 @@ myTopicConfig = def
     { topicDirs = M.fromList $ map (\(Main.TI n d _) -> (n,d)) myTopics
     , defaultTopicAction = const (return ())
     , defaultTopic = "web1"
-    , maxTopicHistory = 10
     , topicActions = M.fromList $ map (\(Main.TI n _ a) -> (n,a)) myTopics
     }
 
