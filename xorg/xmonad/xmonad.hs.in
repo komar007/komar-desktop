@@ -76,24 +76,19 @@ defaultWSet r n =
 defaultVSet r n =
     mySimpleFull ||| myTall r n ||| myWide r n
 
-webSpaces = ["web1", "web2", "pdf1", "pdf2", "pdf3"]
-vncSpaces = map (("vnc"++) . show) [1..2]
+webSpaces = ["web1", "web2"]
 
 -- FIXME dynamically create workspacedirs from topics configuration
 myLayoutHook = workspaceDir "~" $ smartBorders $
-    (onWorkspace "stats"    $ avoidStruts stats) $
     (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspace "mail" $ avoidStruts web) $
-    (onWorkspaces vncSpaces $ vnc) $
     (onWorkspace "temp" $ norm 0.5 2) $
 #ifdef CONFIG_WORK
     (onWorkspace "stb" $ norm golden 2) $
 #endif
     (norm golden 1)
     where
-    stats    = defaultMSet golden 1
     web      = defaultWSet golden 1
-    vnc      = defaultVSet golden 1
     norm r n = avoidStruts $ defaultSet r n
 
 #ifdef CONFIG_WORK
@@ -135,7 +130,6 @@ scratchpads = [
 myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook def
 myConditions = composeAll [
-    resource  =? "stats"      --> doF (W.shift "stats"),
     resource  =? "tempterm"   --> doF (W.shift "temp"),
     isIM                      --> doF (W.shift "im"),
     isMail                    --> doF (W.shift "mail"),
@@ -186,11 +180,7 @@ myTopics =
     , ti "c2"    "~"
     , ti "d2"    "~"
     , ti "c3"    "~"
-#ifdef CONFIG_WORK
-    , ti "stb"   "~"
-#else
     , ti "d3"    "~"
-#endif
     , ti "sys1"  "~"
     , ti "ds1"   "~"
     , ti "sys2"  "~"
@@ -199,30 +189,13 @@ myTopics =
         (spawnHere browser)
     , Main.TI "web2"  "~/Pobrania"
         (spawnHere browser)
-    , Main.TI "pdf1"  "~/Pobrania"
-        (runLastPdf "pdf1")
-    , Main.TI "pdf2"  "~/Pobrania"
-        (runLastPdf "pdf2")
-    , Main.TI "pdf3"  "~/Pobrania"
-        (runLastPdf "pdf3")
-    , ti "im"    "~"
-    , Main.TI "irc"   "~" (shellRemote "kserver" "screen -x irssi")
-    , Main.TI "kserver" "~" (shellRemote "kserver" "bash")
-    , ti "temp"  "~/temp"
-    , ti "stats" "~"
     , ti "mail"  "~"
     , ti "vm1"  "~/VMs"
     , ti "vm2"  "~/VMs"
-    , Main.TI "vnc1"  "~"
-        (spawnHere "vncviewer")
-    , Main.TI "vnc2"  "~"
-        (spawnHere "vncviewer")
-    , ti "float" "~"
     ]
     where
         ti t d = Main.TI t d shell
         shell = spawnHere "~/.xmonad/terminal.sh terminal"
-        runLastPdf w = spawnHere $ "~/.xmonad/run_pdf.sh " ++ w
         shellRemote host cmd = spawnHere $ "~/.xmonad/terminal.sh terminal -e ssh " ++ host ++ " -t " ++ cmd
 
 myTopicNames :: [Topic]
@@ -250,7 +223,7 @@ myConf xmproc =
         terminal = "~/.xmonad/terminal.sh terminal",
         workspaces = myTopicNames,
         clickJustFocuses = True
-} `additionalKeysP` (myKeys xmproc) `additionalKeys` myKeysMulti
+} `additionalKeysP` (myKeys xmproc)
 
 -- Better idea to run dzen with blinker
 --myDzenWithArgs :: String -> [String] -> Int -> X ()
@@ -295,7 +268,7 @@ main = do
         $ myConf xmproc
 
 workspaceKeys = ["", "M-1", "M-<F1>", "M-2", "M-<F2>", "M-3", "M-<F3>", "M-4", "M-<F4>", "M-5", "M-<F5>",
-    "M-6", "M-7", "M-8", "M-9", "M-0", "M--", "M-i", "M-o", "M-=", "M-\\", "M-u", "M-<F9>", "M-<F10>", "M-<F11>", "M-<F12>", "M-y"]
+    "M-6", "M-7", "M-u", "M-<F9>", "M-<F10>"]
 workspaceSKeys = map ("S-"++) workspaceKeys
 
 -- Workaround for toggle + scratchpad
@@ -331,8 +304,6 @@ myKeys xmproc = [
     ("M-x",               namedScratchpadAction scratchpads "bc"),
     ("M-c",               namedScratchpadAction scratchpads "notepad"),
     ("M-d",               changeDir xpconfig),
-    ("M-S-z",             selectSearchBrowser browser mySearchEngine),
-    ("M-z",               promptSearchBrowser xpconfig browser mySearchEngine),
     ("M-;",               sendMessage R.MirrorShrink),
     ("M-'",               sendMessage R.MirrorExpand),
     ("M-n",               scratchCmdPrompt xpconfig),
@@ -360,26 +331,3 @@ myKeys xmproc = [
     [(mod ++ sc, func (Lines 1) Linear dir) |
         (sc, dir) <- [("[", ToLeft), ("]", ToRight)],
         (mod, func) <- [("M-", planeMove), ("M-S-", planeShift)]]
-
-mySearchEngine = searchEngineF "multi" parseGoogle
-    where
-    parseGoogle s | s == "gmail" = "http://gmail.com"
-                  | otherwise    = (use mymulti) s
-    mymulti = intelligent multi
-
-myKeysMulti = [
-    ((0,                    xK_XF86AudioPlay        ), spawn ("mpc toggle")),
-    ((0,                    xK_XF86AudioStop        ), spawn ("mpc stop")),
-    ((0,                    xK_XF86AudioPrev        ), spawn ("mpc prev")),
-    ((0,                    xK_XF86AudioNext        ), spawn ("mpc next")),
-    ((0,                    xK_XF86AudioMute        ), spawn ("amixer -q set Master\\ Front toggle")),
-    ((0,                    xK_XF86AudioLowerVolume ), spawn ("amixer set Master\\ Front 2dB-")),
-    ((0,                    xK_XF86AudioRaiseVolume ), spawn ("amixer set Master\\ Front 2dB+"))]
-
-xK_XF86AudioLowerVolume = 0x1008ff11
-xK_XF86AudioMute = 0x1008ff12
-xK_XF86AudioRaiseVolume = 0x1008ff13
-xK_XF86AudioStop = 0x1008ff15
-xK_XF86AudioPlay = 0x1008ff14
-xK_XF86AudioPrev = 0x1008ff16
-xK_XF86AudioNext = 0x1008ff17
