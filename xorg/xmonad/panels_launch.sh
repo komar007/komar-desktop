@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [[ -a ~/.desktop_type ]]; then
 	CONFIG=`cat ~/.desktop_type`
-elif [[ -a /proc/acpi/battery/BAT0/ ]]; then
+elif [[ -d /sys/class/power_supply/BAT1/ ]]; then
 	CONFIG=laptop
 else
 	CONFIG=desktop
@@ -25,8 +25,10 @@ HEIGHT=$(cpp -P -I"$DIR" - <<< '#include "xmonad.rc"'$'\n''HEIGHT')
 
 if [[ $CONFIG == desktop ]]; then
     DZEN_X=1920
-else
+elif [[ $CONFIG == work ]]; then
     DZEN_X=1200
+elif [[ $CONFIG == laptop ]]; then
+    DZEN_X=400
 fi
 
 # in case cat dies because of broken pipe
@@ -55,8 +57,12 @@ elif [[ $CONFIG == work ]]; then
     xmobar /tmp/xmobar-clock2 &
     echo $! >> $PIDS
 elif [[ $CONFIG == laptop ]]; then
-    ICON_ROOT="$HOME/.xmonad/dzen2_img_small/"
-    xmobar ~/.xmonad/xmobar-laptop &
+    ICON_ROOT="$HOME/.xmonad/dzen2_img_large/"
+    cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_DESKTOP -DPOS=0    -DWIDTH=400  ~/.xmonad/xmobar-info.in               > /tmp/xmobar-info-laptop
+    cpp -P -I"$DIR" -DICON_ROOT=\"$ICON_ROOT\" -DCONFIG_DESKTOP -DPOS=1856 -DWIDTH=400  ~/.xmonad/xmobar-clock.in              > /tmp/xmobar-clock
+    xmobar /tmp/xmobar-info-laptop &
+    echo $! >> $PIDS
+    xmobar /tmp/xmobar-clock &
     echo $! >> $PIDS
 fi
 cat
