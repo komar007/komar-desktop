@@ -3,11 +3,14 @@
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.framework-13-7040-amd
 
+    ../modules/hibernate-while-in-suspend.nix
     ../modules/xserver.nix
     ../modules/audio.nix
   ];
 
   services.logind.lidSwitch = "suspend";
+  hibernate-while-in-suspend.seconds = 3600;
+  hibernate-while-in-suspend.ac-online-file = "/sys/class/power_supply/ACAD/online";
 
   networking = {
     hostName = "nixos-frmwrk";
