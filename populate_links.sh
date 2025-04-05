@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -f ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc_orig
