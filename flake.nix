@@ -5,6 +5,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,6 +21,7 @@
       system = "x86_64-linux";
       nixpkgs-stable = system: import inputs.nixpkgs {
         inherit system;
+        overlays = [ inputs.nur.overlays.default ];
       };
       nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
         inherit system;

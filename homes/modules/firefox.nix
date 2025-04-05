@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  # stuff coming
+  firefox-addons = pkgs.nur.repos.rycee.firefox-addons;
 in
 {
   programs.firefox.enable = true;
@@ -10,6 +10,7 @@ in
     isDefault = true;
 
     settings = {
+      "extensions.autoDisableScopes" = 0;
       "ui.key.menuAccessKeyFocuses" = false;
     };
 
@@ -33,5 +34,9 @@ in
         ];
       }];
     };
+    extensions = with firefox-addons; [
+      firenvim
+      ublock-origin
+    ];
   };
 }
