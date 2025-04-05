@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +12,7 @@
     komar-nvim.url = "github:komar007/neovim-config";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... } @ inputs:
     let
       system = "x86_64-linux";
       nixpkgs-stable = system: import inputs.nixpkgs {
@@ -24,6 +25,7 @@
 
       nixosConfiguration = name: nixpkgs.lib.nixosSystem {
         specialArgs = {
+          inherit nixos-hardware;
           nixpkgs-unstable = nixpkgs-unstable system;
           komar-nvim = komar-nvim system;
         };
@@ -48,9 +50,11 @@
     {
       nixosConfigurations = {
         home = nixosConfiguration "home";
+        framework = nixosConfiguration "framework";
       };
       homeConfigurations = {
         home = homeConfiguration "home";
+        framework = homeConfiguration "framework";
       };
     };
 }
