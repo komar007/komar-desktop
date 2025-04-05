@@ -6,6 +6,10 @@
       path = "default";
       isDefault = true;
 
+      settings = {
+        "ui.key.menuAccessKeyFocuses" = false;
+      };
+
       search.engines."Nix Packages" = {
         definedAliases = [ "@np" ];
         urls = [{
