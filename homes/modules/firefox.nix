@@ -1,6 +1,20 @@
 { lib, pkgs, ... }:
 let
   firefox-addons = pkgs.nur.repos.rycee.firefox-addons;
+  home-assistant = firefox-addons.buildFirefoxXpiAddon {
+    pname = "home-assistant";
+    version = "0.5.0";
+    addonId = "home-assistant@bokub.dev";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4239570/home_assistant-0.5.0.xpi";
+    sha256 = "sha256-Jb6Xqh7Qd/BDokLTRdMVH71pEbOL6Hr/v9n8jX0lm2M=";
+    meta = with lib; {
+      homepage = "https://github.com/bokub/home-assistant-extension#readme";
+      description = "";
+      license = licenses.mit;
+      mozPermissions = [];
+      platforms = platforms.all;
+    };
+  };
 in
 {
   programs.firefox.enable = true;
@@ -37,6 +51,7 @@ in
     extensions = with firefox-addons; [
       firenvim
       ublock-origin
+      home-assistant
     ];
   };
 }
