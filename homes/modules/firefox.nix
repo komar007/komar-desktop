@@ -26,6 +26,8 @@ in
     settings = {
       "extensions.autoDisableScopes" = 0;
       "ui.key.menuAccessKeyFocuses" = false;
+      "browser.aboutConfig.showWarning" = false;
+      "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
     };
 
     search.force = true;
