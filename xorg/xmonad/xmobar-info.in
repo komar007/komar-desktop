@@ -22,8 +22,7 @@ Config {
         Run Swap [
             "-t", "<usedratio>%",
             "--low", "#777777", "--normal", "#aaaaaa", "--high", "#a53333"
-        ] 10,
-        Run StdinReader
+        ] 10
     ],
     sepChar = "X",
     template = "XmemoryX/XswapX XcpuX"
