@@ -49,7 +49,7 @@
 
 
   networking = {
-    hostName = "nixos-home";
+    hostName = "nixos-thnkctre";
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [ 80 ];
   };

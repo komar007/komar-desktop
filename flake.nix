@@ -49,11 +49,11 @@
     in
     {
       nixosConfigurations = {
-        home = nixosConfiguration "home";
+        thinkcentre = nixosConfiguration "thinkcentre";
         framework = nixosConfiguration "framework";
       };
       homeConfigurations = {
-        home = homeConfiguration "home";
+        thinkcentre = homeConfiguration "thinkcentre";
         framework = homeConfiguration "framework";
       };
     };
