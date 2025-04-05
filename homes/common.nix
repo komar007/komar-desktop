@@ -6,11 +6,14 @@
     homeDirectory = "/home/komar";
   };
 
+  imports = [
+    ./modules/tmux.nix
+  ];
+
   home.packages = with pkgs; [
     pstree # required by PS1
     jq # required by PS1
     fzf
-    tmux
     bat
 
     komar-nvim.nvim
