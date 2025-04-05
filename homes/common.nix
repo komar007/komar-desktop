@@ -11,6 +11,7 @@
     jq # required by PS1
     fzf
     tmux
+    bat
 
     komar-nvim.nvim
 
@@ -22,5 +23,6 @@
     cmake
     gcc
     rustup
+    bacon
   ];
 }
