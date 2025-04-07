@@ -10,6 +10,8 @@
     ./modules/tmux.nix
   ];
 
+  programs.home-manager.enable = true;
+
   home.packages = with pkgs; [
     pstree # required by PS1
     jq # required by PS1
