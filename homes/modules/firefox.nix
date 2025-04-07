@@ -50,6 +50,16 @@ in
         ];
       }];
     };
+    search.engines."Home Manager Options" = {
+      definedAliases = [ "@hmo" ];
+      urls = [{
+        template = "https://home-manager-options.extranix.com/";
+        params = [
+          { name = "query"; value = "{searchTerms}"; }
+          { name = "release"; value = "release-24.11"; }
+        ];
+      }];
+    };
     extensions = with firefox-addons; [
       firenvim
       ublock-origin
