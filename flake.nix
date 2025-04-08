@@ -52,6 +52,7 @@
         extraSpecialArgs = {
           nixpkgs-unstable = nixpkgs-unstable system;
           komar-nvim = komar-nvim system;
+          nixgl = inputs.nixgl;
         };
         modules = [
           ./homes/common.nix

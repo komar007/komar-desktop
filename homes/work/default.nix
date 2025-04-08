@@ -1,20 +1,18 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, config, nixgl, ... }: {
   imports = [
     ../modules/firefox.nix
     ../modules/xmonad.nix
   ];
 
-  nixpkgs.overlays = let
-    wrapWith = wrapper: pkg: pkgs.writeShellApplication {
-      name = "${pkg.meta.mainProgram}";
-      text = ''${pkgs.lib.getExe wrapper} ${pkgs.lib.getExe pkg} "$@"'';
-    };
-    nixGlIntelize = wrapWith pkgs.nixgl.nixGLIntel;
-  in [
+  nixGL.packages = nixgl.packages;
+  nixGL.defaultWrapper = "mesa";
+  nixGL.installScripts = [ "mesa" ];
+
+  nixpkgs.overlays = [
     (final: prev: {
-      # TODO: why does config.lib.nixGL.wrap cause infinite recursion in overlay?
-      alacritty = nixGlIntelize prev.alacritty;
-      mpv = nixGlIntelize prev.mpv;
+      alacritty = config.lib.nixGL.wrap prev.alacritty;
+      mpv = config.lib.nixGL.wrap prev.mpv;
+      firefox = config.lib.nixGL.wrap prev.firefox;
     })
   ];
 
