@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
+{ config, pkgs, nixpkgs-unstable, ...}: {
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 

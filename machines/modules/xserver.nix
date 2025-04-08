@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
+{ config, pkgs, nixpkgs-unstable, ...}: {
   services.xserver = {
     enable = true;
     displayManager.startx.enable = true;

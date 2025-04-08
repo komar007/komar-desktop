@@ -33,13 +33,12 @@
       nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
         inherit system;
       };
-      komar-nvim = system: inputs.komar-nvim.packages.${system};
+      komar-nvim-module = system: inputs.komar-nvim.homeManagerModules.${system}.default;
 
       nixosConfiguration = name: nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit nixos-hardware;
           nixpkgs-unstable = nixpkgs-unstable system;
-          komar-nvim = komar-nvim system;
         };
         modules = [
           ./machines/common.nix
@@ -51,7 +50,7 @@
         pkgs = nixpkgs-stable system;
         extraSpecialArgs = {
           nixpkgs-unstable = nixpkgs-unstable system;
-          komar-nvim = komar-nvim system;
+          komar-nvim-module = komar-nvim-module system;
           nixgl = inputs.nixgl;
         };
         modules = [

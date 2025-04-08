@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
+{ config, pkgs, nixpkgs-unstable, ...}: {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 

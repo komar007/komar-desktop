@@ -1,4 +1,4 @@
-{ lib, pkgs, komar-nvim, nixpkgs-unstable, ... }: {
+{ lib, pkgs, komar-nvim-module, nixpkgs-unstable, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   home = {
@@ -8,6 +8,7 @@
 
   imports = [
     ./modules/tmux.nix
+    komar-nvim-module
   ];
 
   programs.home-manager.enable = true;
@@ -17,8 +18,6 @@
     jq # required by PS1
     fzf
     bat
-
-    komar-nvim.nvim
 
     alacritty
 

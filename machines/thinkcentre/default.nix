@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
+{ config, pkgs, nixpkgs-unstable, ...}: {
   imports = [
     ./hardware-configuration.nix
 

@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs-unstable, komar-nvim, ...}: {
+{ config, pkgs, nixpkgs-unstable, ...}: {
   nixpkgs.config.packageOverrides = pkgs: {
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
