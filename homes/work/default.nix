@@ -8,12 +8,19 @@
   nixGL.defaultWrapper = "mesa";
   nixGL.installScripts = [ "mesa" ];
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      alacritty = config.lib.nixGL.wrap prev.alacritty;
-      mpv = config.lib.nixGL.wrap prev.mpv;
-      firefox = config.lib.nixGL.wrap prev.firefox;
-    })
+  nixpkgs.overlays =
+  let
+    makeNixGlWrappedOverlay = pkgs:
+      final: prev: builtins.listToAttrs (
+        map (pkg: { name = pkg; value = config.lib.nixGL.wrap prev.${pkg}; }) pkgs
+      );
+  in
+  [
+    (makeNixGlWrappedOverlay [
+      "alacritty"
+      "mpv"
+      "firefox"
+    ])
   ];
 
   home.packages = with pkgs; [
