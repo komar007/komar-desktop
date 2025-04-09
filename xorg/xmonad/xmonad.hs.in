@@ -83,9 +83,6 @@ myLayoutHook = workspaceDir "~" $ smartBorders $
     (onWorkspaces webSpaces $ avoidStruts web) $
     (onWorkspace "mail" $ avoidStruts web) $
     (onWorkspace "temp" $ norm 0.5 2) $
-#ifdef CONFIG_WORK
-    (onWorkspace "stb" $ norm golden 2) $
-#endif
     (norm golden 1)
     where
     web      = defaultWSet golden 1
@@ -131,15 +128,9 @@ myScratchpadManageHook = namedScratchpadManageHook scratchpads
 myManageHook = myScratchpadManageHook <+> manageDocks <+> myConditions <+> manageHook def
 myConditions = composeAll [
     resource  =? "tempterm"   --> doF (W.shift "temp"),
-    isIM                      --> doF (W.shift "im"),
     isMail                    --> doF (W.shift "mail"),
-    resource  =? "scratchcmd" --> (doRectFloat $ W.RationalRect 0.1 0.1 0.8 0.8),
-#ifdef CONFIG_WORK
-    resource  =? "stb"        --> doF (W.shift "stb"),
-#endif
     isFullscreen              --> doFullFloat]
-    where isIM = className =? "Gajim" <||> className =? "Psi" <||> className =? "Pidgin"
-          isMail = className =? "Thunderbird"
+    where isMail = className =? "Thunderbird"
 
 guiFont = xstr(XMONAD_FONT)
 
@@ -225,14 +216,6 @@ myConf xmproc =
         clickJustFocuses = True
 } `additionalKeysP` (myKeys xmproc)
 
--- Better idea to run dzen with blinker
---myDzenWithArgs :: String -> [String] -> Int -> X ()
---myDzenWithArgs str args timeout = io $ runProcessWithInputAndWait "~/.xmonad/dzenblink.sh" args (unchomp str) timeout
---  -- dzen seems to require the input to terminate with exactly one newline.
---  where unchomp s@['\n'] = s
---        unchomp []       = ['\n']
---        unchomp (c:cs)   = c : unchomp cs
-
 data MyDzenUrgencyHook = MyDzenUrgencyHook {
                              duration :: Int,
                              args :: [String]
@@ -274,18 +257,6 @@ workspaceSKeys = map ("S-"++) workspaceKeys
 -- Workaround for toggle + scratchpad
 myToggle = windows $ W.view =<< W.tag . head . Prelude.filter ((\x -> x /= "NSP" && x /= "SP") . W.tag) . W.hidden
 
--- Runs command in scratchpad
-scratchPrompt :: String -> X ()
-scratchPrompt c = spawnHere $ "~/.xmonad/terminal.sh scratchcmd -e bash -ic '" ++ c ++ "'"
-
--- taken from XMonad.Acrions.SpawnOn, because it is not exported...
-mkPrompt :: (String -> X ()) -> XPConfig -> X ()
-mkPrompt cb c = do
-    cmds <- io $ getCommands
-    mkXPrompt Shell c (getShellCompl cmds $ searchPredicate c) cb
-
-scratchCmdPrompt = mkPrompt scratchPrompt
-
 myKeys xmproc = [
     ("M-m",               spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi"),
     ("M-S-m",             io exitSuccess),
@@ -306,7 +277,6 @@ myKeys xmproc = [
     ("M-d",               changeDir xpconfig),
     ("M-;",               sendMessage R.MirrorShrink),
     ("M-'",               sendMessage R.MirrorExpand),
-    ("M-n",               scratchCmdPrompt xpconfig),
     ("M-<Esc>",           goToSelected def),
     ("M-<Return>",        promote),
     ("M-b",               sendMessage ToggleStruts),
