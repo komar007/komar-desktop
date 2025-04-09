@@ -7,6 +7,8 @@
     ../modules/audio.nix
   ];
 
+  services.libinput.touchpad.disableWhileTyping = true;
+
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
     powerKey = "hibernate";
