@@ -82,11 +82,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1744141504,
-        "narHash": "sha256-qSnsA6R0zfvj4HEP8c5MzSUkhAD876j4lyZGk5lPq7g=",
+        "lastModified": 1744223238,
+        "narHash": "sha256-Nz59rs6IoZJD2jdKWxe/Bt/dDCBR+xQXZV93esSNMLo=",
         "owner": "komar007",
         "repo": "neovim-config",
-        "rev": "badcfddc6645319c4788d4fdb1a9a40ddde66c77",
+        "rev": "fcb754289796b3f17d774dc8e39251fcd77c78f9",
         "type": "github"
       },
       "original": {
