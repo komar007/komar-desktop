@@ -5,6 +5,7 @@
 
     ../modules/xserver.nix
     ../modules/audio.nix
+    ../modules/splashscreen.nix
   ];
 
   services.libinput.touchpad.disableWhileTyping = true;
