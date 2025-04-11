@@ -2,9 +2,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # systemd-boot is a sane default; disable when needed in specific machines...
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 5;
   };
 
   time.timeZone = "Europe/Warsaw";

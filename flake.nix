@@ -5,9 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    flake-utils.url = "github:numtide/flake-utils";
+
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     nur = {
       url = "github:nix-community/NUR";
@@ -17,7 +20,14 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    komar-nvim.url = "github:komar007/neovim-config";
+    komar-nvim = {
+      url = "github:komar007/neovim-config";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    grub-themes = {
+      url = "github:vinceliuice/grub2-themes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, ... } @ inputs:
@@ -34,11 +44,13 @@
         inherit system;
       };
       komar-nvim-module = system: inputs.komar-nvim.homeManagerModules.${system}.default;
+      grub-themes-module = system: inputs.grub-themes.nixosModules.default;
 
       nixosConfiguration = name: nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit nixos-hardware;
           nixpkgs-unstable = nixpkgs-unstable system;
+          grub-themes-module = grub-themes-module system;
         };
         modules = [
           ./machines/common.nix
