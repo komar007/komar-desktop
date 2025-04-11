@@ -7,6 +7,8 @@
     ../modules/audio.nix
   ];
 
+  services.power-profiles-daemon.enable = true;
+
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
   '';
