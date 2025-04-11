@@ -90,7 +90,7 @@
       },
       "locked": {
         "lastModified": 1744399098,
-        "narHash": "sha256-BA9C4hGsvwwFCUDngA2fwzRBBqq4wsobBwRvCFKcETM=",
+        "narHash": "sha256-cLMG75oBqE3YAsqxX3qtM5HK92/f6HNZhG+HekoHyZE=",
         "owner": "komar007",
         "repo": "neovim-config",
         "rev": "fb623d4377fc610efb0e3682ede4934b8840bc53",
