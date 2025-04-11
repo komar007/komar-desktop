@@ -30,9 +30,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
-      system = "x86_64-linux";
       nixpkgs-stable = system: import inputs.nixpkgs {
         inherit system;
         overlays = [
@@ -46,9 +45,9 @@
       komar-nvim-module = system: inputs.komar-nvim.homeManagerModules.${system}.default;
       grub-themes-module = system: inputs.grub-themes.nixosModules.default;
 
-      nixosConfiguration = name: nixpkgs.lib.nixosSystem {
+      nixosConfiguration = name: system: nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit nixos-hardware;
+          nixos-hardware = inputs.nixos-hardware;
           nixpkgs-unstable = nixpkgs-unstable system;
           grub-themes-module = grub-themes-module system;
         };
@@ -58,7 +57,7 @@
         ];
       };
 
-      homeConfiguration = name: home-manager.lib.homeManagerConfiguration {
+      homeConfiguration = name: system: home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs-stable system;
         extraSpecialArgs = {
           nixpkgs-unstable = nixpkgs-unstable system;
@@ -73,13 +72,13 @@
     in
     {
       nixosConfigurations = {
-        thinkcentre = nixosConfiguration "thinkcentre";
-        framework = nixosConfiguration "framework";
+        thinkcentre = nixosConfiguration "thinkcentre" "x86_64-linux";
+        framework = nixosConfiguration "framework" "x86_64-linux";
       };
       homeConfigurations = {
-        thinkcentre = homeConfiguration "thinkcentre";
-        framework = homeConfiguration "framework";
-        work = homeConfiguration "work";
+        thinkcentre = homeConfiguration "thinkcentre" "x86_64-linux";
+        framework = homeConfiguration "framework" "x86_64-linux";
+        work = homeConfiguration "work" "x86_64-linux";
       };
     };
 }
