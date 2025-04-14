@@ -31,6 +31,8 @@
     imagemagick
     gnuplot
     xcolor
+
+    kanata
   ];
 
   home.stateVersion = "24.11";
