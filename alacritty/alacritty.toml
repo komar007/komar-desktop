@@ -129,3 +129,8 @@ chars = "\uE106"
 mods = "Control|Shift"
 key = "n"
 chars = "\uE107"
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "Backspace"
+chars = "\uE108"
