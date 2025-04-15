@@ -189,8 +189,7 @@ myTopics =
     ]
     where
         ti t d = Main.TI t d shell
-        shell = spawnHere "~/.xmonad/terminal.sh terminal"
-        shellRemote host cmd = spawnHere $ "~/.xmonad/terminal.sh terminal -e ssh " ++ host ++ " -t " ++ cmd
+        shell = spawnHere "~/.xmonad/terminal.sh terminal tmux"
 
 myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
@@ -295,6 +294,7 @@ myKeys xmproc = [
                               spawnHere "~/.xmonad/noblink.sh"
                               ),
     ("M-S-<Return>",      currentTopicAction myTopicConfig),
+    ("M-S-C-<Return>",    spawnHere "~/.xmonad/terminal.sh terminal"),
     ("M-<Backspace>",     myToggle)]
     ++
     [(sc, withNthWorkspace W.greedyView n) | (sc, n) <- zip workspaceKeys [0..]]
