@@ -1,6 +1,7 @@
 { lib, pkgs, config, nixgl, ... }: {
   imports = [
     ../modules/firefox.nix
+    ../modules/qutebrowser.nix
     ../modules/xmonad.nix
   ];
 
@@ -20,6 +21,7 @@
       "alacritty"
       "mpv"
       "firefox"
+      "qutebrowser"
     ])
   ];
 
