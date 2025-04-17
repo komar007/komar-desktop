@@ -2,10 +2,10 @@
   imports = [
     ../modules/firefox.nix
     ../modules/xmonad.nix
+    ../modules/mpv.nix
   ];
 
   home.packages = with pkgs; [
-    mpv
     geeqie
     feh
     scrot

@@ -3,6 +3,7 @@
     ../modules/firefox.nix
     ../modules/qutebrowser.nix
     ../modules/xmonad.nix
+    ../modules/mpv.nix
   ];
 
   nixGL.packages = nixgl.packages;
@@ -26,7 +27,6 @@
   ];
 
   home.packages = with pkgs; [
-    mpv
     geeqie
     feh
     scrot
