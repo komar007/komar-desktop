@@ -286,6 +286,7 @@ myKeys xmproc = [
     ("M-g d",             promptWSGroupForget xpconfig "drop group: "),
 #ifndef CONFIG_WORK
     ("M-f",               layoutScreens 2 (TwoPane 0.5 0.5)),
+    ("M-S-f",             layoutScreens 2 (Mirror (TwoPane 0.5 0.5))),
     ("M-v",               rescreen),
 #endif
     ("M-S-<Backspace>",   do
