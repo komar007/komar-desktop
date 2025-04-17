@@ -268,7 +268,6 @@ myKeys xmproc = [
     ("M-S-q",             sendToScreen def 0),
     ("M-S-w",             sendToScreen def 1),
     ("M-S-e",             sendToScreen def 2),
-    ("M-S-f",             spawn ("~/.xmonad/fix_noppoo.sh")),
     ("M-`",               workspacePrompt xpconfig (windows . W.view)),
     ("M-S-`",             workspacePrompt xpconfig (windows . W.shift)),
     ("M-p",               shellPromptHere xpconfig),
