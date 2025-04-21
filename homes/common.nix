@@ -28,5 +28,7 @@
     gcc
     rustup
     bacon
+
+    btop
   ];
 }
