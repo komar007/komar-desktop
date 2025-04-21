@@ -1,9 +1,12 @@
 { lib, pkgs, ... }: {
   imports = [
     ../modules/firefox.nix
+    ../modules/chromium.nix
     ../modules/xmonad.nix
     ../modules/mpv.nix
   ];
+
+  chromium.enable-vaapi-amd-features = true;
 
   home.packages = with pkgs; [
     geeqie
