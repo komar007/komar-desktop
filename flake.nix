@@ -24,6 +24,10 @@
       url = "github:komar007/neovim-config";
       inputs.flake-utils.follows = "flake-utils";
     };
+    dot-tmux = {
+      url = "github:komar007/dot-tmux";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     grub-themes = {
       url = "github:vinceliuice/grub2-themes";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +47,7 @@
         inherit system;
       };
       komar-nvim-module = system: inputs.komar-nvim.homeManagerModules.${system}.default;
+      tmux-module = system: inputs.dot-tmux.homeManagerModules.${system}.default;
       grub-themes-module = system: inputs.grub-themes.nixosModules.default;
 
       nixosConfiguration = name: system: nixpkgs.lib.nixosSystem {
@@ -62,6 +67,7 @@
         extraSpecialArgs = {
           nixpkgs-unstable = nixpkgs-unstable system;
           komar-nvim-module = komar-nvim-module system;
+          tmux-module = tmux-module system;
           nixgl = inputs.nixgl;
         };
         modules = [
