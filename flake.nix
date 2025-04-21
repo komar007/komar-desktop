@@ -20,8 +20,8 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    komar-nvim = {
-      url = "github:komar007/neovim-config";
+    dot-nvim = {
+      url = "github:komar007/dot-nvim";
       inputs.flake-utils.follows = "flake-utils";
     };
     dot-tmux = {
@@ -46,7 +46,7 @@
       nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
         inherit system;
       };
-      komar-nvim-module = system: inputs.komar-nvim.homeManagerModules.${system}.default;
+      nvim-module = system: inputs.dot-nvim.homeManagerModules.${system}.default;
       tmux-module = system: inputs.dot-tmux.homeManagerModules.${system}.default;
       grub-themes-module = system: inputs.grub-themes.nixosModules.default;
 
@@ -66,7 +66,7 @@
         pkgs = nixpkgs-stable system;
         extraSpecialArgs = {
           nixpkgs-unstable = nixpkgs-unstable system;
-          komar-nvim-module = komar-nvim-module system;
+          nvim-module = nvim-module system;
           tmux-module = tmux-module system;
           nixgl = inputs.nixgl;
         };

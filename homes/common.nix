@@ -1,4 +1,4 @@
-{ lib, pkgs, komar-nvim-module, tmux-module, nixpkgs-unstable, ... }: {
+{ lib, pkgs, nvim-module, tmux-module, nixpkgs-unstable, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   home = {
@@ -8,7 +8,7 @@
 
   imports = [
     tmux-module
-    komar-nvim-module
+    nvim-module
   ];
 
   programs.home-manager.enable = true;
