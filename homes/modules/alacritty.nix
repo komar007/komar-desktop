@@ -81,52 +81,20 @@
         action = "IncreaseFontSize";
       }
 
-      # Special combos that are hard (or impossible) to achieve using regular terminal codes
-      # They use Unicode PUA from E100 onwards and can be later bound for example in tmux
-      {
-        mods = "Control";
-        key = "-";
-        chars = "\\uE100";
-      }
-      {
-        mods = "Control";
-        key = "m";
-        chars = "\\uE101";
-      }
-      {
-        mods = "Control|Shift";
-        key = "m";
-        chars = "\\uE102";
-      }
-      {
-        mods = "Control|Shift";
-        key = "j";
-        chars = "\\uE103";
-      }
-      {
-        mods = "Control|Shift";
-        key = "k";
-        chars = "\\uE104";
-      }
-      {
+      { # nvim: yank deleted lines in git diff
         mods = "Control|Shift";
         key = "y";
         chars = "\\uE105";
       }
-      {
+      { # nvim: history back in picker
         mods = "Control|Shift";
         key = "p";
         chars = "\\uE106";
       }
-      {
+      { # nvim: history forward in picker
         mods = "Control|Shift";
         key = "n";
         chars = "\\uE107";
-      }
-      {
-        mods = "Control";
-        key = "Backspace";
-        chars = "\\uE108";
       }
     ];
   };

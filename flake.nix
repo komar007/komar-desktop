@@ -48,6 +48,7 @@
       };
       nvim-module = system: inputs.dot-nvim.homeManagerModules.${system}.default;
       tmux-module = system: inputs.dot-tmux.homeManagerModules.${system}.default;
+      tmux-alacritty-module = system: inputs.dot-tmux.homeManagerModules.${system}.alacrittyKeyBinds;
       grub-themes-module = system: inputs.grub-themes.nixosModules.default;
 
       nixosConfiguration = name: system: nixpkgs.lib.nixosSystem {
@@ -68,6 +69,7 @@
           nixpkgs-unstable = nixpkgs-unstable system;
           nvim-module = nvim-module system;
           tmux-module = tmux-module system;
+          tmux-alacritty-module = tmux-alacritty-module system;
           nixgl = inputs.nixgl;
         };
         modules = [

@@ -1,4 +1,4 @@
-{ lib, pkgs, nvim-module, tmux-module, nixpkgs-unstable, ... }: {
+{ lib, pkgs, nvim-module, tmux-module, tmux-alacritty-module, nixpkgs-unstable, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   home = {
@@ -7,8 +7,9 @@
   };
 
   imports = [
-    tmux-module
     nvim-module
+    tmux-module
+    tmux-alacritty-module
     ./modules/alacritty.nix
   ];
 
