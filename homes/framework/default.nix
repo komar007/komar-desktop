@@ -8,6 +8,9 @@
 
   chromium.enable-vaapi-amd-features = true;
 
+  alacritty.font = "JetBrainsMono Nerd Font";
+  alacritty.font-size = 7.0;
+
   home.packages = with pkgs; [
     geeqie
     feh

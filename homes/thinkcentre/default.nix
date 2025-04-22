@@ -5,6 +5,9 @@
     ../modules/mpv.nix
   ];
 
+  alacritty.font = "JetBrainsMono Nerd Font";
+  alacritty.font-size = 9.0;
+
   home.packages = with pkgs; [
     geeqie
     feh

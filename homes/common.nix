@@ -9,6 +9,7 @@
   imports = [
     tmux-module
     nvim-module
+    ./modules/alacritty.nix
   ];
 
   programs.home-manager.enable = true;
@@ -18,8 +19,6 @@
     jq # required by PS1
     fzf
     bat
-
-    alacritty
 
     unzip
 
