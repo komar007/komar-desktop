@@ -4,6 +4,7 @@
     nixos-hardware.nixosModules.framework-13-7040-amd
     ../modules/grub2.nix
 
+    ../modules/brightness
     ../modules/xserver.nix
     ../modules/audio.nix
     ../modules/splashscreen.nix
