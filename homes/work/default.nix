@@ -26,6 +26,12 @@
     ])
   ];
 
+  alacritty.font = "Terminess Nerd Font Mono";
+  alacritty.font-size = 9.0;
+  alacritty.font-offset = -2;
+  alacritty.glyph-offset = -1;
+  programs.alacritty.settings.font.builtin_box_drawing = false;
+
   home.packages = with pkgs; [
     geeqie
     feh

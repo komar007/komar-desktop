@@ -5,6 +5,14 @@
   options.alacritty.font-size = lib.mkOption {
     type = lib.types.float;
   };
+  options.alacritty.font-offset = lib.mkOption {
+    type = lib.types.int;
+    default = -4;
+  };
+  options.alacritty.glyph-offset = lib.mkOption {
+    type = lib.types.int;
+    default = -2;
+  };
 
   config.programs.alacritty.enable = true;
   config.programs.alacritty.settings = {
@@ -51,9 +59,9 @@
     font.normal.family = config.alacritty.font;
     font.normal.style = "Light";
 
-    font.offset.y = -4;
+    font.offset.y = config.alacritty.font-offset;
 
-    font.glyph_offset.y = -2;
+    font.glyph_offset.y = config.alacritty.glyph-offset;
 
     scrolling.history = 32768;
     scrolling.multiplier = 5;
