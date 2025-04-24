@@ -32,6 +32,8 @@
   alacritty.glyph-offset = -1;
   programs.alacritty.settings.font.builtin_box_drawing = false;
 
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     geeqie
     feh
@@ -41,6 +43,8 @@
     xcolor
 
     kanata
+
+    nerdfonts
   ];
 
   home.stateVersion = "24.11";
