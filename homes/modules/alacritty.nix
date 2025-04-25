@@ -1,77 +1,83 @@
 { lib, config, pkgs, ... }: {
-  options.alacritty.font = lib.mkOption {
-    type = lib.types.str;
-  };
-  options.alacritty.font-italic = lib.mkOption {
-    type = lib.types.str;
-    default = config.alacritty.font;
-  };
-  options.alacritty.font-size = lib.mkOption {
-    type = lib.types.float;
-  };
-  options.alacritty.font-offset = lib.mkOption {
-    type = lib.types.int;
-    default = -4;
-  };
-  options.alacritty.glyph-offset = lib.mkOption {
-    type = lib.types.int;
-    default = -2;
+  options.alacritty = {
+    font = lib.mkOption {
+      type = lib.types.str;
+    };
+    font-italic = lib.mkOption {
+      type = lib.types.str;
+      default = config.alacritty.font;
+    };
+    font-size = lib.mkOption {
+      type = lib.types.float;
+    };
+    font-offset = lib.mkOption {
+      type = lib.types.int;
+      default = -4;
+    };
+    glyph-offset = lib.mkOption {
+      type = lib.types.int;
+      default = -2;
+    };
   };
 
   config.programs.alacritty.enable = true;
   config.programs.alacritty.settings = {
+    scrolling.history = 32768;
+    scrolling.multiplier = 5;
+
     bell.animation = "EaseOutExpo";
     bell.color = "#444444";
     bell.duration = 60;
 
     cursor.style.blinking = "Always";
 
-    colors.cursor.cursor = "CellForeground";
-    colors.cursor.text = "CellBackground";
+    colors = {
+      cursor.cursor = "CellForeground";
+      cursor.text = "CellBackground";
 
-    colors.normal.black = "#7c6f64";
-    colors.normal.blue = "#83a5d8";
-    colors.normal.cyan = "#8ec07c";
-    colors.normal.green = "#c5c821";
-    colors.normal.magenta = "#d3869b";
-    colors.normal.red = "#fb4934";
-    colors.normal.white = "#ebdbb2";
-    colors.normal.yellow = "#fabd2f";
+      normal.black = "#7c6f64";
+      normal.blue = "#83a5d8";
+      normal.cyan = "#8ec07c";
+      normal.green = "#c5c821";
+      normal.magenta = "#d3869b";
+      normal.red = "#fb4934";
+      normal.white = "#ebdbb2";
+      normal.yellow = "#fabd2f";
 
-    colors.primary.background = "#000000";
-    colors.primary.bright_foreground = "#f9f5d7";
-    colors.primary.dim_foreground = "#f2e5bc";
-    colors.primary.foreground = "#fbf1c7";
+      primary.background = "#000000";
+      primary.bright_foreground = "#f9f5d7";
+      primary.dim_foreground = "#f2e5bc";
+      primary.foreground = "#fbf1c7";
 
-    colors.selection.background = "CellForeground";
-    colors.selection.text = "CellBackground";
+      selection.background = "CellForeground";
+      selection.text = "CellBackground";
 
-    colors.vi_mode_cursor.cursor = "CellForeground";
-    colors.vi_mode_cursor.text = "CellBackground";
+      vi_mode_cursor.cursor = "CellForeground";
+      vi_mode_cursor.text = "CellBackground";
+    };
 
-    font.size = config.alacritty.font-size;
+    font = {
+      size = config.alacritty.font-size;
 
-    font.bold.family = config.alacritty.font;
-    font.bold.style = "Bold";
+      normal.family = config.alacritty.font;
+      normal.style = "Light";
 
-    font.bold_italic.family = config.alacritty.font-italic;
-    font.bold_italic.style = "Bold Italic";
+      bold.family = config.alacritty.font;
+      bold.style = "Bold";
 
-    font.italic.family = config.alacritty.font-italic;
-    font.italic.style = "Italic";
+      italic.family = config.alacritty.font-italic;
+      italic.style = "Italic";
 
-    font.normal.family = config.alacritty.font;
-    font.normal.style = "Light";
+      bold_italic.family = config.alacritty.font-italic;
+      bold_italic.style = "Bold Italic";
 
-    font.offset.y = config.alacritty.font-offset;
+      offset.y = config.alacritty.font-offset;
 
-    font.glyph_offset.y = config.alacritty.glyph-offset;
+      glyph_offset.y = config.alacritty.glyph-offset;
+    };
 
-    scrolling.history = 32768;
-    scrolling.multiplier = 5;
-
-    # unbind unnecessary defaults
     keyboard.bindings = [
+      # unbind unnecessary defaults
       {
         mods = "Control";
         key = "-";
@@ -82,6 +88,7 @@
         key = "=";
         action = "None";
       }
+
       {
         mods = "Control | Shift";
         key = "_";
