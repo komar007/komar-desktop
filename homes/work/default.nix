@@ -27,6 +27,7 @@
   ];
 
   alacritty.font = "Terminess Nerd Font Mono";
+  alacritty.font-italic = "JetBrainsMono Nerd Font";
   alacritty.font-size = 9.0;
   alacritty.font-offset = -2;
   alacritty.glyph-offset = -1;

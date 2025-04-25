@@ -2,6 +2,10 @@
   options.alacritty.font = lib.mkOption {
     type = lib.types.str;
   };
+  options.alacritty.font-italic = lib.mkOption {
+    type = lib.types.str;
+    default = config.alacritty.font;
+  };
   options.alacritty.font-size = lib.mkOption {
     type = lib.types.float;
   };
@@ -50,10 +54,10 @@
     font.bold.family = config.alacritty.font;
     font.bold.style = "Bold";
 
-    font.bold_italic.family = config.alacritty.font;
+    font.bold_italic.family = config.alacritty.font-italic;
     font.bold_italic.style = "Bold Italic";
 
-    font.italic.family = config.alacritty.font;
+    font.italic.family = config.alacritty.font-italic;
     font.italic.style = "Italic";
 
     font.normal.family = config.alacritty.font;
