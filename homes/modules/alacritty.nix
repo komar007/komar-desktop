@@ -99,6 +99,11 @@
         key = "+";
         action = "IncreaseFontSize";
       }
+      {
+        mods = "Control | Shift";
+        key = "|";
+        action = "ResetFontSize";
+      }
 
       { # nvim: yank deleted lines in git diff
         mods = "Control|Shift";
