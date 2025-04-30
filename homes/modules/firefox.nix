@@ -60,6 +60,15 @@ in
         ];
       }];
     };
+    search.engines."crates.io" = {
+      definedAliases = [ "@c" ];
+      urls = [{
+        template = "https://crates.io/search";
+        params = [
+          { name = "q"; value = "{searchTerms}"; }
+        ];
+      }];
+    };
     extensions = with firefox-addons; [
       firenvim
       ublock-origin
