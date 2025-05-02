@@ -189,7 +189,7 @@ myTopics =
     ]
     where
         ti t d = Main.TI t d shell
-        shell = spawnHere "~/.xmonad/terminal.sh terminal tmux"
+        shell = spawnHere "~/.xmonad/terminal.sh terminal tmux new-session -A -s 0"
 
 myTopicNames :: [Topic]
 myTopicNames = map topicName myTopics
