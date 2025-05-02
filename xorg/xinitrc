@@ -34,5 +34,13 @@ xset s off
 xset dpms 120 120 120
 xset m 7/4 7
 
+# shellcheck disable=SC2046
+kill -9 $( \
+	ps ax -opid,command \
+		| grep xmonad_pipe.sh \
+		| grep -v grep \
+		| grep -oE '[0-9]+' \
+)
+
 (sleep 1 && ~/.xmonad/panels_launch.sh &)
 ulimit -s 16000 && exec xmonad
