@@ -11,6 +11,7 @@
   ];
 
   services.libinput.touchpad.disableWhileTyping = true;
+  services.libinput.touchpad.accelSpeed = "0.7";
 
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
