@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.desktop_config/xorg/xmonad"
+DIR="$HOME/.xmonad"
 
 cpp -P -I"$DIR" ~/.Xdefaults.edit > ~/.Xdefaults
 if [ -f ~/.desktop_type ]; then
