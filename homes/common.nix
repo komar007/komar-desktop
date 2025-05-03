@@ -7,6 +7,7 @@
   };
 
   imports = [
+    ./modules/x11.nix
     nvim-module
     tmux-module
     tmux-alacritty-module

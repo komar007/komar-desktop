@@ -9,5 +9,3 @@ for d in xorg bash gdb; do
 	done
 done
 ln -s `pwd`/slock ~/.slock
-mkdir -f ~/.icons
-ln -s `pwd`/icons/Neutral_Plus ~/.icons/
