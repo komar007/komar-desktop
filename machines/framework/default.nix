@@ -3,13 +3,15 @@
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.framework-13-7040-amd
     ../modules/grub2.nix
+    ../modules/splashscreen.nix
 
     ../modules/brightness
     ../modules/xserver.nix
     ../modules/amd.nix
     ../modules/audio.nix
-    ../modules/splashscreen.nix
   ];
+
+  boot.loader.grub2-theme.customResolution = "2256x1504";
 
   services.libinput.touchpad.disableWhileTyping = true;
   services.libinput.touchpad.accelSpeed = "0.7";

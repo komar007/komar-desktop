@@ -14,6 +14,5 @@
   boot.loader.grub2-theme = {
     enable = true;
     theme = "stylish";
-    customResolution = "2256x1504";
   };
 }

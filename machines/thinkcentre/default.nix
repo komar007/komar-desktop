@@ -1,11 +1,15 @@
 { config, pkgs, nixpkgs-unstable, ...}: {
   imports = [
     ./hardware-configuration.nix
+    ../modules/grub2.nix
+    ../modules/splashscreen.nix
 
     ../modules/xserver.nix
     ../modules/intel.nix
     ../modules/audio.nix
   ];
+
+  boot.loader.grub2-theme.customResolution = "3840x2160";
 
   services.power-profiles-daemon.enable = true;
 
