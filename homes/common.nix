@@ -12,6 +12,7 @@
     tmux-alacritty-module
     ./modules/alacritty.nix
     ./modules/git.nix
+    ./modules/tig
   ];
 
   programs.home-manager.enable = true;

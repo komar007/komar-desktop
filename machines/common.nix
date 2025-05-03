@@ -33,7 +33,6 @@
     wget
     neovim
     git
-    tig
     killall
     bc
     zip

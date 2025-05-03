@@ -3,7 +3,7 @@ bind main P ?git pg %(commit)
 bind main Y @bash -c "tmux set-buffer %(commit) && xsel --primary -i <<< %(commit)"
 bind main F ?git commit --fixup %(commit)
 set show-untracked = false
-set vertical-split = mixed
+set vertical-split = false
 
 set main-view-date = custom
 set main-view-date-format = "%Y-%m-%d"
