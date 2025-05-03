@@ -9,11 +9,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1744399098,
-        "narHash": "sha256-cLMG75oBqE3YAsqxX3qtM5HK92/f6HNZhG+HekoHyZE=",
+        "lastModified": 1746262964,
+        "narHash": "sha256-WMp4E0zE10tylxTB8HB0RjCVxxfsV97Uljc/KRV1fo0=",
         "owner": "komar007",
         "repo": "dot-nvim",
-        "rev": "fb623d4377fc610efb0e3682ede4934b8840bc53",
+        "rev": "4e8bf1f6cb6b312bd96bb77d30cdcc73acd6b366",
         "type": "github"
       },
       "original": {
@@ -30,11 +30,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1745344707,
-        "narHash": "sha256-yOKgqxAUFEiu7j1T3v+uxjQQqiau9nMd0GnP+a7/2Lg=",
+        "lastModified": 1746220354,
+        "narHash": "sha256-XCrVsKtb6XVlzjSv+bVgoIgpJ/AXh4xUqrIPn9X3hyc=",
         "owner": "komar007",
         "repo": "dot-tmux",
-        "rev": "fc4cf6c4d4fc4e0b51521fefd46ab7f6254b4825",
+        "rev": "a477eb81494856fe883b87c1161d07f0f1811b4b",
         "type": "github"
       },
       "original": {
