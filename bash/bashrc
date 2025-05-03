@@ -116,6 +116,8 @@ p_cmd_ok='[[ $_LAST_EXIT_CODE -eq 0 ]]'
 p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 # shellcheck disable=SC2016
 p_time='$(date +" %H:%M:%S ")'
+# shellcheck disable=SC2016
+p_ps1_extra_exists='[[ -n "$PS1_EXTRA" ]]'
 
 function p_if_else()
 {
@@ -210,6 +212,8 @@ function get_ps1()
 		     -e "s/ +$//")'
 
 	prev_status="$(p_if_else "$p_cmd_ok" "${BLUE}" "${RED}${INVERT}\$?${RESET}${RED}")"${RESET}
+	# shellcheck disable=SC2153
+	ps1_extra="$(p_if "$p_ps1_extra_exists" " ($PS1_EXTRA)")"
 	ssh_tag="$(p_if "$p_is_ssh" "${BYELLOW}ssh:${RESET}")"
 	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${LGRAY}\$NIX_SHELL_NAME${SECTION_END}")"
 	# shellcheck disable=SC2016,SC2089
@@ -224,7 +228,7 @@ function get_ps1()
 	ssh_tag=$(eval echo "$ssh_tag") # needs to be evaluated just once
 
 	twoline="$right_tag"
-	twoline+="$prev_status$branch_token$nix_tag$venv_tag"
+	twoline+="$prev_status$ps1_extra$branch_token$nix_tag$venv_tag"
 	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY} "
 	twoline+="${RESET}\n"
 	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title "$title")"
