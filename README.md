@@ -1,7 +1,6 @@
 # komar-os
 
-[komar007](https://github.com/komar007)'s NixOS-based terminal-oriented declarative operating system
-AKA dotfiles.
+A NixOS-based terminal-oriented declarative operating system AKA dotfiles.
 
 ## Description
 
