@@ -6,6 +6,7 @@
 
     ../modules/brightness
     ../modules/xserver.nix
+    ../modules/amd.nix
     ../modules/audio.nix
     ../modules/splashscreen.nix
   ];
