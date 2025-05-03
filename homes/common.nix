@@ -8,6 +8,7 @@
 
   imports = [
     ./modules/x11.nix
+    ./modules/xdg.nix
     nvim-module
     tmux-module
     tmux-alacritty-module

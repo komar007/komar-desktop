@@ -8,6 +8,8 @@
   alacritty.font = "JetBrainsMono Nerd Font";
   alacritty.font-size = 9.0;
 
+  xdg.default-browser-app = "firefox.desktop";
+
   home.packages = with pkgs; [
     geeqie
     feh

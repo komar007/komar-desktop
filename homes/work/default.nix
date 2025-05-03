@@ -35,6 +35,8 @@
 
   fonts.fontconfig.enable = true;
 
+  xdg.default-browser-app = "firefox.desktop";
+
   home.packages = with pkgs; [
     geeqie
     feh
