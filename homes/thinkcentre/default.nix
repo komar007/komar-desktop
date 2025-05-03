@@ -1,12 +1,15 @@
 { lib, pkgs, ... }: {
   imports = [
     ../modules/firefox.nix
+    ../modules/chromium.nix
     ../modules/xmonad.nix
     ../modules/mpv.nix
   ];
 
   alacritty.font = "JetBrainsMono Nerd Font";
   alacritty.font-size = 9.0;
+
+  chromium.enable-vaapi-intel-features = true;
 
   xdg.default-browser-app = "firefox.desktop";
 
