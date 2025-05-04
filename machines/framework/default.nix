@@ -21,7 +21,7 @@
     powerKey = "hibernate";
   };
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=3600
+    HibernateDelaySec=1800
   '';
 
   networking = {
