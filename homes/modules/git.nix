@@ -49,6 +49,7 @@
       git branch -D "$PUSH_BRANCH"
     ''}";
     as = "!git rebase -i --autosquash $(git log --format='%H' HEAD^ | grep -m 1 --color=never -F $(git branch --format='-e %(objectname)'))";
+    newdate = "commit --amend --no-edit --date=now";
   };
   programs.git.includes = [
     { path = "~/.gitconfig.local"; }
