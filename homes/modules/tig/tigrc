@@ -12,6 +12,8 @@ set diff-view = line-number:display=false text:commit-title-overflow=true
 set git-colors = no
 set truncation-delimiter  = ~
 
+set commit-order = author-date
+
 # Color base: https://github.com/ninjabreakbot/tig-gruvbox
 
 # General colors
