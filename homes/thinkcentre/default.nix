@@ -6,6 +6,8 @@
     ../modules/mpv.nix
   ];
 
+  home.pointerCursor.size = 32;
+
   alacritty.font = "JetBrainsMono Nerd Font";
   alacritty.font-size = 9.0;
 

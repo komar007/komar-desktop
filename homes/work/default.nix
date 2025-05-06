@@ -26,6 +26,8 @@
     ])
   ];
 
+  home.pointerCursor.size = 16;
+
   alacritty.font = "Terminess Nerd Font Mono";
   alacritty.font-italic = "ZedMono Nerd Font";
   alacritty.font-size = 9.0;

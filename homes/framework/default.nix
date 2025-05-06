@@ -6,6 +6,8 @@
     ../modules/mpv.nix
   ];
 
+  home.pointerCursor.size = 32;
+
   chromium.enable-vaapi-amd-features = true;
 
   xdg.default-browser-app = "firefox.desktop";
