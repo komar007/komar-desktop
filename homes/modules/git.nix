@@ -13,8 +13,15 @@
     ''}";
     pg = "!${pkgs.writeShellScript "git-pg" ''
       set -e
+
+      pg_msg() {
+        tput setaf 4
+        echo "$@" | ${pkgs.cowsay}/bin/cowsay -W 79 2> /dev/null
+        tput sgr0
+      }
+
       if [ -n "$(git status --porcelain 2>/dev/null | egrep '^(M| M)')" ]; then
-        echo 'refusing to push, dirty dir'
+        pg_msg 'refusing to push, dirty dir'
         exit 1
       fi
 
@@ -23,26 +30,38 @@
       MAIN_BRANCH=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
       PUSH_TO="HEAD:refs/for/$MAIN_BRANCH"
 
+      temp_shell() {
+        if ! $SHELL; then
+          pg_msg "shell exit with error, type "continue" to continue pg instead of interrupting"
+          read c
+          if [ "$c" = "continue" ]; then
+            return 0
+          else
+            return 1
+          fi
+        fi
+      }
+
       git checkout "$MAIN_BRANCH" -b "$PUSH_BRANCH"
 
       FAILED=0
       if ! git cherry-pick "$1"; then
-        echo "fix conflicts and exit shell"
         git status
-        PS1_EXTRA="CP FAILED" $SHELL
+        pg_msg "fix conflicts and exit shell"
+        PS1_EXTRA="CP FAILED" temp_shell
         git cherry-pick --continue || FAILED=1
       fi
 
       if [ "$FAILED" -eq 0 ]; then
         if git push origin "$PUSH_TO"; then
-          echo "successfully pushed $1"
+          pg_msg "successfully pushed $1"
         else
-          echo "failed to push, backup changes or push yourself to $PUSH_TO and exit shell"
-          PS1_EXTRA="PUSH FAILED" $SHELL
+          pg_msg "failed to push, backup changes or push yourself to $PUSH_TO and exit shell"
+          PS1_EXTRA="PUSH FAILED" temp_shell
         fi
       else
-        echo "cherry-pick --continue failed, backup changes or push yourself to $PUSH_TO and exit shell"
-        PS1_EXTRA="CP CONT FAILED" $SHELL
+        pg_msg "cherry-pick --continue failed, backup changes or push yourself to $PUSH_TO and exit shell"
+        PS1_EXTRA="CP CONT FAILED" temp_shell
         git cherry-pick --abort || true
       fi
       git checkout $PREV
