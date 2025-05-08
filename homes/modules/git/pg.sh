@@ -3,13 +3,13 @@
 set -e
 
 pg_msg() {
-  tput setaf 4
+  tput setaf "${COLOR:-4}"
   echo "$@" | cowsay -W 79 2> /dev/null
   tput sgr0
 }
 
 if git status --porcelain 2>/dev/null | grep -qE '^(M| M)'; then
-  pg_msg 'refusing to push, dirty dir'
+  COLOR=1 pg_msg 'refusing to push, dirty dir'
   exit 1
 fi
 
@@ -42,13 +42,13 @@ fi
 
 if [ "$FAILED" -eq 0 ]; then
   if git push origin "$PUSH_TO"; then
-    pg_msg "successfully pushed $1"
+    COLOR=2 pg_msg "successfully pushed $1"
   else
-    pg_msg "failed to push, backup changes or push yourself to $PUSH_TO and exit shell"
+    COLOR=1 pg_msg "failed to push, backup changes or push yourself to $PUSH_TO and exit shell"
     PS1_EXTRA="PUSH FAILED" temp_shell
   fi
 else
-  pg_msg "cherry-pick --continue failed, backup changes or push yourself to $PUSH_TO and exit shell"
+  COLOR=1 pg_msg "cherry-pick --continue failed, backup changes or push yourself to $PUSH_TO and exit shell"
   PS1_EXTRA="CP CONT FAILED" temp_shell
   git cherry-pick --abort || true
 fi
