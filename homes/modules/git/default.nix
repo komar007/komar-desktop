@@ -16,7 +16,21 @@
       runtimeInputs = [ pkgs.cowsay ];
       text = builtins.readFile ./pg.sh;
     })}";
-    as = "!git rebase -i --autosquash $(git log --format='%H' HEAD^ | grep -m 1 --color=never -F $(git branch --format='-e %(objectname)'))";
+    as = "!${pkgs.writeShellScript "git-as" ''
+      if [ -n "$1" ]; then
+        BASE="$1"
+      else
+        BASE=$(
+          git log --format='%H' HEAD^ \
+          | grep -m 1 --color=never -F $(git branch --format='-e %(objectname)')
+        )
+      fi
+      if [ -z "$BASE" ]; then
+        echo "CANNOT FIND BASE, specify manually" 2>/dev/stderr
+        exit 1
+      fi
+      git rebase -i --autosquash "$BASE"
+    ''}";
     newdate = "commit --amend --no-edit --date=now";
   };
   programs.git.includes = [
