@@ -25,6 +25,8 @@
 
     super-slicer-beta
 
+    esphome
+
     #davinci-resolve
     exiftool
     blender
