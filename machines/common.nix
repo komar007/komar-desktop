@@ -62,4 +62,9 @@
     enable = true;
     keyboards."generic".config = builtins.readFile ../kanata-generic.kbd;
   };
+
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
 }
