@@ -13,6 +13,7 @@
     tmux-module
     tmux-alacritty-module
     ./modules/alacritty.nix
+    ./modules/starship
     ./modules/git
     ./modules/tig
   ];

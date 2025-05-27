@@ -93,148 +93,6 @@ _expand()
 }
 
 
-# SHELL PROMPT
-
-# predicates
-# shellcheck disable=SC2016
-p_is_git='[[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]'
-# shellcheck disable=SC2016
-p_command_executed='[ -n "$_LAST_TIME" ]'
-# shellcheck disable=SC2016
-p_is_ssh='[[ "$(pstree -clspA $BASHPID | head -n 1)" =~ sshd.+\($BASHPID\) ]]'
-# shellcheck disable=SC2016
-p_is_nixshell='[ -n "$NIX_SHELL_NAME" ]'
-# shellcheck disable=SC2016
-p_is_venv='[ -n "$VIRTUAL_ENV" ]'
-# shellcheck disable=SC2016
-p_cmd_ok='[[ $_LAST_EXIT_CODE -eq 0 ]]'
-# strings
-# shellcheck disable=SC2016
-p_git_branch='$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
-# shellcheck disable=SC2016
-p_time='$(date +" %H:%M:%S ")'
-# shellcheck disable=SC2016
-p_ps1_extra_exists='[[ -n "$PS1_EXTRA" ]]'
-
-function p_if_else()
-{
-	cond=$1
-	yes=$2
-	no=$3
-	echo -n "\$(if $cond; then echo -n "'"'"$yes"'"'"; else echo -n "'"'"$no"'"'"; fi)"
-}
-function p_if()
-{
-	p_if_else "$1" "$2" ""
-}
-
-function p_if_last_cmd_succ()
-{
-	p_if_else "[[ \$_LAST_EXIT_CODE -eq 0 ]]" "$1" "$2"
-}
-
-function p_token()
-{
-	prefix=$1
-	str=$2
-	suffix=$3
-	quoted='"'$str'"'
-	p_if "-n $quoted" "$prefix$str$suffix"
-}
-function p_set_title()
-{
-	title="$*"
-	# shellcheck disable=SC2028
-	echo -n "\[\e]0;$title\a\]"
-}
-function print_hline()
-{
-	if grep -q tmux- <<< "$TERM"; then
-		setterm -linewrap off
-		yes ┈ | head -n $COLUMNS | tr -d '\n'
-		setterm -linewrap on
-	else
-		tput cuf $COLUMNS
-	fi
-}
-function p_right()
-{
-	cmd1="$1"
-	cmd2="$2"
-	dim_color="$(tput sgr0 setaf 0)"
-	choose_color="$(p_if_last_cmd_succ "${DIMBLUE}" "${DIMRED}")"
-	h_line="\$(print_hline)"
-	back_to_2="\$(tput cub \$(wc -m <<< \"$cmd2\"))"
-	back_to_1="\$(tput cub \$((\$(wc -m <<< \"$cmd2\") + \$(wc -m <<< \"$cmd1\"))))"
-	# shellcheck disable=SC2028
-	echo -n "$choose_color\[\e7$h_line$back_to_2$dim_color$cmd2$back_to_1$cmd1\e8\]${RESET}"
-}
-
-RESET="\[$(tput sgr0)\]"
-INVERT="\[$(tput rev)\]"
-
-GRAY="\[$(tput setaf 0)\]"
-BGRAY="\[$(tput bold setaf 0)\]"
-RED="\[$(tput setaf 1)\]"
-DIMRED="\[$(tput dim setaf 1)\]"
-BBLUE="\[$(tput bold setaf 4)\]"
-DIMBLUE="\[$(tput dim setaf 4)\]"
-BLUE="\[$(tput setaf 4)\]"
-GREEN="\[$(tput setaf 2)\]"
-BYELLOW="\[$(tput bold setaf 3)\]"
-YELLOW="\[$(tput setaf 3)\]"
-BLACK="\[$(tput setaf 16)\]"
-LGRAY="\[$(tput setaf 249)\]"
-
-BG_GRAY="\[$(tput setab 236)\]"
-
-function get_ps1()
-{
-	if grep -q rxvt <<< "$TERM"; then
-		PLUS=+
-		MINUS=-
-	else
-		PLUS=" "
-		MINUS=" "
-	fi
-
-	SECTION_BEGIN="${BG_GRAY}${BLACK}"
-	SECTION_END="${BLACK}${INVERT}$RESET"
-
-	# shellcheck disable=SC2016
-	p_git_stats=' $(git diff-index  --shortstat  HEAD -- 2>/dev/null \
-	    | sed -r -e "s/[^,]+, ([0-9]+[^,]+)(, ([0-9]+.*))?/\1 \3/" \
-	             -e "s/([0-9]+) [a-z]+\(\+\)/'${GREEN}$PLUS'\1/g" \
-		     -e "s/([0-9]+) [a-z]+\(\-\)/'${RED}$MINUS'\1/g" \
-		     -e "s/ +$//")'
-
-	prev_status="$(p_if_else "$p_cmd_ok" "${BLUE}" "${RED}${INVERT}\$?${RESET}${RED}")"${RESET}
-	# shellcheck disable=SC2153
-	ps1_extra="$(p_if "$p_ps1_extra_exists" " ($PS1_EXTRA)")"
-	ssh_tag="$(p_if "$p_is_ssh" "${BYELLOW}ssh:${RESET}")"
-	nix_tag="$(p_if "$p_is_nixshell" "${SECTION_BEGIN} ${BBLUE}󱄅 ${LGRAY}\$NIX_SHELL_NAME${SECTION_END}")"
-	# shellcheck disable=SC2016,SC2089
-	venv_path='$(realpath --relative-to="$(pwd)" "$VIRTUAL_ENV" 2>/dev/null)'
-	venv_tag="$(p_if "$p_is_venv" "${SECTION_BEGIN} ${BBLUE} ${GRAY}$venv_path${SECTION_END}")"
-	branch_token="$(p_if "$p_is_git" "${SECTION_BEGIN}${YELLOW}⎇ $p_git_branch${GRAY}$p_git_stats${SECTION_END}${RESET}")"
-	# shellcheck disable=SC2016
-	last_exec_time="$(p_if "$p_command_executed" '$(echo \  $_LAST_TIME)s ')"
-	right_tag="$(p_right "$last_exec_time" "$p_time")"
-	title="bash: \\W $(p_if "$p_is_git" "on $p_git_branch")"
-
-	ssh_tag=$(eval echo "$ssh_tag") # needs to be evaluated just once
-
-	twoline="$right_tag"
-	twoline+="$prev_status$ps1_extra$branch_token$nix_tag$venv_tag"
-	twoline+=" ${GREEN}\u${BGRAY}@${RESET}$ssh_tag${GREEN}\h${BGRAY}:${RESET}${BLUE}\w${GRAY} "
-	twoline+="${RESET}\n"
-	twoline+="  ${BBLUE}\\\$${RESET} $(p_set_title "$title")"
-
-	echo -e "$twoline"
-}
-PS1=$(get_ps1)
-
-
 # GLOBAL HISTORY
 
 # Trim the input from whitespace and convert to a json-friendlt string literal
@@ -295,20 +153,12 @@ function _format_history_entry()
 function _prompt_command()
 {
 	_LAST_EXIT_CODE=$?
-	local last_start
-	local end
 	local hist
 	hist=$(history 1 | head)
 	if [ "$hist" = "$_LAST_HIST" ]; then
-		_LAST_TIME=
 		return
 	fi
 	_LAST_HIST="$hist"
-	last_start=$(HISTTIMEFORMAT="%s%n" history 1 \
-		| head -n 1 \
-		| _remove_history_id)
-	end=$(date +%s)
-	_LAST_TIME=$((end-last_start))
 	_format_history_entry >> "$_GLOBAL_HISTORY_FILE"
 }
 
@@ -434,6 +284,22 @@ prepend_path ~/.npm-global/bin
 prepend_path ~/.local/bin
 
 export GDK_DPI_SCALE=1.6
+
+function set_title() {
+	if [ "$PWD" = "$HOME" ]; then
+		DIR="~"
+	else
+		DIR="$PWD"
+	fi
+	TITLE="bash: $(basename "$DIR")"
+	if [[ -n "$(git rev-parse --git-dir 2> /dev/null)" ]]; then
+		TITLE+=" on ⎇ $(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+	fi
+	echo -n "$(tput tsl)$TITLE$(tput fsl)"
+}
+# shellcheck disable=SC2034
+starship_precmd_user_func="set_title"
+eval "$(starship init bash)"
 
 _BASHRC_RELOADED=1
 # start prompt from the bottom (currently not used)
