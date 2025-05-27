@@ -51,8 +51,6 @@
 
     kanata
 
-    nerd-fonts.terminess-ttf
-    nerd-fonts.jetbrains-mono
     nerd-fonts.zed-mono
   ];
 

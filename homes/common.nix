@@ -34,5 +34,8 @@
     bacon
 
     btop
+
+    nerd-fonts.terminess-ttf
+    nerd-fonts.jetbrains-mono
   ];
 }

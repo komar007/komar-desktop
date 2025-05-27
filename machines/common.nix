@@ -47,12 +47,6 @@
     openconnect
   ];
 
-  # FIXME: unify font management by only installing fonts via home-manager
-  fonts.packages = with pkgs; [
-    nerd-fonts.terminess-ttf
-    nerd-fonts.jetbrains-mono
-  ];
-
   users.users.komar = {
     initialPassword = "test";
     isNormalUser = true;
