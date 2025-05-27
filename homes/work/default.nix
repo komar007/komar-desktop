@@ -49,7 +49,9 @@
 
     kanata
 
-    nerdfonts
+    nerd-fonts.terminess-ttf
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.zed-mono
   ];
 
   home.stateVersion = "24.11";

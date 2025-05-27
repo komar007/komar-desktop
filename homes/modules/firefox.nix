@@ -69,7 +69,7 @@ in
         ];
       }];
     };
-    extensions = with firefox-addons; [
+    extensions.packages = with firefox-addons; [
       firenvim
       ublock-origin
       home-assistant
