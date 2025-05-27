@@ -426,6 +426,7 @@ export NIX_SHELL_PRESERVE_PROMPT=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 export EDITOR="nvim"
+export MANPAGER='nvim +Man!'
 
 prepend_path ~/.cargo/bin
 prepend_path ~/go/bin
