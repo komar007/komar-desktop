@@ -1,4 +1,4 @@
-{ lib, pkgs, config, nixgl, ... }: {
+{ lib, pkgs, nixpkgs-unstable, config, nixgl, ... }: {
   imports = [
     ../modules/firefox.nix
     ../modules/qutebrowser.nix
@@ -46,6 +46,8 @@
     imagemagick
     gnuplot
     xcolor
+    nixpkgs-unstable.aider-chat
+    nixpkgs-unstable.codex
 
     kanata
 
