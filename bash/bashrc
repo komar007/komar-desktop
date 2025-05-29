@@ -78,14 +78,6 @@ function notify() {
 	[ "$NOBLOCK" -eq 0 ] && read
 }
 
-
-# COMPLETION
-
-if [ -f /usr/share/mc/mc.gentoo ]; then
-	. /usr/share/mc/mc.gentoo
-fi
-
-[[ -f /etc/profile.d/bash-completion.sh ]] && source /etc/profile.d/bash-completion.sh
 # suppress tilde-expansion
 _expand()
 {
