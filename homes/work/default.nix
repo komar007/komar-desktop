@@ -23,6 +23,7 @@
       "mpv"
       "firefox"
       "qutebrowser"
+      "geeqie"
     ])
   ];
 
