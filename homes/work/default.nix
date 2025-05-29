@@ -9,6 +9,7 @@
   nixGL.packages = nixgl.packages;
   nixGL.defaultWrapper = "mesa";
   nixGL.installScripts = [ "mesa" ];
+  nixGL.vulkan.enable = true;
 
   nixpkgs.overlays =
   let
