@@ -26,6 +26,10 @@
   systemd.sleep.extraConfig = ''
     HibernateDelaySec=1800
   '';
+  services.upower = {
+    enable = true;
+    criticalPowerAction = "Hibernate";
+  };
 
   networking = {
     hostName = "nixos-frmwrk";
