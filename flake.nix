@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # the last commit of nixpkgs-24.11 with linux-6.6.91 where wake up from hibernate does not go to blank screen on framework laptop 13...
+    nixpkgs-kernel-good-hibernate.url = "github:nixos/nixpkgs/d026ae960ca4b24ca265223cbc9d3222d936e90d";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
@@ -46,6 +48,9 @@
       nixpkgs-unstable = system: import inputs.nixpkgs-unstable {
         inherit system;
       };
+      nixpkgs-kernel-good-hibernate = system: import inputs.nixpkgs-kernel-good-hibernate {
+        inherit system;
+      };
       nvim-module = system: inputs.dot-nvim.homeManagerModules.${system}.default;
       tmux-module = system: inputs.dot-tmux.homeManagerModules.${system}.default;
       tmux-alacritty-module = system: inputs.dot-tmux.homeManagerModules.${system}.alacrittyKeyBinds;
@@ -55,6 +60,7 @@
         specialArgs = {
           nixos-hardware = inputs.nixos-hardware;
           nixpkgs-unstable = nixpkgs-unstable system;
+          nixpkgs-kernel-good-hibernate = nixpkgs-kernel-good-hibernate system;
           grub-themes-module = grub-themes-module system;
         };
         modules = [
