@@ -1,4 +1,4 @@
-{ lib, config, pkgs, nixos-hardware, nixpkgs-kernel-good-hibernate, ...}: {
+{ lib, config, pkgs, nixos-hardware, nixpkgs-unstable, ...}: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.framework-13-7040-amd
@@ -12,9 +12,6 @@
   ];
 
   boot.loader.grub2-theme.customResolution = "2256x1504";
-
-  # workaround something wrong in linux-6.6.92 which causes hibernate to wake up to blank screen
-  boot.kernelPackages = nixpkgs-kernel-good-hibernate.linuxKernel.packages.linux_6_6;
 
   services.libinput.touchpad.disableWhileTyping = true;
   services.libinput.touchpad.accelSpeed = "0.7";

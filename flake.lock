@@ -178,22 +178,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-kernel-good-hibernate": {
-      "locked": {
-        "lastModified": 1747938275,
-        "narHash": "sha256-FHfwlw8Lh/E7AZUm1pFnuCVH6t/9+zHjl1072/vQdXc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "d026ae960ca4b24ca265223cbc9d3222d936e90d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "d026ae960ca4b24ca265223cbc9d3222d936e90d",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1737469691,
@@ -244,11 +228,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1748437600,
-        "narHash": "sha256-hYKMs3ilp09anGO7xzfGs3JqEgUqFMnZ8GMAqI6/k04=",
+        "lastModified": 1748889542,
+        "narHash": "sha256-Hb4iMhIbjX45GcrgOp3b8xnyli+ysRPqAgZ/LZgyT5k=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7282cb574e0607e65224d33be8241eae7cfe0979",
+        "rev": "10d7f8d34e5eb9c0f9a0485186c1ca691d2c5922",
         "type": "github"
       },
       "original": {
@@ -290,7 +274,6 @@
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-kernel-good-hibernate": "nixpkgs-kernel-good-hibernate",
         "nixpkgs-unstable": "nixpkgs-unstable_2",
         "nur": "nur"
       }
