@@ -54,9 +54,10 @@ ssh_symbol = "[ssh:](fg)"
 format = "[$ssh_symbol$hostname](green)"
 
 [directory]
-style = "dimmed blue"
-repo_root_style = "blue"
-before_repo_root_style = "blue"
+style = "blue"
+repo_root_format = '[$before_root_path]($before_repo_root_style)[󰳏 $repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+repo_root_style = "fg:blue bg:237"
+before_repo_root_style = "dimmed blue"
 truncate_to_repo = false
 truncation_length = 1000
 read_only = " "
