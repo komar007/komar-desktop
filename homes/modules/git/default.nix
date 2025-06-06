@@ -13,7 +13,7 @@
     ''}";
     pg = "!${lib.getExe (pkgs.writeShellApplication {
       name = "git-pg";
-      runtimeInputs = [ pkgs.cowsay ];
+      runtimeInputs = with pkgs; [ cowsay lolcat ];
       text = builtins.readFile ./pg.sh;
     })}";
     as = "!${pkgs.writeShellScript "git-as" ''
