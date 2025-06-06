@@ -35,10 +35,16 @@ if git status --porcelain 2>/dev/null | grep -qE '^(M| M)'; then
   exit 1
 fi
 
+IS_GERRIT=$(git remote get-url origin | grep -q gerrit && echo 1 || echo 0)
+
 PREV=$(git rev-parse --abbrev-ref HEAD)
 PUSH_BRANCH=push_branch
 MAIN_BRANCH=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
-PUSH_TO="HEAD:refs/for/$MAIN_BRANCH"
+if [ "$IS_GERRIT" -eq 1 ]; then
+  PUSH_TO="HEAD:refs/for/$MAIN_BRANCH"
+else
+  PUSH_TO="HEAD:$MAIN_BRANCH"
+fi
 
 temp_shell() {
   if ! $SHELL; then
