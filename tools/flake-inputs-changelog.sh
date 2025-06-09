@@ -23,6 +23,6 @@ for i in $INPUTS; do
 	owner=$(get "$i" owner < ../flake.lock)
 	[ "$owner" != komar007 ] && continue
 	echo "changes in $i:"
-	PRETTY="format:%H %ai %s" ./flake-input-log.sh "$i"
+	PRETTY="format:%H %ai %s" ./flake-input-log.sh "$i" "$1" "$2"
 	echo
 done
