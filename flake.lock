@@ -9,11 +9,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1748326051,
-        "narHash": "sha256-2W/kCcC7TQXjVfirzgwc22sb+UpFWG6gtV+dNRu7fbk=",
+        "lastModified": 1749486292,
+        "narHash": "sha256-CMJ5QIFlHk4hgpdrvH1pDcgdH4o4fxOmWfvVe2/2+As=",
         "owner": "komar007",
         "repo": "dot-nvim",
-        "rev": "f8ea37be30a8cf570d62e9b0781fef6c8cd25e0e",
+        "rev": "370452658db652fbef31af3ff5e59e9009e3e857",
         "type": "github"
       },
       "original": {
