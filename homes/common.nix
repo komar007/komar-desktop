@@ -1,4 +1,4 @@
-{ lib, pkgs, nvim-module, tmux-module, tmux-alacritty-module, nixpkgs-unstable, ... }: {
+{ lib, pkgs, nvim-module, nixpkgs-unstable, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   home = {
@@ -10,8 +10,7 @@
     ./modules/x11.nix
     ./modules/xdg.nix
     nvim-module
-    tmux-module
-    tmux-alacritty-module
+    ./modules/tmux
     ./modules/alacritty.nix
     ./modules/starship
     ./modules/git
