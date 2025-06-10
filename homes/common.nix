@@ -17,6 +17,10 @@
     ./modules/tig
   ];
 
+  dot-tmux.session-shells = {
+    btop = "exec btop";
+  };
+
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
