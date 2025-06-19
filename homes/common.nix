@@ -42,6 +42,8 @@
 
     btop
 
+    # Cascadia Code contains Symbols for Legacy Computing, required for example by dot-tmux ribbons.
+    cascadia-code
     nerd-fonts.terminess-ttf
     nerd-fonts.jetbrains-mono
   ];
