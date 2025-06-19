@@ -37,8 +37,6 @@
   alacritty.glyph-offset = -1;
   programs.alacritty.settings.font.builtin_box_drawing = false;
 
-  fonts.fontconfig.enable = true;
-
   xdg.default-browser-app = "firefox.desktop";
 
   home.packages = with pkgs; [

@@ -23,6 +23,9 @@
 
   programs.home-manager.enable = true;
 
+  # automatically regenerate fc-cache
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     pstree # required by PS1
     jq # required by PS1
